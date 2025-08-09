@@ -432,7 +432,7 @@
 
         <!-- Download Section -->
         <div class="download-section">
-            <a href="#" class="download-btn" onclick="downloadResume()">
+            <a href="assets/Jordan_Spencer-Resume.pdf" download="Jordan_Spencer-Resume.pdf" class="download-btn">
                 <svg class="download-icon" viewBox="0 0 24 24">
                     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                 </svg>
@@ -593,15 +593,6 @@
     </div>
 
     <script>
-        // Download functionality
-        function downloadResume() {
-            // Create a printable version
-            window.print();
-            
-            // Alternative: If you have a PDF file uploaded to GitHub
-            // window.open('resume/Jordan_Spencer_Resume.pdf', '_blank');
-        }
-
         // Navigation functionality
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
