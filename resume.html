@@ -343,7 +343,43 @@
             font-size: 0.9rem;
         }
 
-        /* Mobile Responsive */
+        /* Scroll Animation Styles - Same as Portfolio */
+        .card-animate,
+        .animate-on-scroll,
+        .section-title-animate {
+            opacity: 1; /* Start visible for reliability */
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
+        }
+
+        /* Add animations only when JavaScript loads successfully */
+        .js-loaded .card-animate,
+        .js-loaded .animate-on-scroll,
+        .js-loaded .section-title-animate {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .js-loaded .card-animate {
+            transform: translateY(20px) scale(0.98);
+        }
+
+        .animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+
+        /* Staggered delays for resume sections */
+        .resume-section:nth-child(1) { transition-delay: 0.1s; }
+        .resume-section:nth-child(2) { transition-delay: 0.2s; }
+        .resume-section:nth-child(3) { transition-delay: 0.3s; }
+        .resume-section:nth-child(4) { transition-delay: 0.4s; }
+        .resume-section:nth-child(5) { transition-delay: 0.5s; }
+
+        .skill-category:nth-child(1) { transition-delay: 0.1s; }
+        .skill-category:nth-child(2) { transition-delay: 0.2s; }
+        .skill-category:nth-child(3) { transition-delay: 0.3s; }
+        .skill-category:nth-child(4) { transition-delay: 0.4s; }
         @media (max-width: 768px) {
             .header-nav {
                 top: 32px;
@@ -426,12 +462,12 @@
     <!-- Resume Content -->
     <div class="resume-container">
         <div class="resume-header">
-            <h1 class="resume-title">RESUME</h1>
-            <p class="resume-subtitle">Jordan Spencer - Mechanical Engineering Student</p>
+            <h1 class="resume-title section-title-animate">RESUME</h1>
+            <p class="resume-subtitle animate-on-scroll">Jordan Spencer - Mechanical Engineering Student</p>
         </div>
 
         <!-- Download Section -->
-        <div class="download-section">
+        <div class="download-section animate-on-scroll">
             <a href="assets/Jordan_Spencer-Resume.pdf" download="Jordan_Spencer-Resume.pdf" class="download-btn">
                 <svg class="download-icon" viewBox="0 0 24 24">
                     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
@@ -441,7 +477,7 @@
         </div>
 
         <!-- Resume Viewer -->
-        <div class="resume-viewer">
+        <div class="resume-viewer card-animate">
             <div class="resume-content">
                 <h1>Jordan Spencer</h1>
                 <div class="contact-info">
@@ -451,7 +487,7 @@
                     <p>Boston, MA</p>
                 </div>
 
-                <div class="resume-section">
+                <div class="resume-section animate-on-scroll">
                     <h2>EDUCATION</h2>
                     <div class="resume-item">
                         <h3>Northeastern University</h3>
@@ -474,7 +510,7 @@
                     </div>
                 </div>
 
-                <div class="resume-section">
+                <div class="resume-section animate-on-scroll">
                     <h2>EXPERIENCE</h2>
                     <div class="resume-item">
                         <h3>SharkNinja</h3>
@@ -500,7 +536,7 @@
                     </div>
                 </div>
 
-                <div class="resume-section">
+                <div class="resume-section animate-on-scroll">
                     <h2>PROJECTS</h2>
                     <div class="resume-item">
                         <h3>Eagle Scout Leadership Project</h3>
@@ -534,10 +570,10 @@
                     </div>
                 </div>
 
-                <div class="resume-section">
+                <div class="resume-section animate-on-scroll">
                     <h2>TECHNICAL SKILLS</h2>
                     <div class="skills-grid">
-                        <div class="skill-category">
+                        <div class="skill-category card-animate">
                             <h4>CAD & Design</h4>
                             <ul>
                                 <li>SolidWorks</li>
@@ -546,7 +582,7 @@
                                 <li>Laser Cutting</li>
                             </ul>
                         </div>
-                        <div class="skill-category">
+                        <div class="skill-category card-animate">
                             <h4>Programming</h4>
                             <ul>
                                 <li>MATLAB</li>
@@ -555,7 +591,7 @@
                                 <li>C++ (Basic)</li>
                             </ul>
                         </div>
-                        <div class="skill-category">
+                        <div class="skill-category card-animate">
                             <h4>Manufacturing</h4>
                             <ul>
                                 <li>Soldering</li>
@@ -564,7 +600,7 @@
                                 <li>Prototyping</li>
                             </ul>
                         </div>
-                        <div class="skill-category">
+                        <div class="skill-category card-animate">
                             <h4>Leadership</h4>
                             <ul>
                                 <li>Project Management</li>
@@ -576,7 +612,7 @@
                     </div>
                 </div>
 
-                <div class="resume-section">
+                <div class="resume-section animate-on-scroll">
                     <h2>ACHIEVEMENTS</h2>
                     <div class="resume-item">
                         <ul>
@@ -593,6 +629,41 @@
     </div>
 
     <script>
+        // Reliable Animation System - Same as Portfolio
+        function initAnimations() {
+            document.body.classList.add('js-loaded');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            const elements = document.querySelectorAll('.card-animate, .animate-on-scroll, .section-title-animate');
+            elements.forEach(el => observer.observe(el));
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAnimations);
+        } else {
+            initAnimations();
+        }
+
+        // Backup: Force show all elements after 3 seconds if animations fail
+        setTimeout(() => {
+            const hiddenElements = document.querySelectorAll('.card-animate, .animate-on-scroll, .section-title-animate');
+            hiddenElements.forEach(el => {
+                if (!el.classList.contains('animate-in')) {
+                    el.classList.add('animate-in');
+                }
+            });
+        }, 3000);
+
         // Navigation functionality
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
