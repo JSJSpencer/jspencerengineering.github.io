@@ -1,4 +1,22 @@
-<!DOCTYPE html>
+/* CAD Viewer with Background */
+        .cad-viewer {
+            background: url('../images/background.png') center/cover;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cad-viewer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;<!DOCTYPE html>
 <html lang="en-US">
 <head>
     <meta charset="utf-8">
@@ -140,7 +158,7 @@
             margin: 0 auto;
         }
 
-        /* Project Header with Hero Background */
+        /* Project Header with Hero Background (Same as Portfolio) */
         .project-header {
             text-align: center;
             margin-bottom: 4rem;
@@ -226,12 +244,42 @@
             margin-bottom: 4rem;
         }
 
+        /* Project Main Content with Background */
         .project-main {
-            background: var(--card-bg);
+            background: url('../images/background.png') center/cover;
             padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px var(--shadow);
             border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .project-main::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), #cc0000);
+            z-index: 2;
+        }
+
+        .project-main > * {
+            position: relative;
+            z-index: 2;
         }
 
         .project-sidebar {
@@ -240,14 +288,15 @@
             gap: 2rem;
         }
 
-        /* Components Card */
+        /* Components Card with Background */
         .components-card {
-            background: var(--card-bg);
+            background: url('../images/background.png') center/cover;
             padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px var(--shadow);
             border: 1px solid var(--border);
             position: relative;
+            overflow: hidden;
         }
 
         .components-card::before {
@@ -256,8 +305,25 @@
             top: 0;
             left: 0;
             width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .components-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 4px;
             background: linear-gradient(90deg, var(--primary-color), #cc0000);
+            z-index: 2;
+        }
+
+        .components-card > * {
+            position: relative;
+            z-index: 2;
         }
 
         .card-title {
@@ -294,14 +360,15 @@
             border-bottom: none;
         }
 
-        /* Skills Card */
+        /* Skills Card with Background */
         .skills-card {
-            background: var(--card-bg);
+            background: url('../images/background.png') center/cover;
             padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px var(--shadow);
             border: 1px solid var(--border);
             position: relative;
+            overflow: hidden;
         }
 
         .skills-card::before {
@@ -310,8 +377,25 @@
             top: 0;
             left: 0;
             width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .skills-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 4px;
             background: linear-gradient(90deg, var(--primary-color), #cc0000);
+            z-index: 2;
+        }
+
+        .skills-card > * {
+            position: relative;
+            z-index: 2;
         }
 
         .skills-list {
