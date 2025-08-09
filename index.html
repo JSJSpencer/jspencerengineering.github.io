@@ -252,7 +252,39 @@
             }
         }
 
-        /* Modern Sections */
+        /* Simplified Animation Styles - More Reliable */
+        .card-animate,
+        .animate-on-scroll,
+        .section-title-animate {
+            opacity: 1; /* Start visible for reliability */
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
+        }
+
+        /* Add animations only when JavaScript loads successfully */
+        .js-loaded .card-animate,
+        .js-loaded .animate-on-scroll,
+        .js-loaded .section-title-animate {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .js-loaded .card-animate {
+            transform: translateY(20px) scale(0.98);
+        }
+
+        .animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+
+        /* Staggered delays */
+        .card-animate:nth-child(1) { transition-delay: 0.1s; }
+        .card-animate:nth-child(2) { transition-delay: 0.2s; }
+        .card-animate:nth-child(3) { transition-delay: 0.3s; }
+        .card-animate:nth-child(4) { transition-delay: 0.4s; }
+        .card-animate:nth-child(5) { transition-delay: 0.5s; }
+        .card-animate:nth-child(6) { transition-delay: 0.6s; }
         .modern-section {
             padding: 6rem 2rem;
             background: var(--background);
@@ -676,11 +708,11 @@
     <section id="about" class="modern-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">ABOUT ME</h2>
-                <p class="section-subtitle">Mechanical Engineering Student & Student-Athlete</p>
+                <h2 class="section-title section-title-animate">ABOUT ME</h2>
+                <p class="section-subtitle animate-on-scroll">Mechanical Engineering Student & Student-Athlete</p>
             </div>
             <div class="about-content">
-                <div class="about-text">
+                <div class="about-text animate-on-scroll">
                     <p>I am a <span class="highlight">fourth-year undergraduate Mechanical Engineering</span> student at <span class="highlight">Northeastern University's Honors College</span> where I am also a member of the <span class="highlight">NCAA Division 1 Varsity Men's Track & Field</span> Team.</p>
                     
                     <p>I was born and raised on <span class="highlight">Long Island, NY</span> with 2 parents, 1 sister, a cat, and 2 dogs. Throughout my childhood, I found joy in playing sports, learning, and building. My love of building can be traced back to my earliest memories of working in carpentry with my father and reverse engineering toys. From holding a level against a wall at the tender age of 2 to building my first tabletop arcade machine at 17, engineering has always been a source of joy for me.</p>
@@ -691,7 +723,7 @@
                     
                     <p class="signature">-Jordan Spencer</p>
                 </div>
-                <div class="profile-image-container">
+                <div class="profile-image-container animate-on-scroll">
                     <img src="images/profile-photo.jpg" alt="Jordan Spencer" class="profile-image">
                 </div>
             </div>
@@ -702,11 +734,11 @@
     <section id="education" class="modern-section alternate">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">EDUCATION</h2>
-                <p class="section-subtitle">My academic journey in engineering</p>
+                <h2 class="section-title section-title-animate">EDUCATION</h2>
+                <p class="section-subtitle animate-on-scroll">My academic journey in engineering</p>
             </div>
             <div class="education-grid">
-                <div class="modern-card">
+                <div class="modern-card card-animate">
                     <div class="card-content">
                         <img src="images/northeastern-logo.jpg" alt="Northeastern University" class="card-logo">
                         <div class="card-info">
@@ -717,7 +749,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modern-card">
+                <div class="modern-card card-animate">
                     <div class="card-content">
                         <img src="images/saint-anthonys-logo.jpg" alt="Saint Anthony's High School" class="card-logo">
                         <div class="card-info">
@@ -736,11 +768,11 @@
     <section id="experience" class="modern-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">EXPERIENCE</h2>
-                <p class="section-subtitle">Professional and academic experiences</p>
+                <h2 class="section-title section-title-animate">EXPERIENCE</h2>
+                <p class="section-subtitle animate-on-scroll">Professional and academic experiences</p>
             </div>
             <div class="experience-grid">
-                <div class="modern-card">
+                <div class="modern-card card-animate">
                     <div class="card-content">
                         <img src="images/sharkninja-logo.jpg" alt="SharkNinja" class="card-logo">
                         <div class="card-info">
@@ -750,7 +782,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modern-card">
+                <div class="modern-card card-animate">
                     <div class="card-content">
                         <img src="images/fyelic-logo.jpg" alt="FYELIC" class="card-logo">
                         <div class="card-info">
@@ -768,11 +800,11 @@
     <section id="projects" class="modern-section alternate">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">PROJECTS</h2>
-                <p class="section-subtitle">Engineering solutions and creative builds</p>
+                <h2 class="section-title section-title-animate">PROJECTS</h2>
+                <p class="section-subtitle animate-on-scroll">Engineering solutions and creative builds</p>
             </div>
             <div class="projects-grid">
-                <a href="projects/eagle-scout-project.html" class="project-card">
+                <a href="projects/eagle-scout-project.html" class="project-card card-animate">
                     <div class="project-content">
                         <h3 class="project-title">EAGLE SCOUT PROJECT</h3>
                         <p class="project-description">Community service project demonstrating leadership and project management skills through planning and executing a beneficial initiative.</p>
@@ -790,7 +822,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/tabletop-arcade-machine.html" class="project-card">
+                <a href="projects/tabletop-arcade-machine.html" class="project-card card-animate">
                     <div class="project-content">
                         <h3 class="project-title">TABLETOP ARCADE MACHINE</h3>
                         <p class="project-description">Custom-built retro gaming system combining woodworking craftsmanship with electronics integration and programming.</p>
@@ -809,7 +841,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/ir-transmitter-and-receiver.html" class="project-card">
+                <a href="projects/ir-transmitter-and-receiver.html" class="project-card card-animate">
                     <div class="project-content">
                         <h3 class="project-title">IR TRANSMITTER AND RECEIVER</h3>
                         <p class="project-description">Electronic communication system utilizing infrared technology for wireless data transmission and signal processing.</p>
@@ -828,7 +860,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/stealth-planes-museum-exhibit.html" class="project-card">
+                <a href="projects/stealth-planes-museum-exhibit.html" class="project-card card-animate">
                     <div class="project-content">
                         <h3 class="project-title">STEALTH PLANES EXHIBIT</h3>
                         <p class="project-description">Interactive museum display showcasing aerospace engineering principles and stealth technology innovations.</p>
@@ -847,7 +879,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/portable-charging-3ds-dock.html" class="project-card">
+                <a href="projects/portable-charging-3ds-dock.html" class="project-card card-animate">
                     <div class="project-content">
                         <h3 class="project-title">PORTABLE CHARGING 3DS DOCK</h3>
                         <p class="project-description">Compact charging solution with custom circuitry and 3D printed housing for mobile gaming convenience.</p>
@@ -866,7 +898,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/motor-control-assistive-device.html" class="project-card">
+                <a href="projects/motor-control-assistive-device.html" class="project-card card-animate">
                     <div class="project-content">
                         <h3 class="project-title">MOTOR CONTROL ASSISTIVE DEVICE</h3>
                         <p class="project-description">Accessibility-focused engineering solution utilizing motor control systems to assist individuals with mobility challenges.</p>
@@ -894,15 +926,15 @@
         <div class="container">
             <h3>Let's Connect</h3>
             <div class="contact-grid">
-                <div class="contact-item">
+                <div class="contact-item card-animate">
                     <h4>Phone</h4>
                     <p>(631) 294-8401</p>
                 </div>
-                <div class="contact-item">
+                <div class="contact-item card-animate">
                     <h4>Email</h4>
                     <a href="mailto:spencer.jo@northeastern.edu">spencer.jo@northeastern.edu</a>
                 </div>
-                <div class="contact-item">
+                <div class="contact-item card-animate">
                     <h4>LinkedIn</h4>
                     <a href="https://www.linkedin.com/in/jordan-spencer-engineering/" target="_blank">jordan-spencer-engineering</a>
                 </div>
