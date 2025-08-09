@@ -1,15 +1,14 @@
-<!DOCTYPE html><html lang="en-US" itemscope itemtype="http://schema.org/WebPage">
+<!DOCTYPE html>
+<html lang="en-US">
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="referrer" content="origin">
     <title>Jordan's Engineering Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato%3Ai%2Cbi%2C700%2C400&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lobster%3Ai%2Cbi%2C700%2C400&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Oswald%3Ai%2Cbi%2C700%2C300%2C400&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster:400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #660000;
@@ -24,20 +23,24 @@
             --card-bg: #1f1f1f;
         }
 
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            color: var(--text-primary);
-            background: var(--background);
+            box-sizing: border-box;
         }
 
-        /* Scrolling Marquee Banner - Transparent Over Hero */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background: var(--background);
+            line-height: 1.6;
+        }
+
+        /* Scrolling Marquee Banner */
         .scrolling-banner {
-            background: transparent;
+            background: rgba(0, 0, 0, 0.1);
             color: white;
-            padding: 0.7rem 0;
+            padding: 0;
             position: fixed;
             top: 0;
             width: 100%;
@@ -48,6 +51,8 @@
             align-items: center;
             transition: all 0.3s ease;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            height: 40px;
+            backdrop-filter: blur(5px);
         }
 
         .scrolling-banner.scrolled {
@@ -59,7 +64,7 @@
 
         .scrolling-content {
             display: inline-block;
-            animation: scroll-seamless 40s linear infinite;
+            animation: scroll-seamless 45s linear infinite;
             will-change: transform;
         }
 
@@ -85,12 +90,12 @@
             animation-play-state: paused;
         }
 
-        /* Original Header Navigation - No Gap, Connected to Marquee */
+        /* Original Header Navigation */
         .header-nav {
             position: fixed;
-            top: 48px; /* Directly connected to marquee bottom */
+            top: 30px;
             width: 100%;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.1);
             z-index: 1000;
             height: 60px;
             display: flex;
@@ -98,21 +103,29 @@
             justify-content: space-between;
             padding: 0 2rem;
             transition: all 0.3s ease;
-            border-top: 1px solid transparent; /* Seamless connection */
+            border-radius: 0 0 15px 15px;
+            backdrop-filter: blur(5px);
         }
 
         .header-nav.scrolled {
             background: rgba(102, 0, 0, 0.95);
             backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator when solid */
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .site-title {
-            color: #f9f9f9;
+            color: white;
             font-family: 'Oswald', sans-serif;
             font-weight: 300;
             font-size: 1.3rem;
             text-decoration: none;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .site-title:hover {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .nav-menu {
@@ -122,12 +135,15 @@
         }
 
         .nav-menu a {
-            color: #f9f9f9;
+            color: white;
             text-decoration: none;
             font-family: 'Oswald', sans-serif;
             font-weight: 300;
             font-size: 0.95rem;
             position: relative;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
         }
 
         .nav-menu a.active {
@@ -135,17 +151,33 @@
         }
 
         .nav-menu a:hover {
-            color: rgba(249, 249, 249, 0.8);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: white;
         }
 
         .search-icon {
             width: 20px;
             height: 20px;
-            fill: #f9f9f9;
+            fill: white;
             cursor: pointer;
+            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+            transition: all 0.3s ease;
         }
 
-        /* Original Hero Section (No margin adjustment needed) */
+        .search-icon:hover {
+            opacity: 0.8;
+        }
+
+        /* Original Hero Section */
         .hero-section {
             min-height: 100vh;
             background: url('images/header-background.jpg') center/cover no-repeat;
@@ -199,7 +231,6 @@
             color: white;
             animation: bounce 2s infinite;
             cursor: pointer;
-            text-align: center;
         }
 
         .scroll-indicator svg {
@@ -221,7 +252,7 @@
             }
         }
 
-        /* Modern Sections with Dark Theme */
+        /* Modern Sections */
         .modern-section {
             padding: 6rem 2rem;
             background: var(--background);
@@ -246,15 +277,17 @@
             font-size: 2.5rem;
             color: var(--primary-color);
             margin-bottom: 1rem;
+            opacity: 1;
         }
 
         .section-subtitle {
             color: var(--text-secondary);
             font-size: 1.1rem;
             font-weight: 300;
+            opacity: 1;
         }
 
-        /* Modern About Section with Cards */
+        /* About Section */
         .about-content {
             display: grid;
             grid-template-columns: 1fr 400px;
@@ -266,6 +299,7 @@
             font-size: 1.1rem;
             line-height: 1.7;
             color: var(--text-secondary);
+            opacity: 1;
         }
 
         .about-text p {
@@ -281,6 +315,7 @@
             position: relative;
             display: flex;
             justify-content: center;
+            opacity: 1;
         }
 
         .profile-image {
@@ -305,7 +340,7 @@
             margin-top: 2rem;
         }
 
-        /* Modern Card Layouts */
+        /* Modern Cards */
         .education-grid,
         .experience-grid {
             display: grid;
@@ -323,6 +358,7 @@
             border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
+            opacity: 1;
         }
 
         .modern-card::before {
@@ -369,7 +405,7 @@
             font-weight: 300;
         }
 
-        /* Modern Projects Section with Hover Previews */
+        /* Projects Section */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -380,7 +416,7 @@
         .project-card {
             background: var(--card-bg);
             border-radius: 20px;
-            overflow: hidden;
+            overflow: visible;
             box-shadow: 0 10px 30px var(--shadow);
             transition: all 0.3s ease;
             text-decoration: none;
@@ -388,6 +424,7 @@
             border: 1px solid var(--border);
             position: relative;
             cursor: pointer;
+            opacity: 1;
         }
 
         .project-card::before {
@@ -409,7 +446,6 @@
         .project-content {
             padding: 2rem;
             position: relative;
-            overflow: hidden;
         }
 
         .project-title {
@@ -443,6 +479,7 @@
             max-height: 200px;
             overflow-y: auto;
             border-radius: 0 0 20px 20px;
+            z-index: 11;
         }
 
         .project-card:hover .project-preview {
@@ -496,7 +533,6 @@
             text-decoration: underline;
         }
 
-        /* Enhanced card animations for preview */
         .project-card:hover .project-content {
             transform: translateY(-10px);
         }
@@ -505,7 +541,7 @@
             opacity: 0.7;
         }
 
-        /* Modern Footer */
+        /* Footer */
         .footer {
             background: var(--primary-color);
             color: white;
@@ -554,53 +590,16 @@
             opacity: 0.8;
         }
 
-        /* Scroll Animation Styles */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
-        }
-
-        .animate-on-scroll.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card-animate {
-            opacity: 0;
-            transform: translateY(20px) scale(0.98);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-animate.animate-in {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .section-title-animate {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease-out;
-        }
-
-        .section-title-animate.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Staggered animations */
-        .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
-        .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
-        .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
-
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .scrolling-banner {
-                height: 32px; /* Even smaller on mobile */
+                height: 32px;
             }
 
             .header-nav {
-                top: 30px; /* Moved up to close mobile gap */
+                top: 32px; /* Match mobile marquee height */
+                left: 1rem; /* Smaller margins on mobile */
+                right: 1rem;
             }
 
             .nav-menu {
@@ -639,19 +638,19 @@
 
 <body>
     <!-- Scrolling Marquee Banner -->
-    <div class="scrolling-banner">
+    <div class="scrolling-banner" id="marquee">
         <div class="scrolling-content">
             <span class="scroll-text">
-                🚀 NEW: Advanced Motor Control System   •   🔧 WIP: 3D Printed Prosthetic Hand   •   ⭐ FEATURED: Eagle Scout Leadership   •   🏆 LATEST: SharkNinja Co-op Documentation   •   💡 UPCOMING: Smart Home IoT Project   •   🎯 HIGHLIGHT: Award-Winning Design
+                🚀 NEW: Advanced Motor Control System   •   ⭐ FEATURED: Eagle Scout Leadership Project   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   🚀 NEW: Advanced Motor Control System   •   ⭐ FEATURED: Eagle Scout Leadership Project   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   
             </span>
         </div>
     </div>
 
-    <!-- Original Header Navigation (Unchanged) -->
-    <div class="header-nav">
-        <a href="#" class="site-title">Jordan's Engineering Portfolio</a>
+    <!-- Original Header Navigation -->
+    <div class="header-nav" id="navbar">
+        <a href="index.html" class="site-title">Jordan's Engineering Portfolio</a>
         <div class="nav-menu">
-            <a href="#home" class="active">Home</a>
+            <a href="index.html" class="active">Home</a>
             <a href="resume.html">Resume</a>
             <a href="#projects">Projects</a>
             <svg class="search-icon" viewBox="0 0 24 24">
@@ -660,7 +659,7 @@
         </div>
     </div>
 
-    <!-- Original Hero Section with Scroll Indicator -->
+    <!-- Original Hero Section -->
     <section id="home" class="hero-section">
         <div class="hero-content">
             <h1 class="hero-title">ENGINEERING PORTFOLIO</h1>
@@ -673,15 +672,15 @@
         </div>
     </section>
 
-    <!-- Modern About Section -->
+    <!-- About Section -->
     <section id="about" class="modern-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title section-title-animate">ABOUT ME</h2>
-                <p class="section-subtitle animate-on-scroll">Mechanical Engineering Student & Student-Athlete</p>
+                <h2 class="section-title">ABOUT ME</h2>
+                <p class="section-subtitle">Mechanical Engineering Student & Student-Athlete</p>
             </div>
             <div class="about-content">
-                <div class="about-text animate-on-scroll">
+                <div class="about-text">
                     <p>I am a <span class="highlight">fourth-year undergraduate Mechanical Engineering</span> student at <span class="highlight">Northeastern University's Honors College</span> where I am also a member of the <span class="highlight">NCAA Division 1 Varsity Men's Track & Field</span> Team.</p>
                     
                     <p>I was born and raised on <span class="highlight">Long Island, NY</span> with 2 parents, 1 sister, a cat, and 2 dogs. Throughout my childhood, I found joy in playing sports, learning, and building. My love of building can be traced back to my earliest memories of working in carpentry with my father and reverse engineering toys. From holding a level against a wall at the tender age of 2 to building my first tabletop arcade machine at 17, engineering has always been a source of joy for me.</p>
@@ -692,22 +691,22 @@
                     
                     <p class="signature">-Jordan Spencer</p>
                 </div>
-                <div class="profile-image-container animate-on-scroll">
+                <div class="profile-image-container">
                     <img src="images/profile-photo.jpg" alt="Jordan Spencer" class="profile-image">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modern Education Section -->
+    <!-- Education Section -->
     <section id="education" class="modern-section alternate">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title section-title-animate">EDUCATION</h2>
-                <p class="section-subtitle animate-on-scroll">My academic journey in engineering</p>
+                <h2 class="section-title">EDUCATION</h2>
+                <p class="section-subtitle">My academic journey in engineering</p>
             </div>
             <div class="education-grid">
-                <div class="modern-card card-animate">
+                <div class="modern-card">
                     <div class="card-content">
                         <img src="images/northeastern-logo.jpg" alt="Northeastern University" class="card-logo">
                         <div class="card-info">
@@ -718,7 +717,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modern-card card-animate">
+                <div class="modern-card">
                     <div class="card-content">
                         <img src="images/saint-anthonys-logo.jpg" alt="Saint Anthony's High School" class="card-logo">
                         <div class="card-info">
@@ -733,15 +732,15 @@
         </div>
     </section>
 
-    <!-- Modern Experience Section -->
+    <!-- Experience Section -->
     <section id="experience" class="modern-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title section-title-animate">EXPERIENCE</h2>
-                <p class="section-subtitle animate-on-scroll">Professional and academic experiences</p>
+                <h2 class="section-title">EXPERIENCE</h2>
+                <p class="section-subtitle">Professional and academic experiences</p>
             </div>
             <div class="experience-grid">
-                <div class="modern-card card-animate">
+                <div class="modern-card">
                     <div class="card-content">
                         <img src="images/sharkninja-logo.jpg" alt="SharkNinja" class="card-logo">
                         <div class="card-info">
@@ -751,7 +750,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modern-card card-animate">
+                <div class="modern-card">
                     <div class="card-content">
                         <img src="images/fyelic-logo.jpg" alt="FYELIC" class="card-logo">
                         <div class="card-info">
@@ -765,15 +764,15 @@
         </div>
     </section>
 
-    <!-- Modern Projects Section -->
+    <!-- Projects Section -->
     <section id="projects" class="modern-section alternate">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title section-title-animate">PROJECTS</h2>
-                <p class="section-subtitle animate-on-scroll">Engineering solutions and creative builds</p>
+                <h2 class="section-title">PROJECTS</h2>
+                <p class="section-subtitle">Engineering solutions and creative builds</p>
             </div>
             <div class="projects-grid">
-                <a href="projects/eagle-scout-project.html" class="project-card card-animate">
+                <a href="projects/eagle-scout-project.html" class="project-card">
                     <div class="project-content">
                         <h3 class="project-title">EAGLE SCOUT PROJECT</h3>
                         <p class="project-description">Community service project demonstrating leadership and project management skills through planning and executing a beneficial initiative.</p>
@@ -791,7 +790,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/tabletop-arcade-machine.html" class="project-card card-animate">
+                <a href="projects/tabletop-arcade-machine.html" class="project-card">
                     <div class="project-content">
                         <h3 class="project-title">TABLETOP ARCADE MACHINE</h3>
                         <p class="project-description">Custom-built retro gaming system combining woodworking craftsmanship with electronics integration and programming.</p>
@@ -810,7 +809,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/ir-transmitter-and-receiver.html" class="project-card card-animate">
+                <a href="projects/ir-transmitter-and-receiver.html" class="project-card">
                     <div class="project-content">
                         <h3 class="project-title">IR TRANSMITTER AND RECEIVER</h3>
                         <p class="project-description">Electronic communication system utilizing infrared technology for wireless data transmission and signal processing.</p>
@@ -829,7 +828,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/stealth-planes-museum-exhibit.html" class="project-card card-animate">
+                <a href="projects/stealth-planes-museum-exhibit.html" class="project-card">
                     <div class="project-content">
                         <h3 class="project-title">STEALTH PLANES EXHIBIT</h3>
                         <p class="project-description">Interactive museum display showcasing aerospace engineering principles and stealth technology innovations.</p>
@@ -848,7 +847,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/portable-charging-3ds-dock.html" class="project-card card-animate">
+                <a href="projects/portable-charging-3ds-dock.html" class="project-card">
                     <div class="project-content">
                         <h3 class="project-title">PORTABLE CHARGING 3DS DOCK</h3>
                         <p class="project-description">Compact charging solution with custom circuitry and 3D printed housing for mobile gaming convenience.</p>
@@ -867,7 +866,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/motor-control-assistive-device.html" class="project-card card-animate">
+                <a href="projects/motor-control-assistive-device.html" class="project-card">
                     <div class="project-content">
                         <h3 class="project-title">MOTOR CONTROL ASSISTIVE DEVICE</h3>
                         <p class="project-description">Accessibility-focused engineering solution utilizing motor control systems to assist individuals with mobility challenges.</p>
@@ -890,20 +889,20 @@
         </div>
     </section>
 
-    <!-- Modern Footer -->
+    <!-- Contact Footer -->
     <section class="footer">
         <div class="container">
-            <h3 class="section-title-animate">Let's Connect</h3>
+            <h3>Let's Connect</h3>
             <div class="contact-grid">
-                <div class="contact-item card-animate">
+                <div class="contact-item">
                     <h4>Phone</h4>
                     <p>(631) 294-8401</p>
                 </div>
-                <div class="contact-item card-animate">
+                <div class="contact-item">
                     <h4>Email</h4>
                     <a href="mailto:spencer.jo@northeastern.edu">spencer.jo@northeastern.edu</a>
                 </div>
-                <div class="contact-item card-animate">
+                <div class="contact-item">
                     <h4>LinkedIn</h4>
                     <a href="https://www.linkedin.com/in/jordan-spencer-engineering/" target="_blank">jordan-spencer-engineering</a>
                 </div>
@@ -912,40 +911,12 @@
     </section>
 
     <script>
-        // Scroll Animation System
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('animate-in');
-                    }, index * 100);
-                }
-            });
-        }, observerOptions);
-
-        function initScrollAnimations() {
-            const animateElements = document.querySelectorAll(
-                '.animate-on-scroll, .card-animate, .section-title-animate'
-            );
-            animateElements.forEach((el) => {
-                observer.observe(el);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', initScrollAnimations);
-        window.addEventListener('load', initScrollAnimations);
-
-        // Transparent navigation and marquee - wait until fully past hero
+        // Simplified scroll behavior for marquee and navigation
         window.addEventListener('scroll', function() {
             const heroHeight = document.querySelector('.hero-section').offsetHeight;
-            const scrolled = window.scrollY > (heroHeight - 100); // Trigger when almost past hero
-            const navbar = document.querySelector('.header-nav');
-            const marquee = document.querySelector('.scrolling-banner');
+            const scrolled = window.scrollY > (heroHeight - 50);
+            const navbar = document.getElementById('navbar');
+            const marquee = document.getElementById('marquee');
             
             if (scrolled) {
                 navbar.classList.add('scrolled');
@@ -969,19 +940,16 @@
                 }
             });
 
-            // Hide scroll indicator when scrolling starts
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 50) {
                     scrollIndicator.style.opacity = '0';
-                    scrollIndicator.style.pointerEvents = 'none';
                 } else {
                     scrollIndicator.style.opacity = '1';
-                    scrollIndicator.style.pointerEvents = 'auto';
                 }
             });
         }
 
-        // Original navigation functionality
+        // Simple navigation functionality
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -995,11 +963,12 @@
             });
         });
 
+        // Active nav link highlighting - updated for proper home link
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-menu a');
             
-            let current = '';
+            let current = 'home';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (window.pageYOffset >= sectionTop - 200) {
@@ -1009,7 +978,9 @@
 
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
+                // Handle both #home and index.html for home link
+                if (link.getAttribute('href') === `#${current}` || 
+                    (current === 'home' && link.getAttribute('href') === 'index.html')) {
                     link.classList.add('active');
                 }
             });
