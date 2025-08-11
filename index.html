@@ -527,6 +527,90 @@
 
         .search-input {
             width: 100%;
+            padding: 1rem 8rem 1rem 1.5rem;
+            background: var(--surface-primary);
+            border: 2px solid var(--border-primary);
+            border-radius: 24px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px var(--shadow-light);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 32px var(--shadow-medium);
+            transform: translateY(-2px);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .search-results-badge {
+            position: absolute;
+            right: 3.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .search-results-badge.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .search-results-badge:hover {
+            background: var(--primary-hover);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            pointer-events: none;
+            transition: fill 0.3s ease;
+        }
+
+        .search-input:focus + .search-results-badge + .search-icon {
+            fill: var(--primary-color);
+        }
+
+        /* Modern Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+            margin: 2rem 0 3rem 0;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
             padding: 1rem 3rem 1rem 1.5rem;
             background: var(--surface-primary);
             border: 2px solid var(--border-primary);
@@ -562,6 +646,104 @@
 
         .search-input:focus + .search-icon {
             fill: var(--primary-color);
+        }
+
+        /* Search Suggestions Dropdown */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--surface-primary);
+            border: 2px solid var(--border-primary);
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 12px 48px var(--shadow-heavy);
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        .search-suggestions.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .suggestion-item {
+            padding: 0.875rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--border-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--surface-primary);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 18px 18px;
+        }
+
+        .suggestion-item:hover {
+            background: var(--surface-elevated);
+            color: var(--primary-color);
+        }
+
+        .suggestion-item.selected {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .suggestion-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+
+        .suggestion-text {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .suggestion-count {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            background: var(--background-secondary);
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .suggestion-item.selected .suggestion-count {
+            background: rgba(255, 255, 255, 0.25);
+            opacity: 1;
+        }
+
+        .suggestion-item:hover .suggestion-count {
+            background: var(--primary-color);
+            color: white;
+            opacity: 1;
+        }
+
+        /* Highlighted Projects */
+        .project-card.highlighted {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 48px var(--primary-color), 0 8px 32px var(--shadow-medium);
+            border-color: var(--primary-color);
+        }
+
+        .project-card.dimmed {
+            opacity: 0.4;
+            transform: scale(0.98);
         }
 
         /* Enhanced About Section */
@@ -1168,6 +1350,7 @@
                         id="projectSearch"
                         autocomplete="off"
                     >
+                    <div class="search-results-badge" id="searchResultsBadge"></div>
                     <svg class="search-icon" viewBox="0 0 24 24">
                         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                     </svg>
@@ -1361,56 +1544,338 @@
             document.body.setAttribute('data-theme', savedTheme);
         });
 
-        // Project Search Functionality
+        // Simplified Project Search with Results Badge
         const projectSearch = document.getElementById('projectSearch');
+        const searchResultsBadge = document.getElementById('searchResultsBadge');
         const projectCards = document.querySelectorAll('.project-card');
 
-        if (projectSearch) {
-            projectSearch.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase().trim();
-                
-                projectCards.forEach(card => {
-                    const title = card.querySelector('.project-title').textContent.toLowerCase();
-                    const description = card.querySelector('.project-description').textContent.toLowerCase();
-                    const keywords = card.getAttribute('data-keywords').toLowerCase();
-                    const tags = Array.from(card.querySelectorAll('.preview-tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
+        // Auto-scrape project data from actual project pages
+        async function scrapeProjectData() {
+            const projectUrls = [
+                'projects/eagle-scout-project.html',
+                'projects/tabletop-arcade-machine.html', 
+                'projects/mini-robo-arm.html',
+                'projects/ir-transmitter-and-receiver.html',
+                'projects/stealth-planes-museum-exhibit.html',
+                'projects/portable-charging-3ds-dock.html',
+                'projects/motor-control-assistive-device.html'
+            ];
+
+            const scrapedData = [];
+
+            for (const url of projectUrls) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) continue;
                     
-                    const searchableContent = `${title} ${description} ${keywords} ${tags}`;
+                    const html = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
                     
-                    if (searchTerm === '' || searchableContent.includes(searchTerm)) {
-                        card.style.display = 'block';
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0) scale(1)';
-                    } else {
-                        card.style.display = 'none';
+                    // Extract title - from project-title class or h1
+                    const title = doc.querySelector('.project-title')?.textContent?.trim() || 
+                                 doc.querySelector('h1')?.textContent?.trim() ||
+                                 url.split('/').pop().replace('.html', '').replace(/-/g, ' ');
+                    
+                    // Extract keywords from various sections
+                    const keywords = new Set();
+                    
+                    // 1. From Components List (.components-list li)
+                    doc.querySelectorAll('.components-list li').forEach(el => {
+                        const text = el.textContent?.trim().toLowerCase();
+                        if (text && text.length > 1) {
+                            keywords.add(text);
+                            
+                            // Extract specific tech terms from components
+                            if (text.includes('arduino')) keywords.add('arduino');
+                            if (text.includes('servo')) keywords.add('servo motors');
+                            if (text.includes('pcb')) keywords.add('pcb design');
+                            if (text.includes('motor')) keywords.add('motor control');
+                            if (text.includes('sensor')) keywords.add('sensors');
+                            if (text.includes('button')) keywords.add('electronics');
+                            if (text.includes('potentiometer')) keywords.add('electronics');
+                        }
+                    });
+                    
+                    // 2. From Skills List (.skills-list li)
+                    doc.querySelectorAll('.skills-list li').forEach(el => {
+                        const text = el.textContent?.trim().toLowerCase();
+                        if (text && text.length > 2) {
+                            keywords.add(text);
+                        }
+                    });
+                    
+                    // 3. From Project Overview/Description (.project-description)
+                    const description = doc.querySelector('.project-description')?.textContent;
+                    if (description) {
+                        // Extract technical terms from the description
+                        const techTerms = description.toLowerCase().match(
+                            /\b(arduino|raspberry pi|pcb|3d printing|robotics|electronics|programming|python|javascript|c\+\+|java|solidworks|matlab|cad|servo|sensor|motor|led|circuit|wireless|bluetooth|wifi|microcontroller|automation|ai|machine learning|cnc|laser cutting|soldering|hotswappable|pogo pin|degrees of freedom|object manipulation|automated task|tool detection|electrical continuity|sensor feedback)\b/g
+                        );
+                        
+                        if (techTerms) {
+                            techTerms.forEach(term => {
+                                keywords.add(term);
+                                // Add related terms
+                                if (term === 'servo') keywords.add('servo motors');
+                                if (term === 'pogo pin') keywords.add('pogo pins');
+                                if (term === 'hotswappable') keywords.add('modular design');
+                            });
+                        }
+                        
+                        // Look for specific project-related keywords
+                        if (description.toLowerCase().includes('robotic arm')) keywords.add('robotics');
+                        if (description.toLowerCase().includes('precision')) keywords.add('precision control');
+                        if (description.toLowerCase().includes('degrees of freedom')) keywords.add('multi-axis control');
                     }
+                    
+                    // 4. From project subtitle (.project-subtitle)
+                    const subtitle = doc.querySelector('.project-subtitle')?.textContent;
+                    if (subtitle) {
+                        const subtitleTerms = subtitle.toLowerCase().match(
+                            /\b(precision|servo motor|control|programmable|automation|robotic|arm|hotswappable|end effector|tool detection|microcontroller)\b/g
+                        );
+                        if (subtitleTerms) {
+                            subtitleTerms.forEach(term => keywords.add(term));
+                        }
+                    }
+                    
+                    // 5. From existing data-keywords attributes (if present)
+                    const dataKeywords = doc.querySelector('[data-keywords]')?.getAttribute('data-keywords');
+                    if (dataKeywords) {
+                        dataKeywords.split(',').forEach(kw => {
+                            const cleaned = kw.trim().toLowerCase();
+                            if (cleaned) keywords.add(cleaned);
+                        });
+                    }
+                    
+                    // Clean and filter keywords
+                    const finalKeywords = Array.from(keywords)
+                        .filter(kw => kw.length > 2 && !['the', 'and', 'with', 'for', 'using', 'system', 'design'].includes(kw))
+                        .slice(0, 20); // Allow more keywords since we're being more specific
+                    
+                    scrapedData.push({
+                        element: document.querySelector(`a[href="${url}"]`),
+                        title: title,
+                        keywords: finalKeywords,
+                        url: url
+                    });
+                    
+                    console.log(`✅ Scraped ${url}:`, {
+                        title: title,
+                        keywordCount: finalKeywords.length,
+                        keywords: finalKeywords.slice(0, 8) // Show first 8 for debugging
+                    });
+                    
+                } catch (error) {
+                    console.log(`❌ Could not scrape ${url}:`, error);
+                    
+                    // Fallback to manual data for this project
+                    const fallbackData = getProjectDataFallback(url);
+                    if (fallbackData) {
+                        scrapedData.push(fallbackData);
+                        console.log(`📋 Used fallback data for ${url}`);
+                    }
+                }
+            }
+            
+            return scrapedData.length > 0 ? scrapedData : [];
+        }
+
+        // Fallback only if scraping completely fails
+        function getProjectDataFallback(url) {
+            // Return basic data with just title and URL, no keywords
+            const titleMap = {
+                'projects/eagle-scout-project.html': 'Eagle Scout Project',
+                'projects/tabletop-arcade-machine.html': 'Tabletop Arcade Machine',
+                'projects/mini-robo-arm.html': 'Mini Robo Arm',
+                'projects/ir-transmitter-and-receiver.html': 'IR Transmitter and Receiver',
+                'projects/stealth-planes-museum-exhibit.html': 'Stealth Planes Exhibit',
+                'projects/portable-charging-3ds-dock.html': 'Portable Charging 3DS Dock',
+                'projects/motor-control-assistive-device.html': 'Motor Control Assistive Device'
+            };
+
+            return {
+                element: document.querySelector(`a[href="${url}"]`),
+                title: titleMap[url] || url.split('/').pop().replace('.html', '').replace(/-/g, ' '),
+                keywords: [], // No fallback keywords - force user to check their project pages
+                url: url
+            };
+        }
+
+        // Initialize project data with scraping only
+        let projectData = [];
+
+        async function initializeSearch() {
+            console.log('🔍 Loading project data from actual project pages...');
+            try {
+                projectData = await scrapeProjectData();
+                
+                if (projectData.length === 0) {
+                    console.log('❌ No project data could be scraped. Please check your project page structure.');
+                    return;
+                }
+                
+                console.log('✅ Project search data loaded successfully:');
+                projectData.forEach(project => {
+                    console.log(`  📄 ${project.title}: ${project.keywords.length} keywords`);
+                    console.log(`      Keywords: ${project.keywords.slice(0, 10).join(', ')}${project.keywords.length > 10 ? '...' : ''}`);
                 });
                 
-                // Show "No results" message if no projects are visible
-                const visibleCards = Array.from(projectCards).filter(card => card.style.display !== 'none');
-                const projectsGrid = document.getElementById('projectsGrid');
+                // Verify search functionality is ready
+                console.log('🚀 Search is ready! Try searching for: arduino, 3d printing, electronics, robotics');
                 
-                let noResultsMessage = document.getElementById('no-results-message');
-                if (visibleCards.length === 0 && searchTerm !== '') {
-                    if (!noResultsMessage) {
-                        noResultsMessage = document.createElement('div');
-                        noResultsMessage.id = 'no-results-message';
-                        noResultsMessage.style.cssText = `
-                            grid-column: 1 / -1;
-                            text-align: center;
-                            padding: 3rem;
-                            color: var(--text-secondary);
-                            font-size: 1.1rem;
-                        `;
-                        noResultsMessage.innerHTML = `
-                            <p>No projects found matching "${searchTerm}"</p>
-                            <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Try searching for technologies like "Arduino", "3D Printing", or "Robotics"</p>
-                        `;
-                        projectsGrid.appendChild(noResultsMessage);
-                    }
-                } else if (noResultsMessage) {
-                    noResultsMessage.remove();
+            } catch (error) {
+                console.log('❌ Error loading project data:', error);
+                console.log('Search functionality may be limited. Please check your project pages.');
+            }
+        }
+
+        // Initialize search when page loads
+        document.addEventListener('DOMContentLoaded', initializeSearch);
+
+        let currentMatches = [];
+
+        if (projectSearch) {
+            // Search input handler
+            projectSearch.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                handleSearch(searchTerm);
+            });
+
+            // Enter key handler
+            projectSearch.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleEnterKey();
+                } else if (e.key === 'Escape') {
+                    this.blur();
+                    clearSearch();
                 }
+            });
+
+            // Badge click handler
+            searchResultsBadge.addEventListener('click', function() {
+                if (currentMatches.length === 1) {
+                    // If only one match, navigate to it
+                    window.location.href = currentMatches[0].url;
+                } else if (currentMatches.length > 1) {
+                    // Scroll to projects section to see highlighted results
+                    document.getElementById('projects').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
+
+        function handleSearch(searchTerm) {
+            if (searchTerm.length === 0) {
+                clearSearch();
+                return;
+            }
+
+            // Find matching projects
+            const matches = findMatches(searchTerm);
+            currentMatches = matches;
+            
+            // Update visual highlights
+            updateProjectHighlights(matches);
+            
+            // Update results badge
+            updateResultsBadge(matches.length);
+        }
+
+        function findMatches(searchTerm) {
+            const matches = [];
+            
+            projectData.forEach(project => {
+                const titleMatch = project.title.toLowerCase().includes(searchTerm);
+                const keywordMatch = project.keywords.some(keyword => 
+                    keyword.toLowerCase().includes(searchTerm)
+                );
+                
+                if (titleMatch || keywordMatch) {
+                    matches.push(project);
+                }
+            });
+
+            return matches;
+        }
+
+        function updateProjectHighlights(matchingProjects) {
+            const projectsGrid = document.getElementById('projectsGrid');
+            
+            if (matchingProjects.length === 0) {
+                // No matches - show all projects in original order
+                projectCards.forEach(card => {
+                    card.classList.remove('highlighted', 'dimmed');
+                    card.style.order = '';
+                });
+                return;
+            }
+
+            // Create arrays for matched and non-matched projects
+            const matchedElements = [];
+            const nonMatchedElements = [];
+
+            projectCards.forEach(card => {
+                const isMatch = matchingProjects.some(project => project.element === card);
+                
+                card.classList.remove('highlighted', 'dimmed');
+                
+                if (isMatch) {
+                    card.classList.add('highlighted');
+                    matchedElements.push(card);
+                } else {
+                    card.classList.add('dimmed');
+                    nonMatchedElements.push(card);
+                }
+            });
+
+            // Reorder: matched projects first, then non-matched
+            matchedElements.forEach((card, index) => {
+                card.style.order = index;
+            });
+
+            nonMatchedElements.forEach((card, index) => {
+                card.style.order = matchedElements.length + index;
+            });
+        }
+
+        function updateResultsBadge(count) {
+            if (count === 0) {
+                searchResultsBadge.classList.remove('active');
+                searchResultsBadge.textContent = '';
+            } else {
+                searchResultsBadge.classList.add('active');
+                searchResultsBadge.textContent = count === 1 ? '1 project' : `${count} projects`;
+            }
+        }
+
+        function handleEnterKey() {
+            if (currentMatches.length === 1) {
+                // Navigate to single project
+                window.location.href = currentMatches[0].url;
+            } else if (currentMatches.length > 1) {
+                // Scroll to see all highlighted projects
+                document.getElementById('projects').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        function clearSearch() {
+            currentMatches = [];
+            clearHighlights();
+            updateResultsBadge(0);
+        }
+
+        function clearHighlights() {
+            projectCards.forEach(card => {
+                card.classList.remove('highlighted', 'dimmed');
+                card.style.order = ''; // Reset order to original
             });
         }
 
