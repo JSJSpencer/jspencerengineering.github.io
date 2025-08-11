@@ -431,16 +431,16 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/header-background.jpg') center/cover no-repeat;
         }
 
-        .hero-section::before {
-            content: '';
+        .hero-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 120%;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://lh4.googleusercontent.com/PLlYZNVMaOyWe3eZIge-00Mfv0rIBsXQqTLXobdZcZZi4hmaSmRnLCJfCtKk3Anl0dYE8ApVdlUVlMRA0Vlk6cRUdG2-i87DFreLDmd0Fp5ur3PtH284JyhK50r0GCpmE2thXlM6SUs=w16383') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/header-background.jpg') center/cover no-repeat;
             will-change: transform;
             z-index: 1;
         }
@@ -614,7 +614,13 @@
         }
 
         /* Modern Card Layouts */
-        .education-grid,
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
         .experience-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -652,6 +658,32 @@
             background: transparent;
             padding: 0;
             border: none;
+        }
+
+        /* Advanced SVG logo color switching - handles mixed-color logos intelligently */
+        .card-logo[alt="SharkNinja"],
+        .card-logo[alt="FYELIC"],
+        .card-logo[alt="Brookhaven National Laboratory"] {
+            transition: filter 0.3s ease;
+        }
+
+        /* Dark mode: Smart inversion that preserves colors while making dark elements light */
+        [data-theme="dark"] .card-logo[alt="SharkNinja"],
+        [data-theme="dark"] .card-logo[alt="FYELIC"],
+        [data-theme="dark"] .card-logo[alt="Brookhaven National Laboratory"] {
+            filter: 
+                contrast(120%) 
+                brightness(0.9) 
+                invert(0.85) 
+                hue-rotate(180deg) 
+                saturate(1.1);
+        }
+
+        /* Light mode: Enhance contrast for better visibility */
+        [data-theme="light"] .card-logo[alt="SharkNinja"],
+        [data-theme="light"] .card-logo[alt="FYELIC"],
+        [data-theme="light"] .card-logo[alt="Brookhaven National Laboratory"] {
+            filter: contrast(110%) brightness(0.95);
         }
 
         .card-info h3 {
@@ -1001,6 +1033,7 @@
 
     <!-- Hero Section with Original Background -->
     <section id="home" class="hero-section">
+        <div class="hero-background" id="heroBackground"></div>
         <div class="hero-content">
             <h1 class="hero-title">ENGINEERING PORTFOLIO</h1>
             <p class="hero-subtitle">By: Jordan Spencer</p>
@@ -1032,7 +1065,7 @@
                     <p class="signature">-Jordan Spencer</p>
                 </div>
                 <div class="profile-image-container animate-on-scroll">
-                    <img src="https://lh4.googleusercontent.com/F3DsNXkJR-ygG1eMIUC0GrCK1trcX1lCtLlDzxc-Vjni59lCitryLpGAmYHdK0hMEa-Y8vz-C71zinVktGiR7IvQfKfW2KnIiQBprBxQsOtFhCHnhhUKFEaPaylip6EjUbyrVcnQUz1r6qkK-FpUDEfuLqPT05aIfAeKv7JxY_lpwCxRALHYMg=w1280" alt="Jordan Spencer" class="profile-image">
+                    <img src="images/profile-photo.jpg" alt="Jordan Spencer" class="profile-image">
                 </div>
             </div>
         </div>
@@ -1048,7 +1081,7 @@
             <div class="education-grid">
                 <a href="https://northeastern.edu" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="https://lh5.googleusercontent.com/NL58so95u58qzPrP0MBbXb3thpSzW7tyFMxt1hQpC7zgYx3CKb3YpiIeetV5A_1tRREdXdZ3toY2ASPt57vNa2pltJpgjYnvs9LEes-EMkP0XO4nhq_8jJ7k2L1Qx_jGxOzrl8HBtNc=w1280" alt="Northeastern University" class="card-logo">
+                        <img src="images/northeastern-logo.png" alt="Northeastern University" class="card-logo">
                         <div class="card-info">
                             <h3>Northeastern University</h3>
                             <p>Class of 2026</p>
@@ -1059,7 +1092,7 @@
                 </a>
                 <a href="https://stanthonyshs.org" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="https://lh3.googleusercontent.com/fyMOwMIeNczPRShxyWz1pR0rqw7dS5g9RGj6kbxmLZ_VjesDCPsOEq612xHGFX67N-DyH4bEpIACecUj8aKU0HFpEyELAlVU6GYWF-SgCc8c_Yw6yxnts1LlW72Fv3-CCs2BJdixdhZBVZzl0MEsM8woViivK1uW8JrOU3peJULfVZXdEFKoKQ=w1280" alt="Saint Anthony's High School" class="card-logo">
+                        <img src="images/saint-anthonys-logo.png" alt="Saint Anthony's High School" class="card-logo">
                         <div class="card-info">
                             <h3>Saint Anthony's High School</h3>
                             <p>Class of 2022</p>
@@ -1082,7 +1115,7 @@
             <div class="experience-grid">
                 <a href="https://sharkninja.com" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="https://lh5.googleusercontent.com/zLQm5vSYZs4OVZZRhRK8VetJotmLth47seN4LLlNUsO5pZvNU2mG9Oz5ByB6d_HRg3etI2KkiqCShQrrNhlPmdER15pmLxPJ9WCL570JSZlW0x776nJhfuic8c9Y-BuR75jICSqVJf8cXseGlxJ9erUFVCABCfYxtEo1fTNjW4fCp4vH2Cjm8w=w1280" alt="SharkNinja" class="card-logo">
+                        <img src="images/sharkninja-logo.svg" alt="SharkNinja" class="card-logo">
                         <div class="card-info">
                             <h3>SharkNinja</h3>
                             <p>Mechanical Engineering Co-op (Systems Team)</p>
@@ -1092,11 +1125,21 @@
                 </a>
                 <a href="https://makerspaces.northeastern.edu/makerspace/fyelic/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="https://lh6.googleusercontent.com/OBYDzQGfjZrWN-v6dcN8rjHsJAfX9HJLjY-3S3mU1TJD5HWQi4SGOR3j14c-b8ho52htXFvHv0gCp6UstSGm-XLVF4qQkUaOzPQvJm7HaRm1Q2VWTD7X712RT0FPOlgb1sGzvt8I6QmNKAeZIQM1ZidVBWEt7oK7j2uoRu540OUnUIJd_b6KPA=w1280" alt="FYELIC" class="card-logo">
+                        <img src="images/fyelic-logo.svg" alt="FYELIC" class="card-logo">
                         <div class="card-info">
-                            <h3>FYELIC</h3>
+                            <h3>FYELIC (First Year Engineering Learning & Innovation Center)</h3>
                             <p>Engineering Mentor (Red Vest)</p>
                             <p>Boston, MA</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.bnl.gov/education/programs/hsrp/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
+                    <div class="card-content">
+                        <img src="images/brookhaven-logo.svg" alt="Brookhaven National Laboratory" class="card-logo">
+                        <div class="card-info">
+                            <h3>Brookhaven National Laboratory</h3>
+                            <p>High School Research Program (HSRP) - Quantum Algorithms</p>
+                            <p>Upton, NY</p>
                         </div>
                     </div>
                 </a>
@@ -1145,6 +1188,25 @@
                             <span class="preview-tag">Programming</span>
                         </div>
                         <a href="projects/tabletop-arcade-machine.html" class="preview-link">
+                            View Full Project →
+                        </a>
+                    </div>
+                </a>
+                <a href="projects/mini-robo-arm.html" class="project-card card-animate">
+                    <div class="project-content">
+                        <h3 class="project-title">MINI ROBO ARM</h3>
+                        <p class="project-description">Precision robotic arm with servo motor control, hotswappable end effectors, and automated task execution capabilities.</p>
+                    </div>
+                    <div class="project-preview">
+                        <div class="preview-title">Advanced Features</div>
+                        <p class="preview-text">Features hotswappable end effector design with automatic tool detection through pogo pin connections. Custom PCB design with Arduino Nano control and multiple servo motors for precise manipulation.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag">Arduino</span>
+                            <span class="preview-tag">PCB Design</span>
+                            <span class="preview-tag">Robotics</span>
+                            <span class="preview-tag">3D Printing</span>
+                        </div>
+                        <a href="projects/mini-robo-arm.html" class="preview-link">
                             View Full Project →
                         </a>
                     </div>
@@ -1350,6 +1412,18 @@
             }
         });
 
+        // Parallax effect - background moves slower, text moves normally
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroBackground = document.getElementById('heroBackground');
+            
+            if (heroBackground) {
+                // Apply parallax only to the background element
+                const parallaxSpeed = 0.5;
+                heroBackground.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+            }
+        });
+
         // Enhanced Scroll indicator functionality with smooth animation
         const scrollIndicator = document.getElementById('scrollIndicator');
         if (scrollIndicator) {
@@ -1398,29 +1472,6 @@
                     link.classList.add('active');
                 }
             });
-        });
-
-        // Parallax effect - background moves slower, text moves normally
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const heroSection = document.querySelector('.hero-section');
-            
-            if (heroSection) {
-                // Apply parallax only to the background pseudo-element
-                const parallaxSpeed = 0.5;
-                heroSection.style.setProperty('--parallax-offset', `${scrolled * parallaxSpeed}px`);
-            }
-        });
-
-        // Add CSS custom property for parallax
-        document.addEventListener('DOMContentLoaded', function() {
-            const style = document.createElement('style');
-            style.textContent = `
-                .hero-section::before {
-                    transform: translateY(var(--parallax-offset, 0px));
-                }
-            `;
-            document.head.appendChild(style);
         });
     </script>
 </body>
