@@ -516,14 +516,16 @@
             border: none;
         }
 
-        /* SharkNinja logo color switching */
-        .card-logo[alt="SharkNinja"] {
-            filter: brightness(0) invert(1); /* Makes it white in dark mode */
+        /* SharkNinja and FYELIC logo color switching */
+        .card-logo[alt="SharkNinja"],
+        .card-logo[alt="FYELIC"] {
+            filter: brightness(0) invert(1); /* Makes them white in dark mode */
             transition: filter 0.3s ease;
         }
 
-        [data-theme="light"] .card-logo[alt="SharkNinja"] {
-            filter: brightness(0); /* Makes it black in light mode */
+        [data-theme="light"] .card-logo[alt="SharkNinja"],
+        [data-theme="light"] .card-logo[alt="FYELIC"] {
+            filter: brightness(0); /* Makes them black in light mode */
         }
 
         .card-info h3 {
@@ -899,7 +901,7 @@
                 </a>
                 <a href="https://makerspaces.northeastern.edu/makerspace/fyelic/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/fyelic-logo.png" alt="FYELIC" class="card-logo">
+                        <img src="images/fyelic-logo.svg" alt="FYELIC" class="card-logo">
                         <div class="card-info">
                             <h3>FYELIC</h3>
                             <p>Engineering Mentor (Red Vest)</p>
