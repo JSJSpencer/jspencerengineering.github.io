@@ -8,6 +8,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔨</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
             /* Dark Theme Colors */
@@ -169,10 +170,10 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Enhanced Scrolling Marquee */
+        /* Enhanced Scrolling Marquee - Transparent over hero */
         .scrolling-banner {
-            background: var(--glass-bg);
-            color: var(--text-primary);
+            background: transparent;
+            color: rgba(255, 255, 255, 0.9);
             padding: 0;
             position: fixed;
             top: 0;
@@ -183,14 +184,16 @@
             display: flex;
             align-items: center;
             height: 36px;
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .scrolling-banner.scrolled {
-            background: var(--primary-color);
-            color: white;
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .scrolling-content {
@@ -203,6 +206,11 @@
             font-size: 0.85rem;
             font-weight: 500;
             letter-spacing: 0.3px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .scrolling-banner.scrolled .scroll-text {
+            text-shadow: none;
         }
 
         @keyframes scroll-seamless {
@@ -210,13 +218,13 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* Enhanced Navigation */
+        /* Enhanced Navigation - Transparent over hero */
         .header-nav {
             position: fixed;
             top: 36px;
             left: 2rem;
             right: 2rem;
-            background: var(--glass-bg);
+            background: transparent;
             z-index: 1000;
             height: 64px;
             display: flex;
@@ -224,30 +232,35 @@
             justify-content: space-between;
             padding: 0 2rem;
             border-radius: 0 0 20px 20px;
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
+            backdrop-filter: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-top: none;
-            box-shadow: 0 8px 32px var(--shadow-light);
+            box-shadow: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .header-nav.scrolled {
-            background: var(--primary-color);
-            color: white;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: none;
+            box-shadow: 0 8px 32px var(--shadow-light);
         }
 
         .site-title {
-            color: var(--text-primary);
+            color: rgba(255, 255, 255, 0.95);
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
             font-weight: 600;
             font-size: 1.1rem;
             text-decoration: none;
             letter-spacing: -0.01em;
             transition: color 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .header-nav.scrolled .site-title {
-            color: white;
+            color: var(--text-primary);
+            text-shadow: none;
         }
 
         .nav-menu {
@@ -257,27 +270,29 @@
         }
 
         .nav-menu a {
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
             position: relative;
             transition: color 0.3s ease;
             letter-spacing: -0.01em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .nav-menu a:hover,
         .nav-menu a.active {
-            color: var(--text-primary);
+            color: rgba(255, 255, 255, 1);
         }
 
         .header-nav.scrolled .nav-menu a {
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
+            text-shadow: none;
         }
 
         .header-nav.scrolled .nav-menu a:hover,
         .header-nav.scrolled .nav-menu a.active {
-            color: white;
+            color: var(--text-primary);
         }
 
         .nav-menu a.active::after {
@@ -287,42 +302,135 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: var(--primary-color);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 1px;
         }
 
         .header-nav.scrolled .nav-menu a.active::after {
-            background: white;
+            background: var(--primary-color);
         }
 
         .search-icon {
             width: 20px;
             height: 20px;
-            fill: var(--text-secondary);
+            fill: rgba(255, 255, 255, 0.8);
             cursor: pointer;
             transition: fill 0.3s ease;
+            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
         }
 
         .search-icon:hover {
-            fill: var(--text-primary);
+            fill: rgba(255, 255, 255, 1);
         }
 
         .header-nav.scrolled .search-icon {
-            fill: rgba(255, 255, 255, 0.8);
+            fill: var(--text-secondary);
+            filter: none;
         }
 
         .header-nav.scrolled .search-icon:hover {
-            fill: white;
+            fill: var(--text-primary);
+        }
+
+        /* Mobile Hamburger Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line {
+            width: 24px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 3px 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+        }
+
+        .header-nav.scrolled .hamburger-line {
+            background: var(--text-primary);
+            filter: none;
+        }
+
+        .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .mobile-nav-menu {
+            position: fixed;
+            top: 100px;
+            left: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 16px 64px var(--shadow-medium);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+        }
+
+        .mobile-nav-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .mobile-nav-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid var(--border-primary);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-menu a:last-child {
+            border-bottom: none;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .mobile-nav-menu a:first-child {
+            border-radius: 20px 20px 0 0;
+        }
+
+        .mobile-nav-menu a:hover {
+            background: var(--surface-elevated);
+            color: var(--primary-color);
+        }
+
+        .mobile-theme-toggle {
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid var(--border-primary);
         }
 
         /* Hero Section - Keep Original Background */
         .hero-section {
             min-height: 100vh;
-            background: url('images/header-background.jpg') center/cover no-repeat;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .hero-section::before {
@@ -331,36 +439,47 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            height: 120%;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://lh4.googleusercontent.com/PLlYZNVMaOyWe3eZIge-00Mfv0rIBsXQqTLXobdZcZZi4hmaSmRnLCJfCtKk3Anl0dYE8ApVdlUVlMRA0Vlk6cRUdG2-i87DFreLDmd0Fp5ur3PtH284JyhK50r0GCpmE2thXlM6SUs=w16383') center/cover no-repeat;
+            will-change: transform;
+            z-index: 1;
         }
 
         .hero-content {
-            position: relative;
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 2;
-            text-align: center;
+            text-align: left;
             color: white;
-            padding: 2rem;
+            padding: 0 2rem;
+            width: 100%;
+            max-width: 1200px;
         }
 
         .hero-title {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-family: Impact, Arial, sans-serif;
             font-size: 4rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            letter-spacing: -0.02em;
+            letter-spacing: 0.02em;
+            text-align: left;
+            margin-left: 3rem;
         }
 
         .hero-subtitle {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-family: 'Lobster', cursive, Arial, sans-serif;
             font-size: 2rem;
             margin-bottom: 2rem;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             font-weight: 400;
+            text-align: left;
+            margin-left: 3rem;
         }
 
-        /* Enhanced Scroll Indicator */
+        /* Enhanced Scroll Indicator with Animation */
         .scroll-indicator {
             position: absolute;
             bottom: 2rem;
@@ -368,10 +487,10 @@
             transform: translateX(-50%);
             z-index: 2;
             color: white;
-            animation: bounce 2s infinite;
             cursor: pointer;
             text-align: center;
             transition: opacity 0.3s ease;
+            animation: scroll-bounce 2s infinite;
         }
 
         .scroll-indicator svg {
@@ -379,12 +498,29 @@
             height: 32px;
             fill: currentColor;
             filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+            transition: transform 0.3s ease;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
+        .scroll-indicator:hover svg {
+            transform: scale(1.1);
+        }
+
+        @keyframes scroll-bounce {
+            0%, 20%, 50%, 80%, 100% { 
+                transform: translateX(-50%) translateY(0); 
+            }
+            40% { 
+                transform: translateX(-50%) translateY(-10px); 
+            }
+            60% { 
+                transform: translateX(-50%) translateY(-5px); 
+            }
+        }
+
+        /* Scroll indicator fade out */
+        .scroll-indicator.fade-out {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* Modern Sections */
@@ -479,7 +615,6 @@
 
         /* Modern Card Layouts */
         .education-grid,
-        /* Enhanced Experience Section - 2 column layout */
         .experience-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -517,32 +652,6 @@
             background: transparent;
             padding: 0;
             border: none;
-        }
-
-        /* Advanced SVG logo color switching - handles mixed-color logos intelligently */
-        .card-logo[alt="SharkNinja"],
-        .card-logo[alt="FYELIC"],
-        .card-logo[alt="Brookhaven National Laboratory"] {
-            transition: filter 0.3s ease;
-        }
-
-        /* Dark mode: Smart inversion that preserves colors while making dark elements light */
-        [data-theme="dark"] .card-logo[alt="SharkNinja"],
-        [data-theme="dark"] .card-logo[alt="FYELIC"],
-        [data-theme="dark"] .card-logo[alt="Brookhaven National Laboratory"] {
-            filter: 
-                contrast(120%) 
-                brightness(0.9) 
-                invert(0.85) 
-                hue-rotate(180deg) 
-                saturate(1.1);
-        }
-
-        /* Light mode: Enhance contrast for better visibility */
-        [data-theme="light"] .card-logo[alt="SharkNinja"],
-        [data-theme="light"] .card-logo[alt="FYELIC"],
-        [data-theme="light"] .card-logo[alt="Brookhaven National Laboratory"] {
-            filter: contrast(110%) brightness(0.95);
         }
 
         .card-info h3 {
@@ -759,22 +868,30 @@
                 top: 32px;
                 left: 1rem;
                 right: 1rem;
+                padding: 0 1rem;
             }
 
             .nav-menu {
                 display: none;
             }
 
-            .theme-toggle {
-                order: -1;
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .hero-content {
+                bottom: 20%;
+                padding: 0 1rem;
             }
 
             .hero-title {
                 font-size: 2.5rem;
+                margin-left: 1rem;
             }
 
             .hero-subtitle {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+                margin-left: 1rem;
             }
 
             .about-content {
@@ -800,6 +917,12 @@
                 width: 280px;
                 height: 280px;
             }
+
+            .mobile-nav-menu {
+                top: 96px;
+                left: 1rem;
+                right: 1rem;
+            }
         }
 
         /* Smooth transitions for theme changes */
@@ -824,6 +947,8 @@
     <!-- Enhanced Header Navigation -->
     <div class="header-nav" id="navbar">
         <a href="index.html" class="site-title">Jordan's Engineering Portfolio</a>
+        
+        <!-- Desktop Navigation -->
         <div class="nav-menu">
             <a href="index.html" class="active">Home</a>
             <a href="resume.html">Resume</a>
@@ -843,6 +968,34 @@
             <svg class="search-icon" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
             </svg>
+        </div>
+
+        <!-- Mobile Hamburger Menu -->
+        <div class="mobile-menu-toggle" id="mobileMenuToggle">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+        <a href="index.html">Home</a>
+        <a href="resume.html">Resume</a>
+        <a href="#projects">Projects</a>
+        <div class="mobile-theme-toggle">
+            <div class="theme-toggle">
+                <div class="theme-switch" onclick="toggleTheme()">
+                    <div class="theme-icons">
+                        <svg class="theme-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
+                        </svg>
+                        <svg class="theme-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -879,7 +1032,7 @@
                     <p class="signature">-Jordan Spencer</p>
                 </div>
                 <div class="profile-image-container animate-on-scroll">
-                    <img src="images/profile-photo.jpg" alt="Jordan Spencer" class="profile-image">
+                    <img src="https://lh4.googleusercontent.com/F3DsNXkJR-ygG1eMIUC0GrCK1trcX1lCtLlDzxc-Vjni59lCitryLpGAmYHdK0hMEa-Y8vz-C71zinVktGiR7IvQfKfW2KnIiQBprBxQsOtFhCHnhhUKFEaPaylip6EjUbyrVcnQUz1r6qkK-FpUDEfuLqPT05aIfAeKv7JxY_lpwCxRALHYMg=w1280" alt="Jordan Spencer" class="profile-image">
                 </div>
             </div>
         </div>
@@ -895,7 +1048,7 @@
             <div class="education-grid">
                 <a href="https://northeastern.edu" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/northeastern-logo.png" alt="Northeastern University" class="card-logo">
+                        <img src="https://lh5.googleusercontent.com/NL58so95u58qzPrP0MBbXb3thpSzW7tyFMxt1hQpC7zgYx3CKb3YpiIeetV5A_1tRREdXdZ3toY2ASPt57vNa2pltJpgjYnvs9LEes-EMkP0XO4nhq_8jJ7k2L1Qx_jGxOzrl8HBtNc=w1280" alt="Northeastern University" class="card-logo">
                         <div class="card-info">
                             <h3>Northeastern University</h3>
                             <p>Class of 2026</p>
@@ -906,7 +1059,7 @@
                 </a>
                 <a href="https://stanthonyshs.org" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/saint-anthonys-logo.png" alt="Saint Anthony's High School" class="card-logo">
+                        <img src="https://lh3.googleusercontent.com/fyMOwMIeNczPRShxyWz1pR0rqw7dS5g9RGj6kbxmLZ_VjesDCPsOEq612xHGFX67N-DyH4bEpIACecUj8aKU0HFpEyELAlVU6GYWF-SgCc8c_Yw6yxnts1LlW72Fv3-CCs2BJdixdhZBVZzl0MEsM8woViivK1uW8JrOU3peJULfVZXdEFKoKQ=w1280" alt="Saint Anthony's High School" class="card-logo">
                         <div class="card-info">
                             <h3>Saint Anthony's High School</h3>
                             <p>Class of 2022</p>
@@ -929,7 +1082,7 @@
             <div class="experience-grid">
                 <a href="https://sharkninja.com" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/sharkninja-logo.svg" alt="SharkNinja" class="card-logo">
+                        <img src="https://lh5.googleusercontent.com/zLQm5vSYZs4OVZZRhRK8VetJotmLth47seN4LLlNUsO5pZvNU2mG9Oz5ByB6d_HRg3etI2KkiqCShQrrNhlPmdER15pmLxPJ9WCL570JSZlW0x776nJhfuic8c9Y-BuR75jICSqVJf8cXseGlxJ9erUFVCABCfYxtEo1fTNjW4fCp4vH2Cjm8w=w1280" alt="SharkNinja" class="card-logo">
                         <div class="card-info">
                             <h3>SharkNinja</h3>
                             <p>Mechanical Engineering Co-op (Systems Team)</p>
@@ -939,21 +1092,11 @@
                 </a>
                 <a href="https://makerspaces.northeastern.edu/makerspace/fyelic/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/fyelic-logo.svg" alt="FYELIC" class="card-logo">
+                        <img src="https://lh6.googleusercontent.com/OBYDzQGfjZrWN-v6dcN8rjHsJAfX9HJLjY-3S3mU1TJD5HWQi4SGOR3j14c-b8ho52htXFvHv0gCp6UstSGm-XLVF4qQkUaOzPQvJm7HaRm1Q2VWTD7X712RT0FPOlgb1sGzvt8I6QmNKAeZIQM1ZidVBWEt7oK7j2uoRu540OUnUIJd_b6KPA=w1280" alt="FYELIC" class="card-logo">
                         <div class="card-info">
                             <h3>FYELIC</h3>
                             <p>Engineering Mentor (Red Vest)</p>
                             <p>Boston, MA</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="https://www.bnl.gov/education/programs/hsrp/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
-                    <div class="card-content">
-                        <img src="images/brookhaven-logo.svg" alt="Brookhaven National Laboratory" class="card-logo">
-                        <div class="card-info">
-                            <h3>Brookhaven National Laboratory</h3>
-                            <p>High School Research Program (HSRP) - Quantum Algorithms</p>
-                            <p>Upton, NY</p>
                         </div>
                     </div>
                 </a>
@@ -1002,25 +1145,6 @@
                             <span class="preview-tag">Programming</span>
                         </div>
                         <a href="projects/tabletop-arcade-machine.html" class="preview-link">
-                            View Full Project →
-                        </a>
-                    </div>
-                </a>
-                <a href="projects/mini-robo-arm.html" class="project-card card-animate">
-                    <div class="project-content">
-                        <h3 class="project-title">MINI ROBO ARM</h3>
-                        <p class="project-description">Precision robotic arm with servo motor control, hotswappable end effectors, and automated task execution capabilities.</p>
-                    </div>
-                    <div class="project-preview">
-                        <div class="preview-title">Advanced Features</div>
-                        <p class="preview-text">Features hotswappable end effector design with automatic tool detection through pogo pin connections. Custom PCB design with Arduino Nano control and multiple servo motors for precise manipulation.</p>
-                        <div class="preview-tags">
-                            <span class="preview-tag">Arduino</span>
-                            <span class="preview-tag">PCB Design</span>
-                            <span class="preview-tag">Robotics</span>
-                            <span class="preview-tag">3D Printing</span>
-                        </div>
-                        <a href="projects/mini-robo-arm.html" class="preview-link">
                             View Full Project →
                         </a>
                     </div>
@@ -1146,13 +1270,37 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
         }
 
         // Load saved theme
         document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const savedTheme = 'dark'; // Default to dark theme
             document.body.setAttribute('data-theme', savedTheme);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNavMenu = document.getElementById('mobileNavMenu');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.classList.toggle('active');
+            mobileNavMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuToggle.classList.remove('active');
+                mobileNavMenu.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                mobileNavMenu.classList.remove('active');
+            }
         });
 
         // Enhanced Animation System
@@ -1186,20 +1334,23 @@
         // Enhanced Navigation scroll behavior
         window.addEventListener('scroll', function() {
             const heroHeight = document.querySelector('.hero-section').offsetHeight;
-            const scrolled = window.scrollY > (heroHeight - 50);
+            const scrolled = window.scrollY > (heroHeight - 100);
             const navbar = document.getElementById('navbar');
             const marquee = document.getElementById('marquee');
+            const scrollIndicator = document.getElementById('scrollIndicator');
             
             if (scrolled) {
                 navbar.classList.add('scrolled');
                 marquee.classList.add('scrolled');
+                scrollIndicator.classList.add('fade-out');
             } else {
                 navbar.classList.remove('scrolled');
                 marquee.classList.remove('scrolled');
+                scrollIndicator.classList.remove('fade-out');
             }
         });
 
-        // Enhanced Scroll indicator functionality
+        // Enhanced Scroll indicator functionality with smooth animation
         const scrollIndicator = document.getElementById('scrollIndicator');
         if (scrollIndicator) {
             scrollIndicator.addEventListener('click', function() {
@@ -1209,16 +1360,6 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                }
-            });
-
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
-                    scrollIndicator.style.opacity = '0';
-                    scrollIndicator.style.pointerEvents = 'none';
-                } else {
-                    scrollIndicator.style.opacity = '1';
-                    scrollIndicator.style.pointerEvents = 'auto';
                 }
             });
         }
@@ -1240,7 +1381,7 @@
         // Enhanced Active nav link highlighting
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-menu a');
+            const navLinks = document.querySelectorAll('.nav-menu a, .mobile-nav-menu a');
             
             let current = 'home';
             sections.forEach(section => {
@@ -1257,6 +1398,29 @@
                     link.classList.add('active');
                 }
             });
+        });
+
+        // Parallax effect - background moves slower, text moves normally
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroSection = document.querySelector('.hero-section');
+            
+            if (heroSection) {
+                // Apply parallax only to the background pseudo-element
+                const parallaxSpeed = 0.5;
+                heroSection.style.setProperty('--parallax-offset', `${scrolled * parallaxSpeed}px`);
+            }
+        });
+
+        // Add CSS custom property for parallax
+        document.addEventListener('DOMContentLoaded', function() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .hero-section::before {
+                    transform: translateY(var(--parallax-offset, 0px));
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
 </body>
