@@ -161,42 +161,9 @@
         }
 
         /* Enhanced Navigation */
-        .scrolling-banner {
-            background: var(--glass-bg);
-            color: var(--text-primary);
-            padding: 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1001;
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            height: 36px;
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .scrolling-content {
-            display: inline-block;
-            animation: scroll-seamless 45s linear infinite;
-        }
-
-        .scroll-text {
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        @keyframes scroll-seamless {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
-
         .header-nav {
             position: fixed;
-            top: 36px;
+            top: 0;
             left: 2rem;
             right: 2rem;
             background: var(--glass-bg);
@@ -268,9 +235,9 @@
 
         /* Project Content */
         .project-container {
-            margin-top: 120px;
+            margin-top: 84px;
             padding: 2rem;
-            min-height: calc(100vh - 120px);
+            min-height: calc(100vh - 84px);
         }
 
         .container {
@@ -446,6 +413,21 @@
             margin-bottom: 1.5rem;
         }
 
+        /* CAD Viewer - Enhanced */
+        .cad-viewer {
+            margin: 3rem 0;
+        }
+
+        spline-viewer {
+            width: 100%;
+            height: 500px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: block;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+        }
+
         /* Image Gallery */
         .image-gallery {
             margin: 4rem 0;
@@ -489,21 +471,6 @@
             text-align: center;
             font-style: italic;
             font-weight: 400;
-        }
-
-        /* CAD Viewer - Enhanced */
-        .cad-viewer {
-            margin: 3rem 0;
-        }
-
-        spline-viewer {
-            width: 100%;
-            height: 500px;
-            border-radius: 16px;
-            overflow: hidden;
-            display: block;
-            box-shadow: 0 8px 32px var(--shadow-light);
-            border: 1px solid var(--border-primary);
         }
 
         /* Footer */
@@ -573,13 +540,13 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .header-nav {
-                top: 32px;
+                top: 0;
                 left: 1rem;
                 right: 1rem;
             }
 
             .project-container {
-                margin-top: 100px;
+                margin-top: 74px;
                 padding: 1rem;
             }
 
@@ -606,12 +573,6 @@
             spline-viewer {
                 height: 400px;
             }
-
-            .theme-toggle {
-                right: 1rem;
-                top: 120px;
-                transform: none;
-            }
         }
 
         /* Smooth transitions for theme changes */
@@ -624,29 +585,6 @@
 </head>
 
 <body data-theme="dark">
-    <!-- Apple-style Theme Toggle -->
-    <div class="theme-toggle">
-        <div class="theme-switch" onclick="toggleTheme()">
-            <div class="theme-icons">
-                <svg class="theme-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
-                </svg>
-                <svg class="theme-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
-                </svg>
-            </div>
-        </div>
-    </div>
-
-    <!-- Enhanced Marquee -->
-    <div class="scrolling-banner">
-        <div class="scrolling-content">
-            <span class="scroll-text">
-                🚀 NEW: Advanced Motor Control System   •   ⭐ FEATURED: Eagle Scout Leadership Project   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   
-            </span>
-        </div>
-    </div>
-
     <!-- Enhanced Navigation -->
     <div class="header-nav">
         <a href="../index.html" class="site-title">Jordan's Engineering Portfolio</a>
@@ -888,17 +826,6 @@
                         block: 'start'
                     });
                 }
-            });
-        });
-
-        // Enhanced hover effects
-        document.querySelectorAll('.gallery-item, .components-card, .skills-card').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px)';
-            });
-            
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
             });
         });
     </script>
