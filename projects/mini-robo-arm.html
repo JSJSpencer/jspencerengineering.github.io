@@ -160,44 +160,10 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Enhanced Scrolling Marquee */
-        .scrolling-banner {
-            background: var(--glass-bg);
-            color: var(--text-primary);
-            padding: 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1001;
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            height: 36px;
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .scrolling-content {
-            display: inline-block;
-            animation: scroll-seamless 45s linear infinite;
-        }
-
-        .scroll-text {
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        @keyframes scroll-seamless {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
-
         /* Enhanced Navigation */
         .header-nav {
             position: fixed;
-            top: 36px;
+            top: 0;
             left: 2rem;
             right: 2rem;
             background: var(--glass-bg);
@@ -269,9 +235,9 @@
 
         /* Project Content */
         .project-container {
-            margin-top: 120px;
+            margin-top: 84px;
             padding: 2rem;
-            min-height: calc(100vh - 120px);
+            min-height: calc(100vh - 84px);
         }
 
         .container {
@@ -447,63 +413,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Image Gallery */
-        .image-gallery {
-            margin: 4rem 0;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-        }
-
-        .gallery-item {
-            background: var(--surface-primary);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px var(--shadow-light);
-            border: 1px solid var(--border-primary);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 80px var(--shadow-medium);
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            cursor: pointer;
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-video {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 0;
-        }
-
-        .video-item .gallery-caption {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        .gallery-item:hover .gallery-image {
-            transform: scale(1.05);
-        }
-
-        .gallery-caption {
-            padding: 1.5rem;
-            color: var(--text-secondary);
-            text-align: center;
-            font-style: italic;
-            font-weight: 400;
-        }
-
         /* CAD Viewer - Enhanced */
         .cad-viewer {
             margin: 3rem 0;
@@ -596,6 +505,63 @@
             fill: currentColor;
         }
 
+        /* Image Gallery */
+        .image-gallery {
+            margin: 4rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            background: var(--surface-primary);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 80px var(--shadow-medium);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 0;
+        }
+
+        .video-item .gallery-caption {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            text-align: center;
+            font-style: italic;
+            font-weight: 400;
+        }
+
         /* Footer */
         .footer {
             background: var(--surface-primary);
@@ -662,18 +628,14 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .scrolling-banner {
-                height: 32px;
-            }
-
             .header-nav {
-                top: 32px;
+                top: 0;
                 left: 1rem;
                 right: 1rem;
             }
 
             .project-container {
-                margin-top: 100px;
+                margin-top: 74px;
                 padding: 1rem;
             }
 
@@ -712,15 +674,6 @@
 </head>
 
 <body data-theme="dark">
-    <!-- Enhanced Marquee -->
-    <div class="scrolling-banner">
-        <div class="scrolling-content">
-            <span class="scroll-text">
-                🚀 NEW: Advanced Motor Control System   •   ⭐ FEATURED: Eagle Scout Leadership Project   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   
-            </span>
-        </div>
-    </div>
-
     <!-- Enhanced Navigation -->
     <div class="header-nav">
         <a href="../index.html" class="site-title">Jordan's Engineering Portfolio</a>
