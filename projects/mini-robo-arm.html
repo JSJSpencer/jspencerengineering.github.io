@@ -770,6 +770,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Debug button -->
+                            <button onclick="debugSpline()" style="margin-left: 1rem; padding: 0.5rem 1rem; background: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer;">Debug</button>
                         </div>
                         
                         <p style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.9rem; text-align: center;">
@@ -821,8 +823,13 @@
                         <div class="gallery-caption">Arduino control system and motor drivers</div>
                     </div>
                     <div class="gallery-item animate-on-scroll video-item">
-                        <video class="gallery-video" controls poster="../images/project-images/mini-robo-arm-video-thumbnail.jpg">
-                            <source src="https://github.com/JSJSpencer/jspencerengineering.github.io/raw/main/images/project-images/mini-robo-arm-video.mp4" type="video/mp4">
+                        <video class="gallery-video" controls poster="../images/project-images/mini-robo-arm-video-thumbnail.jpg" 
+                               onerror="console.log('Video failed to load')"
+                               onloadstart="console.log('Video loading started')"
+                               oncanplay="console.log('Video can play')">
+                            <source src="https://github.com/JSJSpencer/jspencerengineering.github.io/raw/main/images/project-images/mini-robo-arm-video.mp4" 
+                                    type="video/mp4"
+                                    onerror="console.log('Video source error')">
                             Your browser does not support the video tag.
                         </video>
                         <div class="gallery-caption">Mini Robo Arm in action - hotswappable end effector demo</div>
@@ -882,17 +889,38 @@
             // Control Spline shell visibility
             if (splineApp) {
                 try {
-                    const shell = splineApp.findObjectByName('MiniRoboArm-1');
+                    // Try to find the component first
+                    let component = splineApp.findObjectByName('MiniRoboArm-1');
                     
-                    if (shell) {
-                        shell.visible = shellVisible;
-                        console.log(`MiniRoboArm-1 visibility: ${shellVisible ? 'visible' : 'hidden'}`);
+                    if (component) {
+                        component.visible = shellVisible;
+                        console.log(`MiniRoboArm-1 component visibility: ${shellVisible ? 'visible' : 'hidden'}`);
                     } else {
-                        console.log('MiniRoboArm-1 component not found. Available objects:', splineApp.scene.children.map(child => child.name));
+                        // If component not found, try to find it in the scene hierarchy
+                        function findObjectInScene(scene, name) {
+                            for (let child of scene.children) {
+                                if (child.name === name) return child;
+                                if (child.children && child.children.length > 0) {
+                                    let found = findObjectInScene(child, name);
+                                    if (found) return found;
+                                }
+                            }
+                            return null;
+                        }
+                        
+                        component = findObjectInScene(splineApp.scene, 'MiniRoboArm-1');
+                        if (component) {
+                            component.visible = shellVisible;
+                            console.log(`Found MiniRoboArm-1 in scene hierarchy, visibility: ${shellVisible ? 'visible' : 'hidden'}`);
+                        } else {
+                            console.log('MiniRoboArm-1 component not found anywhere in scene');
+                        }
                     }
                 } catch (error) {
                     console.log('Spline interaction error:', error);
                 }
+            } else {
+                console.log('Spline app not loaded yet');
             }
         }
 
@@ -900,15 +928,85 @@
         function initSplineViewer() {
             const viewer = document.getElementById('spline-viewer');
             if (viewer) {
-                viewer.addEventListener('load', () => {
-                    splineApp = viewer.splineApp;
-                    console.log('Spline viewer loaded successfully');
+                // Try multiple approaches to detect when Spline is ready
+                let checkCount = 0;
+                const maxChecks = 20; // Check for 10 seconds total
+                
+                const checkSplineReady = () => {
+                    checkCount++;
+                    console.log(`Checking Spline readiness (attempt ${checkCount})`);
                     
-                    // List all objects in the scene for debugging
-                    if (splineApp && splineApp.scene) {
-                        console.log('Available objects:', splineApp.scene.children.map(child => child.name));
+                    // Try different properties
+                    const app = viewer.splineApp || viewer.spline || viewer.app;
+                    
+                    if (app) {
+                        console.log('✅ Spline app found!', app);
+                        splineApp = app;
+                        return true;
                     }
+                    
+                    if (checkCount >= maxChecks) {
+                        console.log('❌ Spline app not found after maximum attempts');
+                        console.log('Viewer properties:', Object.getOwnPropertyNames(viewer));
+                        return false;
+                    }
+                    
+                    // Continue checking
+                    setTimeout(checkSplineReady, 500);
+                };
+                
+                // Start checking after a short delay
+                setTimeout(checkSplineReady, 1000);
+                
+                // Also try event-based approaches
+                viewer.addEventListener('load', () => {
+                    console.log('📡 Spline load event fired');
+                    setTimeout(() => {
+                        splineApp = viewer.splineApp || viewer.spline || viewer.app;
+                        if (splineApp) console.log('✅ Got Spline app from load event');
+                    }, 500);
                 });
+                
+                // Try a ready event
+                viewer.addEventListener('ready', () => {
+                    console.log('📡 Spline ready event fired');
+                    splineApp = viewer.splineApp || viewer.spline || viewer.app;
+                    if (splineApp) console.log('✅ Got Spline app from ready event');
+                });
+            }
+        }
+
+        // Debug function to manually check Spline state
+        function debugSpline() {
+            console.log('=== SPLINE DEBUG ===');
+            
+            const viewer = document.getElementById('spline-viewer');
+            console.log('Viewer element:', viewer);
+            
+            // Try different ways to access the Spline app
+            console.log('Viewer properties:', Object.getOwnPropertyNames(viewer));
+            console.log('Viewer.splineApp:', viewer.splineApp);
+            console.log('Viewer.spline:', viewer.spline);
+            console.log('Viewer.app:', viewer.app);
+            
+            // Try to access through different properties
+            splineApp = viewer.splineApp || viewer.spline || viewer.app;
+            
+            if (splineApp) {
+                console.log('Spline app found!');
+                console.log('App object:', splineApp);
+                console.log('App properties:', Object.getOwnPropertyNames(splineApp));
+                
+                if (splineApp.scene) {
+                    console.log('Scene found:', splineApp.scene);
+                    console.log('Scene children:', splineApp.scene.children);
+                } else {
+                    console.log('No scene property found');
+                }
+            } else {
+                console.log('No Spline app found through any property');
+                console.log('Viewer loaded?', viewer.loaded);
+                console.log('Viewer ready?', viewer.ready);
             }
         }
 
