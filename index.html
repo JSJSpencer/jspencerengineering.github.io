@@ -426,38 +426,61 @@
         /* Hero Section - Keep Original Background */
         .hero-section {
             min-height: 100vh;
-            background: url('images/header-background.png') center/cover no-repeat;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            background: url('images/header-background.png') center/cover no-repeat;
+            background-size: 100% auto;
+            background-position: center center;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/header-background.png') center/cover no-repeat;
+            background-size: 100% auto;
+            background-position: center center;
+            will-change: transform;
+            z-index: 1;
         }
 
         .hero-content {
             position: absolute;
-            bottom: 20%;
-            left: 6%;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 2;
             text-align: left;
             color: white;
+            padding: 0 2rem;
+            width: 100%;
+            max-width: 1200px;
         }
 
         .hero-title {
             font-family: Impact, Arial, sans-serif;
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             letter-spacing: 0.02em;
-            line-height: 0.9;
+            text-align: left;
+            margin-left: 3rem;
         }
 
         .hero-subtitle {
             font-family: 'Lobster', cursive, Arial, sans-serif;
-            font-size: 1.5rem;
+            font-size: 2rem;
             margin-bottom: 2rem;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             font-weight: 400;
+            text-align: left;
+            margin-left: 3rem;
         }
 
         /* Enhanced Scroll Indicator with Animation */
@@ -471,7 +494,7 @@
             cursor: pointer;
             text-align: center;
             transition: opacity 0.3s ease;
-            animation: bounce 2s infinite;
+            animation: scroll-bounce 2s infinite;
         }
 
         .scroll-indicator svg {
@@ -486,7 +509,7 @@
             transform: scale(1.1);
         }
 
-        @keyframes bounce {
+        @keyframes scroll-bounce {
             0%, 20%, 50%, 80%, 100% { 
                 transform: translateX(-50%) translateY(0); 
             }
@@ -496,6 +519,12 @@
             60% { 
                 transform: translateX(-50%) translateY(-5px); 
             }
+        }
+
+        /* Scroll indicator fade out */
+        .scroll-indicator.fade-out {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* Modern Sections */
@@ -589,8 +618,13 @@
         }
 
         /* Modern Card Layouts */
-        .education-grid,
-        /* Enhanced Experience Section - 2 column layout */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
         .experience-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -882,16 +916,18 @@
             }
 
             .hero-content {
-                bottom: 15%;
-                left: 4%;
+                bottom: 20%;
+                padding: 0 1rem;
             }
 
             .hero-title {
-                font-size: 2rem;
+                font-size: 2.5rem;
+                margin-left: 1rem;
             }
 
             .hero-subtitle {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
+                margin-left: 1rem;
             }
 
             .about-content {
@@ -1001,6 +1037,7 @@
 
     <!-- Hero Section with Original Background -->
     <section id="home" class="hero-section">
+        <div class="hero-background" id="heroBackground"></div>
         <div class="hero-content">
             <h1 class="hero-title">ENGINEERING PORTFOLIO</h1>
             <p class="hero-subtitle">By: Jordan Spencer</p>
@@ -1299,13 +1336,37 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
         }
 
         // Load saved theme
         document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const savedTheme = 'dark'; // Default to dark theme
             document.body.setAttribute('data-theme', savedTheme);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNavMenu = document.getElementById('mobileNavMenu');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.classList.toggle('active');
+            mobileNavMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuToggle.classList.remove('active');
+                mobileNavMenu.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                mobileNavMenu.classList.remove('active');
+            }
         });
 
         // Enhanced Animation System
@@ -1336,7 +1397,38 @@
         document.addEventListener('DOMContentLoaded', initScrollAnimations);
         window.addEventListener('load', initScrollAnimations);
 
-        // Enhanced Scroll indicator functionality
+        // Enhanced Navigation scroll behavior
+        window.addEventListener('scroll', function() {
+            const heroHeight = document.querySelector('.hero-section').offsetHeight;
+            const scrolled = window.scrollY > (heroHeight - 100);
+            const navbar = document.getElementById('navbar');
+            const marquee = document.getElementById('marquee');
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            
+            if (scrolled) {
+                navbar.classList.add('scrolled');
+                marquee.classList.add('scrolled');
+                scrollIndicator.classList.add('fade-out');
+            } else {
+                navbar.classList.remove('scrolled');
+                marquee.classList.remove('scrolled');
+                scrollIndicator.classList.remove('fade-out');
+            }
+        });
+
+        // Parallax effect - background moves slower, text moves normally
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroBackground = document.getElementById('heroBackground');
+            
+            if (heroBackground) {
+                // Apply parallax only to the background element
+                const parallaxSpeed = 0.5;
+                heroBackground.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+            }
+        });
+
+        // Enhanced Scroll indicator functionality with smooth animation
         const scrollIndicator = document.getElementById('scrollIndicator');
         if (scrollIndicator) {
             scrollIndicator.addEventListener('click', function() {
@@ -1346,16 +1438,6 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                }
-            });
-
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
-                    scrollIndicator.style.opacity = '0';
-                    scrollIndicator.style.pointerEvents = 'none';
-                } else {
-                    scrollIndicator.style.opacity = '1';
-                    scrollIndicator.style.pointerEvents = 'auto';
                 }
             });
         }
@@ -1377,7 +1459,7 @@
         // Enhanced Active nav link highlighting
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-menu a');
+            const navLinks = document.querySelectorAll('.nav-menu a, .mobile-nav-menu a');
             
             let current = 'home';
             sections.forEach(section => {
