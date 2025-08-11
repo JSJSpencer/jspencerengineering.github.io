@@ -310,28 +310,6 @@
             background: var(--primary-color);
         }
 
-        .search-icon {
-            width: 20px;
-            height: 20px;
-            fill: rgba(255, 255, 255, 0.8);
-            cursor: pointer;
-            transition: fill 0.3s ease;
-            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
-        }
-
-        .search-icon:hover {
-            fill: rgba(255, 255, 255, 1);
-        }
-
-        .header-nav.scrolled .search-icon {
-            fill: var(--text-secondary);
-            filter: none;
-        }
-
-        .header-nav.scrolled .search-icon:hover {
-            fill: var(--text-primary);
-        }
-
         /* Mobile Hamburger Menu */
         .mobile-menu-toggle {
             display: none;
@@ -532,6 +510,58 @@
             color: var(--text-secondary);
             font-size: 1.1rem;
             font-weight: 400;
+        }
+
+        /* Projects Search Bar */
+        .projects-search-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0 3rem 0;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            background: var(--surface-primary);
+            border: 2px solid var(--border-primary);
+            border-radius: 24px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px var(--shadow-light);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 32px var(--shadow-medium);
+            transform: translateY(-2px);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            pointer-events: none;
+            transition: fill 0.3s ease;
+        }
+
+        .search-input:focus + .search-icon {
+            fill: var(--primary-color);
         }
 
         /* Enhanced About Section */
@@ -923,6 +953,15 @@
                 left: 1rem;
                 right: 1rem;
             }
+
+            .search-bar {
+                max-width: 100%;
+            }
+
+            .search-input {
+                padding: 0.875rem 3rem 0.875rem 1.25rem;
+                font-size: 0.95rem;
+            }
         }
 
         /* Smooth transitions for theme changes */
@@ -965,9 +1004,6 @@
                     </div>
                 </div>
             </div>
-            <svg class="search-icon" viewBox="0 0 24 24">
-                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
         </div>
 
         <!-- Mobile Hamburger Menu -->
@@ -1114,15 +1150,32 @@
         </div>
     </section>
 
-    <!-- Enhanced Projects Section -->
+    <!-- Enhanced Projects Section with Search -->
     <section id="projects" class="modern-section alternate">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title section-title-animate">PROJECTS</h2>
                 <p class="section-subtitle animate-on-scroll">Engineering solutions and creative builds</p>
             </div>
-            <div class="projects-grid">
-                <a href="projects/eagle-scout-project.html" class="project-card card-animate">
+            
+            <!-- Projects Search Bar -->
+            <div class="projects-search-container animate-on-scroll">
+                <div class="search-bar">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Search projects by name, technology, or keyword..."
+                        id="projectSearch"
+                        autocomplete="off"
+                    >
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <a href="projects/eagle-scout-project.html" class="project-card card-animate" data-keywords="leadership project management community service eagle scout">
                     <div class="project-content">
                         <h3 class="project-title">EAGLE SCOUT PROJECT</h3>
                         <p class="project-description">Community service project demonstrating leadership and project management skills through planning and executing a beneficial initiative.</p>
@@ -1140,7 +1193,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/tabletop-arcade-machine.html" class="project-card card-animate">
+                <a href="projects/tabletop-arcade-machine.html" class="project-card card-animate" data-keywords="raspberry pi woodworking electronics programming gaming arcade">
                     <div class="project-content">
                         <h3 class="project-title">TABLETOP ARCADE MACHINE</h3>
                         <p class="project-description">Custom-built retro gaming system combining woodworking craftsmanship with electronics integration and programming.</p>
@@ -1159,7 +1212,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/mini-robo-arm.html" class="project-card card-animate">
+                <a href="projects/mini-robo-arm.html" class="project-card card-animate" data-keywords="arduino pcb design robotics 3d printing servo motors automation">
                     <div class="project-content">
                         <h3 class="project-title">MINI ROBO ARM</h3>
                         <p class="project-description">Precision robotic arm with servo motor control, hotswappable end effectors, and automated task execution capabilities.</p>
@@ -1178,7 +1231,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/ir-transmitter-and-receiver.html" class="project-card card-animate">
+                <a href="projects/ir-transmitter-and-receiver.html" class="project-card card-animate" data-keywords="arduino pcb design signal processing electronics infrared communication">
                     <div class="project-content">
                         <h3 class="project-title">IR TRANSMITTER AND RECEIVER</h3>
                         <p class="project-description">Electronic communication system utilizing infrared technology for wireless data transmission and signal processing.</p>
@@ -1197,7 +1250,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/stealth-planes-museum-exhibit.html" class="project-card card-animate">
+                <a href="projects/stealth-planes-museum-exhibit.html" class="project-card card-animate" data-keywords="aerospace 3d modeling education museum design radar stealth">
                     <div class="project-content">
                         <h3 class="project-title">STEALTH PLANES EXHIBIT</h3>
                         <p class="project-description">Interactive museum display showcasing aerospace engineering principles and stealth technology innovations.</p>
@@ -1216,7 +1269,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/portable-charging-3ds-dock.html" class="project-card card-animate">
+                <a href="projects/portable-charging-3ds-dock.html" class="project-card card-animate" data-keywords="3d printing circuit design cad product design usb charging">
                     <div class="project-content">
                         <h3 class="project-title">PORTABLE CHARGING 3DS DOCK</h3>
                         <p class="project-description">Compact charging solution with custom circuitry and 3D printed housing for mobile gaming convenience.</p>
@@ -1235,7 +1288,7 @@
                         </a>
                     </div>
                 </a>
-                <a href="projects/motor-control-assistive-device.html" class="project-card card-animate">
+                <a href="projects/motor-control-assistive-device.html" class="project-card card-animate" data-keywords="assistive technology motor control arduino accessibility assistive device mobility">
                     <div class="project-content">
                         <h3 class="project-title">MOTOR CONTROL ASSISTIVE DEVICE</h3>
                         <p class="project-description">Accessibility-focused engineering solution utilizing motor control systems to assist individuals with mobility challenges.</p>
@@ -1308,6 +1361,59 @@
             document.body.setAttribute('data-theme', savedTheme);
         });
 
+        // Project Search Functionality
+        const projectSearch = document.getElementById('projectSearch');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        if (projectSearch) {
+            projectSearch.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                projectCards.forEach(card => {
+                    const title = card.querySelector('.project-title').textContent.toLowerCase();
+                    const description = card.querySelector('.project-description').textContent.toLowerCase();
+                    const keywords = card.getAttribute('data-keywords').toLowerCase();
+                    const tags = Array.from(card.querySelectorAll('.preview-tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
+                    
+                    const searchableContent = `${title} ${description} ${keywords} ${tags}`;
+                    
+                    if (searchTerm === '' || searchableContent.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0) scale(1)';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Show "No results" message if no projects are visible
+                const visibleCards = Array.from(projectCards).filter(card => card.style.display !== 'none');
+                const projectsGrid = document.getElementById('projectsGrid');
+                
+                let noResultsMessage = document.getElementById('no-results-message');
+                if (visibleCards.length === 0 && searchTerm !== '') {
+                    if (!noResultsMessage) {
+                        noResultsMessage = document.createElement('div');
+                        noResultsMessage.id = 'no-results-message';
+                        noResultsMessage.style.cssText = `
+                            grid-column: 1 / -1;
+                            text-align: center;
+                            padding: 3rem;
+                            color: var(--text-secondary);
+                            font-size: 1.1rem;
+                        `;
+                        noResultsMessage.innerHTML = `
+                            <p>No projects found matching "${searchTerm}"</p>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Try searching for technologies like "Arduino", "3D Printing", or "Robotics"</p>
+                        `;
+                        projectsGrid.appendChild(noResultsMessage);
+                    }
+                } else if (noResultsMessage) {
+                    noResultsMessage.remove();
+                }
+            });
+        }
+
         // Enhanced Animation System
         const observerOptions = {
             threshold: 0.1,
@@ -1372,6 +1478,49 @@
                     });
                 }
             });
+        });
+
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNavMenu = document.getElementById('mobileNavMenu');
+
+        if (mobileMenuToggle && mobileNavMenu) {
+            mobileMenuToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                mobileNavMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mobileMenuToggle.contains(event.target) && !mobileNavMenu.contains(event.target)) {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileNavMenu.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            mobileNavMenu.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileNavMenu.classList.remove('active');
+                }
+            });
+        }
+
+        // Enhanced scroll effects for navigation
+        const navbar = document.getElementById('navbar');
+        const marquee = document.getElementById('marquee');
+
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY > 100;
+            
+            if (navbar) {
+                navbar.classList.toggle('scrolled', scrolled);
+            }
+            
+            if (marquee) {
+                marquee.classList.toggle('scrolled', scrolled);
+            }
         });
 
         // Enhanced Active nav link highlighting
