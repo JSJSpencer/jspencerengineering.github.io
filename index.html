@@ -479,10 +479,10 @@
 
         /* Modern Card Layouts */
         .education-grid,
-        /* Enhanced Experience Section */
+        /* Enhanced Experience Section - 2 column layout */
         .experience-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -517,16 +517,30 @@
             border: none;
         }
 
-        /* SharkNinja and FYELIC logo color switching */
+        /* Advanced SVG logo color switching - handles mixed-color logos intelligently */
         .card-logo[alt="SharkNinja"],
-        .card-logo[alt="FYELIC"] {
-            filter: brightness(0) invert(1); /* Makes them white in dark mode */
+        .card-logo[alt="FYELIC"],
+        .card-logo[alt="Brookhaven National Laboratory"] {
             transition: filter 0.3s ease;
         }
 
+        /* Dark mode: Smart inversion that preserves colors while making dark elements light */
+        [data-theme="dark"] .card-logo[alt="SharkNinja"],
+        [data-theme="dark"] .card-logo[alt="FYELIC"],
+        [data-theme="dark"] .card-logo[alt="Brookhaven National Laboratory"] {
+            filter: 
+                contrast(120%) 
+                brightness(0.9) 
+                invert(0.85) 
+                hue-rotate(180deg) 
+                saturate(1.1);
+        }
+
+        /* Light mode: Enhance contrast for better visibility */
         [data-theme="light"] .card-logo[alt="SharkNinja"],
-        [data-theme="light"] .card-logo[alt="FYELIC"] {
-            filter: brightness(0); /* Makes them black in light mode */
+        [data-theme="light"] .card-logo[alt="FYELIC"],
+        [data-theme="light"] .card-logo[alt="Brookhaven National Laboratory"] {
+            filter: contrast(110%) brightness(0.95);
         }
 
         .card-info h3 {
@@ -900,17 +914,6 @@
                         </div>
                     </div>
                 </a>
-                <a href="https://www.bnl.gov/education/programs/hsrp/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
-                    <div class="card-content">
-                        <img src="images/brookhaven-logo.svg" alt="Brookhaven National Laboratory" class="card-logo">
-                        <div class="card-info">
-                            <h3>Brookhaven National Laboratory</h3>
-                            <p>High School Research Program (HSRP)</p>
-                            <p>Quantum Algorithms Research</p>
-                            <p>Upton, NY</p>
-                        </div>
-                    </div>
-                </a>
                 <a href="https://makerspaces.northeastern.edu/makerspace/fyelic/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
                         <img src="images/fyelic-logo.svg" alt="FYELIC" class="card-logo">
@@ -918,6 +921,16 @@
                             <h3>FYELIC</h3>
                             <p>Engineering Mentor (Red Vest)</p>
                             <p>Boston, MA</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.bnl.gov/education/programs/hsrp/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
+                    <div class="card-content">
+                        <img src="images/brookhaven-logo.svg" alt="Brookhaven National Laboratory" class="card-logo">
+                        <div class="card-info">
+                            <h3>Brookhaven National Laboratory</h3>
+                            <p>High School Research Program (HSRP) - Quantum Algorithms</p>
+                            <p>Upton, NY</p>
                         </div>
                     </div>
                 </a>
