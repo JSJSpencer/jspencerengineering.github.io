@@ -770,6 +770,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Debug button -->
+                            <button onclick="debugSpline()" style="margin-left: 1rem; padding: 0.5rem 1rem; background: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer;">Debug</button>
                         </div>
                         
                         <p style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.9rem; text-align: center;">
@@ -887,17 +889,38 @@
             // Control Spline shell visibility
             if (splineApp) {
                 try {
-                    const shell = splineApp.findObjectByName('MiniRoboArm-1');
+                    // Try to find the component first
+                    let component = splineApp.findObjectByName('MiniRoboArm-1');
                     
-                    if (shell) {
-                        shell.visible = shellVisible;
-                        console.log(`MiniRoboArm-1 visibility: ${shellVisible ? 'visible' : 'hidden'}`);
+                    if (component) {
+                        component.visible = shellVisible;
+                        console.log(`MiniRoboArm-1 component visibility: ${shellVisible ? 'visible' : 'hidden'}`);
                     } else {
-                        console.log('MiniRoboArm-1 component not found. Available objects:', splineApp.scene.children.map(child => child.name));
+                        // If component not found, try to find it in the scene hierarchy
+                        function findObjectInScene(scene, name) {
+                            for (let child of scene.children) {
+                                if (child.name === name) return child;
+                                if (child.children && child.children.length > 0) {
+                                    let found = findObjectInScene(child, name);
+                                    if (found) return found;
+                                }
+                            }
+                            return null;
+                        }
+                        
+                        component = findObjectInScene(splineApp.scene, 'MiniRoboArm-1');
+                        if (component) {
+                            component.visible = shellVisible;
+                            console.log(`Found MiniRoboArm-1 in scene hierarchy, visibility: ${shellVisible ? 'visible' : 'hidden'}`);
+                        } else {
+                            console.log('MiniRoboArm-1 component not found anywhere in scene');
+                        }
                     }
                 } catch (error) {
                     console.log('Spline interaction error:', error);
                 }
+            } else {
+                console.log('Spline app not loaded yet');
             }
         }
 
@@ -905,30 +928,71 @@
         function initSplineViewer() {
             const viewer = document.getElementById('spline-viewer');
             if (viewer) {
+                // Try multiple event approaches
                 viewer.addEventListener('load', () => {
+                    console.log('Spline load event fired');
                     splineApp = viewer.splineApp;
-                    console.log('Spline viewer loaded successfully');
-                    
-                    // List all objects in the scene for debugging
-                    if (splineApp && splineApp.scene) {
-                        console.log('Available objects:', splineApp.scene.children.map(child => child.name));
-                        // Also try to list all objects recursively
-                        function listAllObjects(obj, depth = 0) {
-                            const indent = '  '.repeat(depth);
-                            console.log(`${indent}- ${obj.name || 'unnamed'} (${obj.type})`);
-                            if (obj.children) {
-                                obj.children.forEach(child => listAllObjects(child, depth + 1));
-                            }
-                        }
-                        console.log('All scene objects:');
-                        splineApp.scene.children.forEach(child => listAllObjects(child));
-                    }
+                    logSplineObjects();
                 });
                 
-                // Also try the 'ready' event
                 viewer.addEventListener('ready', () => {
-                    console.log('Spline viewer ready event fired');
+                    console.log('Spline ready event fired');
+                    if (!splineApp) splineApp = viewer.splineApp;
+                    logSplineObjects();
                 });
+
+                // Also try a delayed approach
+                setTimeout(() => {
+                    if (viewer.splineApp && !splineApp) {
+                        console.log('Spline app found via setTimeout');
+                        splineApp = viewer.splineApp;
+                        logSplineObjects();
+                    }
+                }, 2000);
+            }
+        }
+
+        // Debug function to manually check Spline state
+        function debugSpline() {
+            console.log('=== SPLINE DEBUG ===');
+            
+            const viewer = document.getElementById('spline-viewer');
+            console.log('Viewer element:', viewer);
+            
+            if (viewer) {
+                console.log('Viewer.splineApp:', viewer.splineApp);
+                splineApp = viewer.splineApp; // Try to get it manually
+            }
+            
+            if (splineApp) {
+                console.log('Spline app found!');
+                console.log('Scene:', splineApp.scene);
+                
+                if (splineApp.scene && splineApp.scene.children) {
+                    console.log('Scene children:', splineApp.scene.children.map(child => ({
+                        name: child.name,
+                        type: child.type,
+                        visible: child.visible
+                    })));
+                    
+                    // Look for MiniRoboArm-1 specifically
+                    const target = splineApp.scene.children.find(child => child.name === 'MiniRoboArm-1');
+                    if (target) {
+                        console.log('Found MiniRoboArm-1:', target);
+                        console.log('Current visibility:', target.visible);
+                        
+                        // Try toggling it manually
+                        target.visible = !target.visible;
+                        console.log('Toggled visibility to:', target.visible);
+                    } else {
+                        console.log('MiniRoboArm-1 not found in direct children');
+                    }
+                } else {
+                    console.log('No scene or scene children found');
+                }
+            } else {
+                console.log('No Spline app found');
+                console.log('Try waiting a few seconds and clicking Debug again');
             }
         }
 
