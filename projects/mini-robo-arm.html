@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mini Robo Arm - Jordan Spencer</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔨</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Spline Viewer Script -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.44/build/spline-viewer.js"></script>
+    <style>
+        :root {
+            /* Dark Theme Colors */
+            --primary-color: #FF3B30;
+            --primary-hover: #D70015;
+            --secondary-color: #FF6B35;
+            --accent-color: #FF9F0A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A1A1A6;
+            --text-tertiary: #636366;
+            --background-primary: #000000;
+            --background-secondary: #1C1C1E;
+            --background-tertiary: #2C2C2E;
+            --surface-primary: #1C1C1E;
+            --surface-secondary: #2C2C2E;
+            --surface-elevated: #3A3A3C;
+            --border-primary: #38383A;
+            --border-secondary: #48484A;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.5);
+            --shadow-heavy: rgba(0, 0, 0, 0.8);
+            --glass-bg: rgba(28, 28, 30, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] {
+            /* Light Theme Colors */
+            --primary-color: #FF3B30;
+            --primary-hover: #D70015;
+            --secondary-color: #FF6B35;
+            --accent-color: #FF9F0A;
+            --text-primary: #1D1D1F;
+            --text-secondary: #515154;
+            --text-tertiary: #86868B;
+            --background-primary: #FFFFFF;
+            --background-secondary: #F2F2F7;
+            --background-tertiary: #FFFFFF;
+            --surface-primary: #FFFFFF;
+            --surface-secondary: #F2F2F7;
+            --surface-elevated: #FFFFFF;
+            --border-primary: #D1D1D6;
+            --border-secondary: #C7C7CC;
+            --shadow-light: rgba(0, 0, 0, 0.04);
+            --shadow-medium: rgba(0, 0, 0, 0.08);
+            --shadow-heavy: rgba(0, 0, 0, 0.16);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            color: var(--text-primary);
+            background: var(--background-primary);
+            line-height: 1.6;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Smooth animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-animate {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-animate.animate-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Staggered animations */
+        .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+        .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+        .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+        .animate-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+
+        /* Apple-style Dark/Light Mode Toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: var(--surface-secondary);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-primary);
+        }
+
+        .theme-switch::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 6px var(--shadow-medium);
+        }
+
+        [data-theme="light"] .theme-switch {
+            background: var(--primary-color);
+        }
+
+        [data-theme="light"] .theme-switch::before {
+            transform: translateX(24px);
+            background: white;
+        }
+
+        .theme-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            right: 5px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .theme-icon {
+            width: 12px;
+            height: 12px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Enhanced Scrolling Marquee */
+        .scrolling-banner {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            padding: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            height: 36px;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .scrolling-content {
+            display: inline-block;
+            animation: scroll-seamless 45s linear infinite;
+        }
+
+        .scroll-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        @keyframes scroll-seamless {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Enhanced Navigation */
+        .header-nav {
+            position: fixed;
+            top: 36px;
+            left: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            z-index: 1000;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            border-radius: 0 0 20px 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: none;
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+
+        .site-title {
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 1px;
+        }
+
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            cursor: pointer;
+            transition: fill 0.3s ease;
+        }
+
+        .search-icon:hover {
+            fill: var(--text-primary);
+        }
+
+        /* Project Content */
+        .project-container {
+            margin-top: 120px;
+            padding: 2rem;
+            min-height: calc(100vh - 120px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Modern Project Header */
+        .project-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 4rem 3rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px var(--shadow-medium);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .project-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .project-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modern Content Grid */
+        .project-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Sleek Cards */
+        .project-main {
+            background: var(--surface-primary);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-main:hover {
+            box-shadow: 0 16px 64px var(--shadow-medium);
+        }
+
+        .project-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .components-card,
+        .skills-card {
+            background: var(--surface-primary);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .components-card:hover,
+        .skills-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 64px var(--shadow-medium);
+        }
+
+        .card-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .components-list,
+        .skills-list {
+            list-style: none;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .components-list li,
+        .skills-list li {
+            color: var(--text-secondary);
+            padding: 0.75rem 1rem;
+            background: var(--background-secondary);
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid var(--border-primary);
+        }
+
+        .components-list li:hover,
+        .skills-list li:hover {
+            background: var(--surface-elevated);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .components-list li::before,
+        .skills-list li::before {
+            content: '•';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Project Description */
+        .project-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .project-description p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            margin: 4rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            background: var(--surface-primary);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 80px var(--shadow-medium);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 0;
+        }
+
+        .video-item .gallery-caption {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            text-align: center;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* CAD Viewer - Enhanced */
+        .cad-viewer {
+            margin: 3rem 0;
+        }
+
+        spline-viewer {
+            width: 100%;
+            height: 500px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: block;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+        }
+
+        /* Component Visibility Toggle */
+        .component-toggle-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--background-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-primary);
+        }
+
+        .component-toggle-label {
+            margin-right: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .component-toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .component-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: var(--surface-secondary);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-primary);
+        }
+
+        .component-switch::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 6px var(--shadow-medium);
+        }
+
+        .component-switch.active {
+            background: var(--primary-color);
+        }
+
+        .component-switch.active::before {
+            transform: translateX(24px);
+            background: white;
+        }
+
+        .component-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            right: 5px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .component-icon {
+            width: 12px;
+            height: 12px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--surface-primary);
+            color: var(--text-primary);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-primary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: var(--background-secondary);
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-primary);
+        }
+
+        .contact-item:hover {
+            background: var(--surface-elevated);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+
+        .contact-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-item h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .scrolling-banner {
+                height: 32px;
+            }
+
+            .header-nav {
+                top: 32px;
+                left: 1rem;
+                right: 1rem;
+            }
+
+            .project-container {
+                margin-top: 100px;
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .theme-toggle {
+                order: -1;
+            }
+
+            .project-content {
+                grid-template-columns: 1fr;
+            }
+
+            .project-title {
+                font-size: 2.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            spline-viewer {
+                height: 400px;
+            }
+        }
+
+        /* Smooth transitions for theme changes */
+        * {
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Enhanced Marquee -->
+    <div class="scrolling-banner">
+        <div class="scrolling-content">
+            <span class="scroll-text">
+                🚀 NEW: Advanced Motor Control System   •   ⭐ FEATURED: Eagle Scout Leadership Project   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   
+            </span>
+        </div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <div class="header-nav">
+        <a href="../index.html" class="site-title">Jordan's Engineering Portfolio</a>
+        <div class="nav-menu">
+            <a href="../index.html">Home</a>
+            <a href="../resume.html">Resume</a>
+            <a href="../index.html#projects" class="active">Projects</a>
+            <div class="theme-toggle">
+                <div class="theme-switch" onclick="toggleTheme()">
+                    <div class="theme-icons">
+                        <svg class="theme-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
+                        </svg>
+                        <svg class="theme-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <svg class="search-icon" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Project Content -->
+    <div class="project-container">
+        <div class="container">
+            <!-- Project Header -->
+            <div class="project-header card-animate">
+                <a href="../index.html#projects" class="back-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                    Back to Projects
+                </a>
+                <h1 class="project-title">MINI ROBO ARM</h1>
+                <p class="project-subtitle">Precision robotic arm with servo motor control and programmable automation</p>
+            </div>
+
+            <!-- Project Content Grid -->
+            <div class="project-content">
+                <div class="project-main animate-on-scroll">
+                    <h2 class="card-title">Project Overview</h2>
+                    <div class="project-description">
+                        <p>Designed and built a compact robotic arm using servo motors and an Arduino microcontroller, featuring multiple degrees of freedom for precise object manipulation and automated task execution.</p>
+                        
+                        <p>The system features a hotswappable end effector design with automatic tool detection through a pogo pin connection, allowing seamless switching between different tools and attachments while maintaining electrical continuity for sensor feedback and control.</p>
+                    </div>
+
+                    <!-- CAD Viewer Section -->
+                    <div class="cad-viewer">
+                        <h3 class="card-title">3D Interactive Model</h3>
+                        <spline-viewer id="spline-viewer" url="https://prod.spline.design/Z4EXtLE-MZc6e3Ei/scene.splinecode"></spline-viewer>
+                        
+                        <!-- Component Visibility Toggle -->
+                        <div class="component-toggle-section">
+                            <span class="component-toggle-label">Show Internal Components</span>
+                            <div class="component-toggle">
+                                <div class="component-switch" id="componentToggle" onclick="toggleComponentVisibility()">
+                                    <div class="component-icons">
+                                        <svg class="component-icon" viewBox="0 0 24 24">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                        </svg>
+                                        <svg class="component-icon" viewBox="0 0 24 24">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.9rem; text-align: center;">
+                            Interactive 3D model - Click and drag to rotate, scroll to zoom
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="project-sidebar">
+                    <!-- Components Card -->
+                    <div class="components-card animate-on-scroll">
+                        <h3 class="card-title">Components</h3>
+                        <ul class="components-list">
+                            <li>Arduino Nano V3</li>
+                            <li>Custom PCB</li>
+                            <li>Servo Motors (x3)</li>
+                            <li>Buttons (x3)</li>
+                            <li>Potentiometers (x4)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Skills Card -->
+                    <div class="skills-card animate-on-scroll">
+                        <h3 class="card-title">Skills Used</h3>
+                        <ul class="skills-list">
+                            <li>Arduino Programming</li>
+                            <li>Servo Motor Control</li>
+                            <li>3D CAD Design</li>
+                            <li>3D Printing</li>
+                            <li>Circuit Assembly</li>
+                            <li>PCB Design</li>
+                            <li>Robotics Programming</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Gallery -->
+            <div class="image-gallery">
+                <h2 class="card-title animate-on-scroll" style="text-align: center; margin-bottom: 3rem; font-size: 2rem;">Project Gallery</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/mini-robo-arm-1.jpg" alt="Mini Robo Arm Overview" class="gallery-image">
+                        <div class="gallery-caption">Completed robotic arm with precision servo control</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/mini-robo-arm-2.jpg" alt="Mini Robo Arm Control System" class="gallery-image">
+                        <div class="gallery-caption">Arduino control system and motor drivers</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll video-item">
+                        <video class="gallery-video" controls poster="../images/project-images/mini-robo-arm-video-thumbnail.jpg">
+                            <source src="https://github.com/JSJSpencer/jspencerengineering.github.io/raw/main/images/project-images/mini-robo-arm-video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="gallery-caption">Mini Robo Arm in action - hotswappable end effector demo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 600;">Let's Connect</h3>
+            <div class="contact-grid">
+                <div class="contact-item animate-on-scroll">
+                    <h4>Phone</h4>
+                    <p>(631) 294-8401</p>
+                </div>
+                <div class="contact-item animate-on-scroll">
+                    <h4>Email</h4>
+                    <a href="mailto:spencer.jo@northeastern.edu?subject=Project%20Inquiry%20-%20Mini%20Robo%20Arm&body=Hi%20Jordan,%0D%0A%0D%0AI%20saw%20your%20Mini%20Robo%20Arm%20project%20and%20would%20like%20to%20discuss%20">spencer.jo@northeastern.edu</a>
+                </div>
+                <div class="contact-item animate-on-scroll">
+                    <h4>LinkedIn</h4>
+                    <a href="https://www.linkedin.com/in/jordan-spencer-engineering/" target="_blank">jordan-spencer-engineering</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Component Visibility Toggle Functionality
+        let shellVisible = true; // Shell starts visible
+        let splineApp = null;
+
+        function toggleComponentVisibility() {
+            const toggle = document.getElementById('componentToggle');
+            shellVisible = !shellVisible;
+            
+            // Update toggle visual state (active when shell is hidden = internals shown)
+            if (!shellVisible) {
+                toggle.classList.add('active');
+            } else {
+                toggle.classList.remove('active');
+            }
+            
+            // Control Spline shell visibility
+            if (splineApp) {
+                try {
+                    const shell = splineApp.findObjectByName('MiniRoboArm-1');
+                    
+                    if (shell) {
+                        shell.visible = shellVisible;
+                        console.log(`MiniRoboArm-1 visibility: ${shellVisible ? 'visible' : 'hidden'}`);
+                    } else {
+                        console.log('MiniRoboArm-1 component not found. Available objects:', splineApp.scene.children.map(child => child.name));
+                    }
+                } catch (error) {
+                    console.log('Spline interaction error:', error);
+                }
+            }
+        }
+
+        // Initialize Spline viewer connection
+        function initSplineViewer() {
+            const viewer = document.getElementById('spline-viewer');
+            if (viewer) {
+                viewer.addEventListener('load', () => {
+                    splineApp = viewer.splineApp;
+                    console.log('Spline viewer loaded successfully');
+                    
+                    // List all objects in the scene for debugging
+                    if (splineApp && splineApp.scene) {
+                        console.log('Available objects:', splineApp.scene.children.map(child => child.name));
+                    }
+                });
+            }
+        }
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            // Initialize Spline viewer
+            initSplineViewer();
+        });
+
+        // Enhanced Animation System
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-in');
+                    }, index * 150);
+                }
+            });
+        }, observerOptions);
+
+        function initScrollAnimations() {
+            const animateElements = document.querySelectorAll(
+                '.animate-on-scroll, .card-animate'
+            );
+            animateElements.forEach((el) => {
+                observer.observe(el);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initScrollAnimations);
+        window.addEventListener('load', initScrollAnimations);
+
+        // Enhanced Image Gallery
+        document.querySelectorAll('.gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.95);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 2000;
+                    cursor: pointer;
+                    backdrop-filter: blur(20px);
+                `;
+                
+                const image = document.createElement('img');
+                image.src = this.src;
+                image.style.cssText = `
+                    max-width: 90%;
+                    max-height: 90%;
+                    border-radius: 16px;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+                `;
+                
+                overlay.appendChild(image);
+                document.body.appendChild(overlay);
+                
+                // Fade in animation
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.opacity = '1', 10);
+                
+                overlay.addEventListener('click', () => {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => document.body.removeChild(overlay), 300);
+                });
+            });
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
