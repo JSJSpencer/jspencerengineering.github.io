@@ -404,7 +404,7 @@
         /* Hero Section - Keep Original Background */
         .hero-section {
             min-height: 100vh;
-            background: url('images/header-background.png') center/cover no-repeat;
+            background: url('./images/header-background.png') center/cover no-repeat;
             position: relative;
             display: flex;
             align-items: center;
@@ -1250,7 +1250,7 @@
                     <p class="signature">-Jordan Spencer</p>
                 </div>
                 <div class="profile-image-container animate-on-scroll">
-                    <img src="images/profile-photo.jpg" alt="Jordan Spencer" class="profile-image">
+                    <img src="./images/profile-photo.jpg" alt="Jordan Spencer" class="profile-image">
                 </div>
             </div>
         </div>
@@ -1266,7 +1266,7 @@
             <div class="education-grid">
                 <a href="https://northeastern.edu" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/northeastern-logo.png" alt="Northeastern University" class="card-logo">
+                        <img src="./images/northeastern-logo.png" alt="Northeastern University" class="card-logo">
                         <div class="card-info">
                             <h3>Northeastern University</h3>
                             <p>Class of 2026</p>
@@ -1277,7 +1277,7 @@
                 </a>
                 <a href="https://stanthonyshs.org" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/saint-anthonys-logo.png" alt="Saint Anthony's High School" class="card-logo">
+                        <img src="./images/saint-anthonys-logo.png" alt="Saint Anthony's High School" class="card-logo">
                         <div class="card-info">
                             <h3>Saint Anthony's High School</h3>
                             <p>Class of 2022</p>
@@ -1300,7 +1300,7 @@
             <div class="experience-grid">
                 <a href="https://sharkninja.com" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/sharkninja-logo.svg" alt="SharkNinja" class="card-logo">
+                        <img src="./images/sharkninja-logo.svg" alt="SharkNinja" class="card-logo">
                         <div class="card-info">
                             <h3>SharkNinja</h3>
                             <p>Mechanical Engineering Co-op (Systems Team)</p>
@@ -1310,7 +1310,7 @@
                 </a>
                 <a href="https://makerspaces.northeastern.edu/makerspace/fyelic/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/fyelic-logo.svg" alt="FYELIC" class="card-logo">
+                        <img src="./images/fyelic-logo.svg" alt="FYELIC" class="card-logo">
                         <div class="card-info">
                             <h3>FYELIC (First Year Engineering Learning & Innovation Center)</h3>
                             <p>Engineering Mentor (Red Vest)</p>
@@ -1320,7 +1320,7 @@
                 </a>
                 <a href="https://www.bnl.gov/education/programs/hsrp/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/brookhaven-logo.svg" alt="Brookhaven National Laboratory" class="card-logo">
+                        <img src="./images/brookhaven-logo.svg" alt="Brookhaven National Laboratory" class="card-logo">
                         <div class="card-info">
                             <h3>Brookhaven National Laboratory</h3>
                             <p>High School Research Program (HSRP) - Quantum Algorithms</p>
@@ -1498,7 +1498,18 @@
                         if (description.toLowerCase().includes('degrees of freedom')) keywords.add('multi-axis control');
                     }
                     
-                    // 4. From project subtitle (.project-subtitle)
+                    // Also check for any image references that might need updating
+                    const images = doc.querySelectorAll('img');
+                    images.forEach(img => {
+                        const src = img.getAttribute('src');
+                        if (src && !src.startsWith('http') && !src.startsWith('../')) {
+                            // Convert relative paths to proper relative paths from project page perspective
+                            if (src.startsWith('images/')) {
+                                // This would be wrong from project page - should be ../images/
+                                console.log(`⚠️ Found potentially incorrect image path: ${src} (should be ../${src})`);
+                            }
+                        }
+                    });
                     const subtitle = doc.querySelector('.project-subtitle')?.textContent;
                     if (subtitle) {
                         const subtitleTerms = subtitle.toLowerCase().match(
