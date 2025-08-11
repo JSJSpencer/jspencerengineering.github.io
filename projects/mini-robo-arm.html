@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mini Robo Arm - Jordan Spencer</title>
+    <title>Jordan's Engineering Portfolio</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔨</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Spline Viewer Script -->
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.44/build/spline-viewer.js"></script>
     <style>
         :root {
             /* Dark Theme Colors */
@@ -96,6 +94,17 @@
             transform: translateY(0) scale(1);
         }
 
+        .section-title-animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-title-animate.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Staggered animations */
         .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
         .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
@@ -176,11 +185,18 @@
             height: 36px;
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scrolling-banner.scrolled {
+            background: var(--primary-color);
+            color: white;
         }
 
         .scrolling-content {
             display: inline-block;
             animation: scroll-seamless 45s linear infinite;
+            will-change: transform;
         }
 
         .scroll-text {
@@ -212,6 +228,12 @@
             border: 1px solid var(--glass-border);
             border-top: none;
             box-shadow: 0 8px 32px var(--shadow-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header-nav.scrolled {
+            background: var(--primary-color);
+            color: white;
         }
 
         .site-title {
@@ -221,6 +243,11 @@
             font-size: 1.1rem;
             text-decoration: none;
             letter-spacing: -0.01em;
+            transition: color 0.3s ease;
+        }
+
+        .header-nav.scrolled .site-title {
+            color: white;
         }
 
         .nav-menu {
@@ -244,6 +271,15 @@
             color: var(--text-primary);
         }
 
+        .header-nav.scrolled .nav-menu a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .header-nav.scrolled .nav-menu a:hover,
+        .header-nav.scrolled .nav-menu a.active {
+            color: white;
+        }
+
         .nav-menu a.active::after {
             content: '';
             position: absolute;
@@ -253,6 +289,10 @@
             height: 2px;
             background: var(--primary-color);
             border-radius: 1px;
+        }
+
+        .header-nav.scrolled .nav-menu a.active::after {
+            background: white;
         }
 
         .search-icon {
@@ -267,11 +307,86 @@
             fill: var(--text-primary);
         }
 
-        /* Project Content */
-        .project-container {
-            margin-top: 120px;
+        .header-nav.scrolled .search-icon {
+            fill: rgba(255, 255, 255, 0.8);
+        }
+
+        .header-nav.scrolled .search-icon:hover {
+            fill: white;
+        }
+
+        /* Hero Section - Keep Original Background */
+        .hero-section {
+            min-height: 100vh;
+            background: url('images/header-background.jpg') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
             padding: 2rem;
-            min-height: calc(100vh - 120px);
+        }
+
+        .hero-subtitle {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-weight: 400;
+        }
+
+        /* Enhanced Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            color: white;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            text-align: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-indicator svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Modern Sections */
+        .modern-section {
+            padding: 6rem 2rem;
+            background: var(--background-primary);
+            transition: background-color 0.3s ease;
+        }
+
+        .modern-section.alternate {
+            background: var(--background-secondary);
         }
 
         .container {
@@ -279,331 +394,316 @@
             margin: 0 auto;
         }
 
-        /* Modern Project Header */
-        .project-header {
+        .section-header {
             text-align: center;
             margin-bottom: 4rem;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            padding: 4rem 3rem;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px var(--shadow-medium);
-            border: 1px solid var(--glass-border);
-            position: relative;
-            overflow: hidden;
         }
 
-        .project-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.1);
-            z-index: 1;
-        }
-
-        .project-header > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .project-title {
+        .section-title {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-            font-size: 3rem;
-            color: white;
+            font-size: 2.5rem;
+            color: var(--text-primary);
             margin-bottom: 1rem;
             font-weight: 700;
             letter-spacing: -0.02em;
         }
 
-        .project-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
             font-weight: 400;
         }
 
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Modern Content Grid */
-        .project-content {
+        /* Enhanced About Section */
+        .about-content {
             display: grid;
             grid-template-columns: 1fr 400px;
-            gap: 3rem;
-            margin-bottom: 4rem;
+            gap: 4rem;
+            align-items: center;
         }
 
-        /* Sleek Cards */
-        .project-main {
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .profile-image-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .profile-image {
+            width: 350px;
+            height: 350px;
+            border-radius: 24px;
+            object-fit: cover;
+            box-shadow: 0 20px 60px var(--shadow-medium);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .profile-image:hover {
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 0 32px 80px var(--shadow-heavy);
+        }
+
+        .signature {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* Modern Card Layouts */
+        .education-grid,
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .modern-card {
             background: var(--surface-primary);
             padding: 2.5rem;
             border-radius: 24px;
             box-shadow: 0 8px 32px var(--shadow-light);
-            border: 1px solid var(--border-primary);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .project-main:hover {
-            box-shadow: 0 16px 64px var(--shadow-medium);
-        }
-
-        .project-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .components-card,
-        .skills-card {
-            background: var(--surface-primary);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px var(--shadow-light);
-            border: 1px solid var(--border-primary);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .components-card:hover,
-        .skills-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 64px var(--shadow-medium);
-        }
-
-        .card-title {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-            font-size: 1.3rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-        }
-
-        .components-list,
-        .skills-list {
-            list-style: none;
-            display: grid;
-            gap: 0.75rem;
-        }
-
-        .components-list li,
-        .skills-list li {
-            color: var(--text-secondary);
-            padding: 0.75rem 1rem;
-            background: var(--background-secondary);
-            border-radius: 12px;
-            position: relative;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            border: 1px solid var(--border-primary);
-        }
-
-        .components-list li:hover,
-        .skills-list li:hover {
-            background: var(--surface-elevated);
-            color: var(--text-primary);
-            transform: translateX(4px);
-        }
-
-        .components-list li::before,
-        .skills-list li::before {
-            content: '•';
-            color: var(--primary-color);
-            position: absolute;
-            left: 0.5rem;
-            font-weight: bold;
-        }
-
-        /* Project Description */
-        .project-description {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        .project-description p {
-            margin-bottom: 1.5rem;
-        }
-
-        /* Image Gallery */
-        .image-gallery {
-            margin: 4rem 0;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-        }
-
-        .gallery-item {
-            background: var(--surface-primary);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px var(--shadow-light);
-            border: 1px solid var(--border-primary);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-primary);
+            text-decoration: none;
+            color: inherit;
         }
 
-        .gallery-item:hover {
+        .modern-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 24px 80px var(--shadow-medium);
         }
 
-        .gallery-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            cursor: pointer;
-            transition: transform 0.4s ease;
+        .card-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
         }
 
-        .gallery-video {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
+        .card-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
             border-radius: 0;
+            background: transparent;
+            padding: 0;
+            border: none;
         }
 
-        .video-item .gallery-caption {
-            color: var(--primary-color);
-            font-weight: 500;
+        /* Advanced SVG logo color switching - handles mixed-color logos intelligently */
+        .card-logo[alt="SharkNinja"],
+        .card-logo[alt="FYELIC"],
+        .card-logo[alt="Brookhaven National Laboratory"] {
+            transition: filter 0.3s ease;
         }
 
-        .gallery-item:hover .gallery-image {
-            transform: scale(1.05);
+        /* Dark mode: Smart inversion that preserves colors while making dark elements light */
+        [data-theme="dark"] .card-logo[alt="SharkNinja"],
+        [data-theme="dark"] .card-logo[alt="FYELIC"],
+        [data-theme="dark"] .card-logo[alt="Brookhaven National Laboratory"] {
+            filter: 
+                contrast(120%) 
+                brightness(0.9) 
+                invert(0.85) 
+                hue-rotate(180deg) 
+                saturate(1.1);
         }
 
-        .gallery-caption {
-            padding: 1.5rem;
+        /* Light mode: Enhance contrast for better visibility */
+        [data-theme="light"] .card-logo[alt="SharkNinja"],
+        [data-theme="light"] .card-logo[alt="FYELIC"],
+        [data-theme="light"] .card-logo[alt="Brookhaven National Laboratory"] {
+            filter: contrast(110%) brightness(0.95);
+        }
+
+        .card-info h3 {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .card-info p {
             color: var(--text-secondary);
-            text-align: center;
-            font-style: italic;
+            margin: 0.25rem 0;
             font-weight: 400;
         }
 
-        /* CAD Viewer - Enhanced */
-        .cad-viewer {
-            margin: 3rem 0;
+        /* Modern Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
-        spline-viewer {
-            width: 100%;
-            height: 500px;
-            border-radius: 16px;
-            overflow: hidden;
-            display: block;
+        .project-card {
+            background: var(--surface-primary);
+            border-radius: 24px;
+            overflow: visible;
             box-shadow: 0 8px 32px var(--shadow-light);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
             border: 1px solid var(--border-primary);
-        }
-
-        /* Component Visibility Toggle */
-        .component-toggle-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: var(--background-secondary);
-            border-radius: 16px;
-            border: 1px solid var(--border-primary);
-        }
-
-        .component-toggle-label {
-            margin-right: 1rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .component-toggle {
-            display: flex;
-            align-items: center;
-        }
-
-        .component-switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-            background: var(--surface-secondary);
-            border-radius: 13px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid var(--border-primary);
+            position: relative;
         }
 
-        .component-switch::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 20px;
-            height: 20px;
-            background: var(--text-primary);
-            border-radius: 50%;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 6px var(--shadow-medium);
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 32px 80px var(--shadow-heavy);
+            z-index: 10;
         }
 
-        .component-switch.active {
-            background: var(--primary-color);
-        }
-
-        .component-switch.active::before {
-            transform: translateX(24px);
-            background: white;
-        }
-
-        .component-icons {
+        .project-content {
+            padding: 2.5rem;
+            position: relative;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
+        }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            stroke: var(--primary-color);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.1);
+            stroke: var(--primary-hover);
+        }
+
+        .project-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        /* Enhanced Project Preview */
+        .project-preview {
             position: absolute;
-            top: 50%;
-            left: 5px;
-            right: 5px;
-            transform: translateY(-50%);
-            pointer-events: none;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--surface-elevated);
+            border-top: 1px solid var(--border-primary);
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 250px;
+            overflow-y: auto;
+            border-radius: 0 0 24px 24px;
+            z-index: 11;
+            backdrop-filter: blur(20px);
         }
 
-        .component-icon {
-            width: 12px;
-            height: 12px;
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-            fill: currentColor;
+        .project-card:hover .project-preview {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        /* Footer */
+        .preview-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .preview-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .preview-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .preview-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .preview-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            text-decoration: none;
+        }
+
+        .preview-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Enhanced Footer */
         .footer {
             background: var(--surface-primary);
             color: var(--text-primary);
             padding: 4rem 2rem;
             text-align: center;
-            margin-top: 4rem;
             border-top: 1px solid var(--border-primary);
+        }
+
+        .footer h3 {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            font-weight: 600;
         }
 
         .contact-grid {
@@ -619,6 +719,10 @@
             border-radius: 20px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid var(--border-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .contact-item:hover {
@@ -627,16 +731,33 @@
             box-shadow: 0 8px 32px var(--shadow-light);
         }
 
-        .contact-item a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
+        .contact-icon {
+            width: 32px;
+            height: 32px;
+            stroke: var(--primary-color);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1);
+            stroke: var(--primary-hover);
         }
 
         .contact-item h4 {
             color: var(--text-primary);
             margin-bottom: 0.5rem;
             font-weight: 600;
+        }
+
+        .contact-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
         }
 
         /* Mobile Responsive */
@@ -651,11 +772,6 @@
                 right: 1rem;
             }
 
-            .project-container {
-                margin-top: 100px;
-                padding: 1rem;
-            }
-
             .nav-menu {
                 display: none;
             }
@@ -664,20 +780,36 @@
                 order: -1;
             }
 
-            .project-content {
-                grid-template-columns: 1fr;
-            }
-
-            .project-title {
+            .hero-title {
                 font-size: 2.5rem;
             }
 
-            .gallery-grid {
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .education-grid,
+            .experience-grid {
                 grid-template-columns: 1fr;
             }
 
-            spline-viewer {
-                height: 400px;
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-image {
+                width: 280px;
+                height: 280px;
             }
         }
 
@@ -691,22 +823,22 @@
 </head>
 
 <body data-theme="dark">
-    <!-- Enhanced Marquee -->
-    <div class="scrolling-banner">
+    <!-- Enhanced Scrolling Marquee Banner -->
+    <div class="scrolling-banner" id="marquee">
         <div class="scrolling-content">
             <span class="scroll-text">
-                🚀 NEW: Advanced Motor Control System   •   ⭐ FEATURED: Eagle Scout Leadership Project   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   
+                🚀 NEW: Advanced Motor Control System   •   ⭐ FEATURED: Eagle Scout Leadership Project   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   🚀 NEW: Advanced Motor Control System   •   ⭐ FEATURED: Eagle Scout Leadership Project   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   
             </span>
         </div>
     </div>
 
-    <!-- Enhanced Navigation -->
-    <div class="header-nav">
-        <a href="../index.html" class="site-title">Jordan's Engineering Portfolio</a>
+    <!-- Enhanced Header Navigation -->
+    <div class="header-nav" id="navbar">
+        <a href="index.html" class="site-title">Jordan's Engineering Portfolio</a>
         <div class="nav-menu">
-            <a href="../index.html">Home</a>
-            <a href="../resume.html">Resume</a>
-            <a href="../index.html#projects" class="active">Projects</a>
+            <a href="index.html" class="active">Home</a>
+            <a href="resume.html">Resume</a>
+            <a href="#projects">Projects</a>
             <div class="theme-toggle">
                 <div class="theme-switch" onclick="toggleTheme()">
                     <div class="theme-icons">
@@ -725,140 +857,335 @@
         </div>
     </div>
 
-    <!-- Project Content -->
-    <div class="project-container">
+    <!-- Hero Section with Original Background -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">ENGINEERING PORTFOLIO</h1>
+            <p class="hero-subtitle">By: Jordan Spencer</p>
+        </div>
+        <div class="scroll-indicator" id="scrollIndicator">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Enhanced About Section -->
+    <section id="about" class="modern-section">
         <div class="container">
-            <!-- Project Header -->
-            <div class="project-header card-animate">
-                <a href="../index.html#projects" class="back-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                    </svg>
-                    Back to Projects
-                </a>
-                <h1 class="project-title">MINI ROBO ARM</h1>
-                <p class="project-subtitle">Precision robotic arm with servo motor control and programmable automation</p>
+            <div class="section-header">
+                <h2 class="section-title section-title-animate">ABOUT ME</h2>
+                <p class="section-subtitle animate-on-scroll">Mechanical Engineering Student & Student-Athlete</p>
             </div>
-
-            <!-- Project Content Grid -->
-            <div class="project-content">
-                <div class="project-main animate-on-scroll">
-                    <h2 class="card-title">Project Overview</h2>
-                    <div class="project-description">
-                        <p>Designed and built a compact robotic arm using servo motors and an Arduino microcontroller, featuring multiple degrees of freedom for precise object manipulation and automated task execution.</p>
-                        
-                        <p>The system features a hotswappable end effector design with automatic tool detection through a pogo pin connection, allowing seamless switching between different tools and attachments while maintaining electrical continuity for sensor feedback and control.</p>
-                    </div>
-
-                    <!-- CAD Viewer Section -->
-                    <div class="cad-viewer">
-                        <h3 class="card-title">3D Interactive Model</h3>
-                        <spline-viewer id="spline-viewer" url="https://prod.spline.design/Z4EXtLE-MZc6e3Ei/scene.splinecode"></spline-viewer>
-                        
-                        <!-- Component Visibility Toggle -->
-                        <div class="component-toggle-section">
-                            <span class="component-toggle-label">Show Internal Components</span>
-                            <div class="component-toggle">
-                                <div class="component-switch" id="componentToggle" onclick="toggleComponentVisibility()">
-                                    <div class="component-icons">
-                                        <svg class="component-icon" viewBox="0 0 24 24">
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                        </svg>
-                                        <svg class="component-icon" viewBox="0 0 24 24">
-                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Debug button - hidden but accessible via console -->
-                            <button onclick="debugSpline()" style="margin-left: 1rem; padding: 0.5rem 1rem; background: #FF6B35; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; display: none;" id="debug-btn">Debug v3</button>
-                        </div>
-                        
-                        <p style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.9rem; text-align: center;">
-                            Interactive 3D model - Click and drag to rotate, scroll to zoom
-                        </p>
-                    </div>
+            <div class="about-content">
+                <div class="about-text animate-on-scroll">
+                    <p>I am a <span class="highlight">fourth-year undergraduate Mechanical Engineering</span> student at <span class="highlight">Northeastern University's Honors College</span> where I am also a member of the <span class="highlight">NCAA Division 1 Varsity Men's Track & Field</span> Team.</p>
+                    
+                    <p>I was born and raised on <span class="highlight">Long Island, NY</span> with 2 parents, 1 sister, a cat, and 2 dogs. Throughout my childhood, I found joy in playing sports, learning, and building. My love of building can be traced back to my earliest memories of working in carpentry with my father and reverse engineering toys. From holding a level against a wall at the tender age of 2 to building my first tabletop arcade machine at 17, engineering has always been a source of joy for me.</p>
+                    
+                    <p>I have worked to develop interpersonal and technical skills across various fields within engineering. As a college student-athlete, I have developed extensive time management and leadership skills, as well as proficiency and discipline in my sport. Additionally, I achieved the rank of <span class="highlight">Eagle Scout</span> in 2022 by completing 21 merit badges, showing proficiency in life skills, and completing an Eagle Scout Project for the betterment of my community. As I continue to progress in academics and athletics, I develop technical skills like <span class="highlight">soldering, 3D printing, SolidWorks, MATLAB,</span> and <span class="highlight">laser cutting</span> through various clubs and student positions such as Generate, an entrepreneurial engineering club, and FYELIC's Red Vest Team.</p>
+                    
+                    <p>Pending the completion of my <span class="highlight">B.S. in Mechanical Engineering (Spring 2026)</span>, I will return to Northeastern University for an additional year to complete a <span class="highlight">M.S. in Mechanical Engineering with Concentration in Mechatronics (Spring 2027)</span>.</p>
+                    
+                    <p class="signature">-Jordan Spencer</p>
                 </div>
-
-                <!-- Sidebar -->
-                <div class="project-sidebar">
-                    <!-- Components Card -->
-                    <div class="components-card animate-on-scroll">
-                        <h3 class="card-title">Components</h3>
-                        <ul class="components-list">
-                            <li>Arduino Nano V3</li>
-                            <li>Custom PCB</li>
-                            <li>Servo Motors (x3)</li>
-                            <li>Buttons (x3)</li>
-                            <li>Potentiometers (x4)</li>
-                        </ul>
-                    </div>
-
-                    <!-- Skills Card -->
-                    <div class="skills-card animate-on-scroll">
-                        <h3 class="card-title">Skills Used</h3>
-                        <ul class="skills-list">
-                            <li>Arduino Programming</li>
-                            <li>Servo Motor Control</li>
-                            <li>3D CAD Design</li>
-                            <li>3D Printing</li>
-                            <li>Circuit Assembly</li>
-                            <li>PCB Design</li>
-                            <li>Robotics Programming</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Image Gallery -->
-            <div class="image-gallery">
-                <h2 class="card-title animate-on-scroll" style="text-align: center; margin-bottom: 3rem; font-size: 2rem;">Project Gallery</h2>
-                <div class="gallery-grid">
-                    <div class="gallery-item animate-on-scroll">
-                        <img src="../images/project-images/mini-robo-arm-1.jpg" alt="Mini Robo Arm Overview" class="gallery-image">
-                        <div class="gallery-caption">Completed robotic arm with precision servo control</div>
-                    </div>
-                    <div class="gallery-item animate-on-scroll">
-                        <img src="../images/project-images/mini-robo-arm-2.jpg" alt="Mini Robo Arm Control System" class="gallery-image">
-                        <div class="gallery-caption">Arduino control system and motor drivers</div>
-                    </div>
-                    <div class="gallery-item animate-on-scroll video-item">
-                        <video class="gallery-video" controls poster="../images/project-images/mini-robo-arm-video-thumbnail.jpg" 
-                               onerror="console.log('Video failed to load')"
-                               onloadstart="console.log('Video loading started')"
-                               oncanplay="console.log('Video can play')">
-                            <source src="https://github.com/JSJSpencer/jspencerengineering.github.io/raw/main/images/project-images/mini-robo-arm-video.mp4" 
-                                    type="video/mp4"
-                                    onerror="console.log('Video source error')">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div class="gallery-caption">Mini Robo Arm in action - hotswappable end effector demo</div>
-                    </div>
+                <div class="profile-image-container animate-on-scroll">
+                    <img src="images/profile-photo.jpg" alt="Jordan Spencer" class="profile-image">
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Contact Footer -->
-    <footer class="footer">
+    <!-- Enhanced Education Section -->
+    <section id="education" class="modern-section alternate">
         <div class="container">
-            <h3 style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 600;">Let's Connect</h3>
+            <div class="section-header">
+                <h2 class="section-title section-title-animate">EDUCATION</h2>
+                <p class="section-subtitle animate-on-scroll">My academic journey in engineering</p>
+            </div>
+            <div class="education-grid">
+                <a href="https://northeastern.edu" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
+                    <div class="card-content">
+                        <img src="images/northeastern-logo.png" alt="Northeastern University" class="card-logo">
+                        <div class="card-info">
+                            <h3>Northeastern University</h3>
+                            <p>Class of 2026</p>
+                            <p>Bachelor of Science in Mechanical Engineering</p>
+                            <p>Boston, MA</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://stanthonyshs.org" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
+                    <div class="card-content">
+                        <img src="images/saint-anthonys-logo.png" alt="Saint Anthony's High School" class="card-logo">
+                        <div class="card-info">
+                            <h3>Saint Anthony's High School</h3>
+                            <p>Class of 2022</p>
+                            <p>Advanced Regents Diploma</p>
+                            <p>South Huntington, NY</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Experience Section -->
+    <section id="experience" class="modern-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title section-title-animate">EXPERIENCE</h2>
+                <p class="section-subtitle animate-on-scroll">Professional and academic experiences</p>
+            </div>
+            <div class="experience-grid">
+                <a href="https://sharkninja.com" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
+                    <div class="card-content">
+                        <img src="images/sharkninja-logo.svg" alt="SharkNinja" class="card-logo">
+                        <div class="card-info">
+                            <h3>SharkNinja</h3>
+                            <p>Mechanical Engineering Co-op (Systems Team)</p>
+                            <p>Needham, MA</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://makerspaces.northeastern.edu/makerspace/fyelic/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
+                    <div class="card-content">
+                        <img src="images/fyelic-logo.svg" alt="FYELIC" class="card-logo">
+                        <div class="card-info">
+                            <h3>FYELIC</h3>
+                            <p>Engineering Mentor (Red Vest)</p>
+                            <p>Boston, MA</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.bnl.gov/education/programs/hsrp/" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
+                    <div class="card-content">
+                        <img src="images/brookhaven-logo.svg" alt="Brookhaven National Laboratory" class="card-logo">
+                        <div class="card-info">
+                            <h3>Brookhaven National Laboratory</h3>
+                            <p>High School Research Program (HSRP) - Quantum Algorithms</p>
+                            <p>Upton, NY</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Projects Section -->
+    <section id="projects" class="modern-section alternate">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title section-title-animate">PROJECTS</h2>
+                <p class="section-subtitle animate-on-scroll">Engineering solutions and creative builds</p>
+            </div>
+            <div class="projects-grid">
+                <a href="projects/eagle-scout-project.html" class="project-card card-animate">
+                    <div class="project-content">
+                        <svg class="project-icon" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                        <h3 class="project-title">EAGLE SCOUT PROJECT</h3>
+                        <p class="project-description">Community service project demonstrating leadership and project management skills through planning and executing a beneficial initiative.</p>
+                    </div>
+                    <div class="project-preview">
+                        <div class="preview-title">Project Overview</div>
+                        <p class="preview-text">Designed and led a community garden installation for a local elementary school, coordinating 15+ volunteers and managing a $2,000 budget. Demonstrated project management, leadership, and community engagement skills.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag">Leadership</span>
+                            <span class="preview-tag">Project Management</span>
+                            <span class="preview-tag">Community Service</span>
+                        </div>
+                        <a href="projects/eagle-scout-project.html" class="preview-link">
+                            View Full Project →
+                        </a>
+                    </div>
+                </a>
+                <a href="projects/tabletop-arcade-machine.html" class="project-card card-animate">
+                    <div class="project-content">
+                        <svg class="project-icon" viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <h3 class="project-title">TABLETOP ARCADE MACHINE</h3>
+                        <p class="project-description">Custom-built retro gaming system combining woodworking craftsmanship with electronics integration and programming.</p>
+                    </div>
+                    <div class="project-preview">
+                        <div class="preview-title">Technical Details</div>
+                        <p class="preview-text">Built from scratch using Raspberry Pi, custom joystick controls, and hand-crafted wooden cabinet. Features over 1000 classic arcade games with authentic CRT monitor display and original arcade buttons.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag">Raspberry Pi</span>
+                            <span class="preview-tag">Woodworking</span>
+                            <span class="preview-tag">Electronics</span>
+                            <span class="preview-tag">Programming</span>
+                        </div>
+                        <a href="projects/tabletop-arcade-machine.html" class="preview-link">
+                            View Full Project →
+                        </a>
+                    </div>
+                </a>
+                <a href="projects/mini-robo-arm.html" class="project-card card-animate">
+                    <div class="project-content">
+                        <svg class="project-icon" viewBox="0 0 24 24">
+                            <path d="M12 2a3 3 0 0 0-3 3v1H7a3 3 0 0 0-3 3v1a3 3 0 0 0 3 3h2v1a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3v-1h2a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2V5a3 3 0 0 0-3-3h-4z"></path>
+                            <circle cx="12" cy="18" r="2"></circle>
+                        </svg>
+                        <h3 class="project-title">MINI ROBO ARM</h3>
+                        <p class="project-description">Precision robotic arm with servo motor control, hotswappable end effectors, and automated task execution capabilities.</p>
+                    </div>
+                    <div class="project-preview">
+                        <div class="preview-title">Advanced Features</div>
+                        <p class="preview-text">Features hotswappable end effector design with automatic tool detection through pogo pin connections. Custom PCB design with Arduino Nano control and multiple servo motors for precise manipulation.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag">Arduino</span>
+                            <span class="preview-tag">PCB Design</span>
+                            <span class="preview-tag">Robotics</span>
+                            <span class="preview-tag">3D Printing</span>
+                        </div>
+                        <a href="projects/mini-robo-arm.html" class="preview-link">
+                            View Full Project →
+                        </a>
+                    </div>
+                </a>
+                <a href="projects/ir-transmitter-and-receiver.html" class="project-card card-animate">
+                    <div class="project-content">
+                        <svg class="project-icon" viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                            <path d="M8 12l2 2 4-4"></path>
+                        </svg>
+                        <h3 class="project-title">IR TRANSMITTER AND RECEIVER</h3>
+                        <p class="project-description">Electronic communication system utilizing infrared technology for wireless data transmission and signal processing.</p>
+                    </div>
+                    <div class="project-preview">
+                        <div class="preview-title">Engineering Solution</div>
+                        <p class="preview-text">Designed custom PCB with Arduino microcontroller for reliable infrared communication. Implemented digital signal processing with error correction and multi-channel support for robust data transmission.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag">Arduino</span>
+                            <span class="preview-tag">PCB Design</span>
+                            <span class="preview-tag">Signal Processing</span>
+                            <span class="preview-tag">Electronics</span>
+                        </div>
+                        <a href="projects/ir-transmitter-and-receiver.html" class="preview-link">
+                            View Full Project →
+                        </a>
+                    </div>
+                </a>
+                <a href="projects/stealth-planes-museum-exhibit.html" class="project-card card-animate">
+                    <div class="project-content">
+                        <svg class="project-icon" viewBox="0 0 24 24">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="7.5,4.21 12,6.81 16.5,4.21"></polyline>
+                            <polyline points="7.5,19.79 7.5,14.6 3,12"></polyline>
+                            <polyline points="21,12 16.5,14.6 16.5,19.79"></polyline>
+                            <polyline points="3.27,6.96 12,12.01 20.73,6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                        <h3 class="project-title">STEALTH PLANES EXHIBIT</h3>
+                        <p class="project-description">Interactive museum display showcasing aerospace engineering principles and stealth technology innovations.</p>
+                    </div>
+                    <div class="project-preview">
+                        <div class="preview-title">Interactive Experience</div>
+                        <p class="preview-text">Created hands-on exhibit explaining radar cross-section principles using 3D models, interactive displays, and real aircraft materials. Collaborated with aerospace engineers to ensure technical accuracy.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag">Aerospace</span>
+                            <span class="preview-tag">3D Modeling</span>
+                            <span class="preview-tag">Education</span>
+                            <span class="preview-tag">Museum Design</span>
+                        </div>
+                        <a href="projects/stealth-planes-museum-exhibit.html" class="preview-link">
+                            View Full Project →
+                        </a>
+                    </div>
+                </a>
+                <a href="projects/portable-charging-3ds-dock.html" class="project-card card-animate">
+                    <div class="project-content">
+                        <svg class="project-icon" viewBox="0 0 24 24">
+                            <rect x="5" y="4" width="14" height="12" rx="2" ry="2"></rect>
+                            <rect x="9" y="9" width="6" height="4" rx="1" ry="1"></rect>
+                            <path d="M9 1v3h6V1"></path>
+                            <path d="M19 14v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4"></path>
+                        </svg>
+                        <h3 class="project-title">PORTABLE CHARGING 3DS DOCK</h3>
+                        <p class="project-description">Compact charging solution with custom circuitry and 3D printed housing for mobile gaming convenience.</p>
+                    </div>
+                    <div class="project-preview">
+                        <div class="preview-title">Design Innovation</div>
+                        <p class="preview-text">Engineered compact charging dock using custom USB-C circuitry and 3D printed ergonomic housing. Features fast charging, cable management, and portable design for gaming on-the-go.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag">3D Printing</span>
+                            <span class="preview-tag">Circuit Design</span>
+                            <span class="preview-tag">CAD</span>
+                            <span class="preview-tag">Product Design</span>
+                        </div>
+                        <a href="projects/portable-charging-3ds-dock.html" class="preview-link">
+                            View Full Project →
+                        </a>
+                    </div>
+                </a>
+                <a href="projects/motor-control-assistive-device.html" class="project-card card-animate">
+                    <div class="project-content">
+                        <svg class="project-icon" viewBox="0 0 24 24">
+                            <path d="M20 9V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2"></path>
+                            <rect x="2" y="9" width="20" height="8" rx="2" ry="2"></rect>
+                            <circle cx="8" cy="13" r="2"></circle>
+                            <path d="M16 13h2"></path>
+                            <path d="M6 7V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"></path>
+                        </svg>
+                        <h3 class="project-title">MOTOR CONTROL ASSISTIVE DEVICE</h3>
+                        <p class="project-description">Accessibility-focused engineering solution utilizing motor control systems to assist individuals with mobility challenges.</p>
+                    </div>
+                    <div class="project-preview">
+                        <div class="preview-title">Accessibility Engineering</div>
+                        <p class="preview-text">Developed assistive technology using servo motors and sensor feedback to help individuals with limited mobility. Integrated Arduino control system with adaptive algorithms for personalized assistance.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag">Assistive Tech</span>
+                            <span class="preview-tag">Motor Control</span>
+                            <span class="preview-tag">Arduino</span>
+                            <span class="preview-tag">Accessibility</span>
+                        </div>
+                        <a href="projects/motor-control-assistive-device.html" class="preview-link">
+                            View Full Project →
+                        </a>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Contact Footer -->
+    <section class="footer">
+        <div class="container">
+            <h3 class="section-title-animate">Let's Connect</h3>
             <div class="contact-grid">
-                <div class="contact-item animate-on-scroll">
+                <div class="contact-item card-animate">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
                     <h4>Phone</h4>
                     <p>(631) 294-8401</p>
                 </div>
-                <div class="contact-item animate-on-scroll">
+                <div class="contact-item card-animate">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
                     <h4>Email</h4>
-                    <a href="mailto:spencer.jo@northeastern.edu?subject=Project%20Inquiry%20-%20Mini%20Robo%20Arm&body=Hi%20Jordan,%0D%0A%0D%0AI%20saw%20your%20Mini%20Robo%20Arm%20project%20and%20would%20like%20to%20discuss%20">spencer.jo@northeastern.edu</a>
+                    <a href="mailto:spencer.jo@northeastern.edu?subject=Portfolio%20Inquiry%20-%20Engineering%20Collaboration&body=Hi%20Jordan,%0D%0A%0D%0AI%20found%20your%20engineering%20portfolio%20and%20would%20like%20to%20connect%20about%20">spencer.jo@northeastern.edu</a>
                 </div>
-                <div class="contact-item animate-on-scroll">
+                <div class="contact-item card-animate">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
                     <h4>LinkedIn</h4>
                     <a href="https://www.linkedin.com/in/jordan-spencer-engineering/" target="_blank">jordan-spencer-engineering</a>
                 </div>
             </div>
         </div>
-    </footer>
+    </section>
 
     <script>
         // Theme Toggle Functionality
@@ -871,175 +1198,10 @@
             localStorage.setItem('theme', newTheme);
         }
 
-        // Component Visibility Toggle Functionality
-        let shellVisible = true; // Shell starts visible
-        let splineApp = null;
-
-        function toggleComponentVisibility() {
-            const toggle = document.getElementById('componentToggle');
-            shellVisible = !shellVisible;
-            
-            // Update toggle visual state (active when shell is hidden = internals shown)
-            if (!shellVisible) {
-                toggle.classList.add('active');
-            } else {
-                toggle.classList.remove('active');
-            }
-            
-            // Control Spline shell visibility
-            if (splineApp) {
-                try {
-                    // Try to find the component first
-                    let component = splineApp.findObjectByName('MiniRoboArm-1');
-                    
-                    if (component) {
-                        component.visible = shellVisible;
-                        console.log(`MiniRoboArm-1 component visibility: ${shellVisible ? 'visible' : 'hidden'}`);
-                    } else {
-                        // If component not found, try to find it in the scene hierarchy
-                        function findObjectInScene(scene, name) {
-                            for (let child of scene.children) {
-                                if (child.name === name) return child;
-                                if (child.children && child.children.length > 0) {
-                                    let found = findObjectInScene(child, name);
-                                    if (found) return found;
-                                }
-                            }
-                            return null;
-                        }
-                        
-                        component = findObjectInScene(splineApp.scene, 'MiniRoboArm-1');
-                        if (component) {
-                            component.visible = shellVisible;
-                            console.log(`Found MiniRoboArm-1 in scene hierarchy, visibility: ${shellVisible ? 'visible' : 'hidden'}`);
-                        } else {
-                            console.log('MiniRoboArm-1 component not found anywhere in scene');
-                        }
-                    }
-                } catch (error) {
-                    console.log('Spline interaction error:', error);
-                }
-            } else {
-                console.log('Spline app not loaded yet');
-            }
-        }
-
-        // Initialize Spline viewer connection
-        function initSplineViewer() {
-            const viewer = document.getElementById('spline-viewer');
-            if (viewer) {
-                // Try multiple approaches to detect when Spline is ready
-                let checkCount = 0;
-                const maxChecks = 20;
-                
-                const checkSplineReady = () => {
-                    checkCount++;
-                    console.log(`Checking Spline readiness (attempt ${checkCount})`);
-                    
-                    // Try different properties we found
-                    const app = viewer.splineApp || viewer.spline || viewer.app || viewer._spline;
-                    
-                    if (app) {
-                        console.log('✅ Spline app found!', app);
-                        splineApp = app;
-                        return true;
-                    }
-                    
-                    // Check if _spline property exists and has useful methods
-                    if (viewer._spline) {
-                        console.log('📡 Found _spline property:', viewer._spline);
-                        splineApp = viewer._spline;
-                        
-                        // Try to access scene through _spline
-                        if (viewer._spline.scene) {
-                            console.log('✅ Found scene through _spline!');
-                            return true;
-                        }
-                    }
-                    
-                    if (checkCount >= maxChecks) {
-                        console.log('❌ Spline app not found after maximum attempts');
-                        console.log('Viewer properties:', Object.getOwnPropertyNames(viewer));
-                        return false;
-                    }
-                    
-                    // Continue checking
-                    setTimeout(checkSplineReady, 500);
-                };
-                
-                // Start checking after a short delay
-                setTimeout(checkSplineReady, 1000);
-                
-                // Also try event-based approaches
-                viewer.addEventListener('load', () => {
-                    console.log('📡 Spline load event fired');
-                    setTimeout(() => {
-                        splineApp = viewer.splineApp || viewer.spline || viewer.app || viewer._spline;
-                        if (splineApp) console.log('✅ Got Spline app from load event');
-                    }, 500);
-                });
-            }
-        }
-
-        // Debug function to manually check Spline state
-        function debugSpline() {
-            console.log('=== SPLINE DEBUG V3 ===');
-            
-            const viewer = document.getElementById('spline-viewer');
-            console.log('Viewer element:', viewer);
-            
-            // Try the _spline property we found
-            console.log('Viewer._spline:', viewer._spline);
-            
-            if (viewer._spline) {
-                console.log('✅ Found _spline property!');
-                console.log('_spline object:', viewer._spline);
-                console.log('_spline properties:', Object.getOwnPropertyNames(viewer._spline));
-                
-                splineApp = viewer._spline;
-                
-                // Check if it has scene or other useful properties
-                if (viewer._spline.scene) {
-                    console.log('✅ Found scene:', viewer._spline.scene);
-                    console.log('Scene children:', viewer._spline.scene.children);
-                    
-                    // Try to find MiniRoboArm-1
-                    const target = viewer._spline.scene.children.find(child => child.name === 'MiniRoboArm-1');
-                    if (target) {
-                        console.log('🎯 Found MiniRoboArm-1:', target);
-                        console.log('Current visibility:', target.visible);
-                        
-                        // Try toggling it
-                        target.visible = !target.visible;
-                        console.log('✅ Toggled visibility to:', target.visible);
-                    } else {
-                        console.log('❌ MiniRoboArm-1 not found in scene children');
-                        console.log('Available objects:', viewer._spline.scene.children.map(child => child.name));
-                    }
-                }
-                
-                // Check for other methods
-                if (typeof viewer._spline.findObjectByName === 'function') {
-                    console.log('✅ findObjectByName method exists');
-                    try {
-                        const result = viewer._spline.findObjectByName('MiniRoboArm-1');
-                        console.log('Direct search result:', result);
-                    } catch (e) {
-                        console.log('Direct search failed:', e.message);
-                    }
-                }
-            } else {
-                console.log('❌ No _spline property found');
-            }
-        }
-
         // Load saved theme
         document.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.body.setAttribute('data-theme', savedTheme);
-            
-            // Initialize Spline viewer
-            initSplineViewer();
         });
 
         // Enhanced Animation System
@@ -1053,14 +1215,14 @@
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('animate-in');
-                    }, index * 150);
+                    }, index * 100);
                 }
             });
         }, observerOptions);
 
         function initScrollAnimations() {
             const animateElements = document.querySelectorAll(
-                '.animate-on-scroll, .card-animate'
+                '.animate-on-scroll, .card-animate, .section-title-animate'
             );
             animateElements.forEach((el) => {
                 observer.observe(el);
@@ -1070,58 +1232,78 @@
         document.addEventListener('DOMContentLoaded', initScrollAnimations);
         window.addEventListener('load', initScrollAnimations);
 
-        // Enhanced Image Gallery
-        document.querySelectorAll('.gallery-image').forEach(img => {
-            img.addEventListener('click', function() {
-                const overlay = document.createElement('div');
-                overlay.style.cssText = `
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.95);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 2000;
-                    cursor: pointer;
-                    backdrop-filter: blur(20px);
-                `;
-                
-                const image = document.createElement('img');
-                image.src = this.src;
-                image.style.cssText = `
-                    max-width: 90%;
-                    max-height: 90%;
-                    border-radius: 16px;
-                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-                `;
-                
-                overlay.appendChild(image);
-                document.body.appendChild(overlay);
-                
-                // Fade in animation
-                overlay.style.opacity = '0';
-                setTimeout(() => overlay.style.opacity = '1', 10);
-                
-                overlay.addEventListener('click', () => {
-                    overlay.style.opacity = '0';
-                    setTimeout(() => document.body.removeChild(overlay), 300);
-                });
-            });
+        // Enhanced Navigation scroll behavior
+        window.addEventListener('scroll', function() {
+            const heroHeight = document.querySelector('.hero-section').offsetHeight;
+            const scrolled = window.scrollY > (heroHeight - 50);
+            const navbar = document.getElementById('navbar');
+            const marquee = document.getElementById('marquee');
+            
+            if (scrolled) {
+                navbar.classList.add('scrolled');
+                marquee.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+                marquee.classList.remove('scrolled');
+            }
         });
 
-        // Smooth scrolling for navigation
+        // Enhanced Scroll indicator functionality
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        if (scrollIndicator) {
+            scrollIndicator.addEventListener('click', function() {
+                const aboutSection = document.getElementById('about');
+                if (aboutSection) {
+                    aboutSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    scrollIndicator.style.opacity = '0';
+                    scrollIndicator.style.pointerEvents = 'none';
+                } else {
+                    scrollIndicator.style.opacity = '1';
+                    scrollIndicator.style.pointerEvents = 'auto';
+                }
+            });
+        }
+
+        // Enhanced Navigation functionality
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ 
+                    target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
+                }
+            });
+        });
+
+        // Enhanced Active nav link highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            
+            let current = 'home';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}` || 
+                    (current === 'home' && link.getAttribute('href') === 'index.html')) {
+                    link.classList.add('active');
                 }
             });
         });
