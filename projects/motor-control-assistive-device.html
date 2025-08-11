@@ -159,44 +159,10 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Enhanced Scrolling Marquee */
-        .scrolling-banner {
-            background: var(--glass-bg);
-            color: var(--text-primary);
-            padding: 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1001;
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            height: 36px;
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .scrolling-content {
-            display: inline-block;
-            animation: scroll-seamless 45s linear infinite;
-        }
-
-        .scroll-text {
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        @keyframes scroll-seamless {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
-
         /* Enhanced Navigation */
         .header-nav {
             position: fixed;
-            top: 36px;
+            top: 0;
             left: 2rem;
             right: 2rem;
             background: var(--glass-bg);
@@ -268,9 +234,9 @@
 
         /* Project Content */
         .project-container {
-            margin-top: 120px;
+            margin-top: 84px;
             padding: 2rem;
-            min-height: calc(100vh - 120px);
+            min-height: calc(100vh - 84px);
         }
 
         .container {
@@ -571,18 +537,14 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .scrolling-banner {
-                height: 32px;
-            }
-
             .header-nav {
-                top: 32px;
+                top: 0;
                 left: 1rem;
                 right: 1rem;
             }
 
             .project-container {
-                margin-top: 100px;
+                margin-top: 74px;
                 padding: 1rem;
             }
 
@@ -617,15 +579,6 @@
 </head>
 
 <body data-theme="dark">
-    <!-- Enhanced Marquee -->
-    <div class="scrolling-banner">
-        <div class="scrolling-content">
-            <span class="scroll-text">
-                🦾 FEATURED: Assistive Technology Innovation   •   🎯 INNOVATION: One-Handed Operation System   •   🏆 LATEST: SharkNinja Co-op Systems Team   •   
-            </span>
-        </div>
-    </div>
-
     <!-- Enhanced Navigation -->
     <div class="header-nav">
         <a href="../index.html" class="site-title">Jordan's Engineering Portfolio</a>
