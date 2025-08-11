@@ -984,29 +984,34 @@
             console.log('Viewer element:', viewer);
             
             // Try different ways to access the Spline app
-            console.log('Viewer properties:', Object.getOwnPropertyNames(viewer));
+            console.log('All viewer properties:', Object.getOwnPropertyNames(viewer));
+            console.log('All viewer methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(viewer)));
             console.log('Viewer.splineApp:', viewer.splineApp);
             console.log('Viewer.spline:', viewer.spline);
             console.log('Viewer.app:', viewer.app);
+            console.log('Viewer._app:', viewer._app);
+            console.log('Viewer.scene:', viewer.scene);
+            console.log('Viewer.runtime:', viewer.runtime);
             
-            // Try to access through different properties
-            splineApp = viewer.splineApp || viewer.spline || viewer.app;
-            
-            if (splineApp) {
-                console.log('Spline app found!');
-                console.log('App object:', splineApp);
-                console.log('App properties:', Object.getOwnPropertyNames(splineApp));
-                
-                if (splineApp.scene) {
-                    console.log('Scene found:', splineApp.scene);
-                    console.log('Scene children:', splineApp.scene.children);
-                } else {
-                    console.log('No scene property found');
+            // Check if there's a different way to access it
+            if (typeof viewer.findObjectByName === 'function') {
+                console.log('✅ findObjectByName method exists on viewer');
+                try {
+                    const result = viewer.findObjectByName('MiniRoboArm-1');
+                    console.log('Direct search result:', result);
+                } catch (e) {
+                    console.log('Direct search failed:', e.message);
                 }
-            } else {
-                console.log('No Spline app found through any property');
-                console.log('Viewer loaded?', viewer.loaded);
-                console.log('Viewer ready?', viewer.ready);
+            }
+            
+            // Try to find objects through any available property
+            for (const prop of Object.getOwnPropertyNames(viewer)) {
+                const value = viewer[prop];
+                if (value && typeof value === 'object' && value.scene) {
+                    console.log(`Found potential app through ${prop}:`, value);
+                    splineApp = value;
+                    break;
+                }
             }
         }
 
