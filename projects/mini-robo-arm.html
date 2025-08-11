@@ -877,6 +877,8 @@
 
         function toggleComponentVisibility() {
             const toggle = document.getElementById('componentToggle');
+            const viewer = document.getElementById('spline-viewer');
+            
             shellVisible = !shellVisible;
             
             // Update toggle visual state (active when shell is hidden = internals shown)
@@ -886,41 +888,30 @@
                 toggle.classList.remove('active');
             }
             
-            // Control Spline shell visibility
-            if (splineApp) {
+            // Control Spline shell visibility using the working _spline approach
+            if (viewer && viewer._spline) {
                 try {
-                    // Try to find the component first
-                    let component = splineApp.findObjectByName('MiniRoboArm-1');
+                    // Use the _spline property that we know works
+                    const app = viewer._spline;
                     
-                    if (component) {
-                        component.visible = shellVisible;
-                        console.log(`MiniRoboArm-1 component visibility: ${shellVisible ? 'visible' : 'hidden'}`);
-                    } else {
-                        // If component not found, try to find it in the scene hierarchy
-                        function findObjectInScene(scene, name) {
-                            for (let child of scene.children) {
-                                if (child.name === name) return child;
-                                if (child.children && child.children.length > 0) {
-                                    let found = findObjectInScene(child, name);
-                                    if (found) return found;
-                                }
-                            }
-                            return null;
-                        }
+                    if (app.scene && app.scene.children) {
+                        const shell = app.scene.children.find(child => child.name === 'MiniRoboArm-1');
                         
-                        component = findObjectInScene(splineApp.scene, 'MiniRoboArm-1');
-                        if (component) {
-                            component.visible = shellVisible;
-                            console.log(`Found MiniRoboArm-1 in scene hierarchy, visibility: ${shellVisible ? 'visible' : 'hidden'}`);
+                        if (shell) {
+                            shell.visible = shellVisible;
+                            console.log(`✅ MiniRoboArm-1 visibility toggled to: ${shellVisible ? 'visible' : 'hidden'}`);
                         } else {
-                            console.log('MiniRoboArm-1 component not found anywhere in scene');
+                            console.log('❌ MiniRoboArm-1 not found in scene');
+                            console.log('Available objects:', app.scene.children.map(child => child.name));
                         }
+                    } else {
+                        console.log('❌ No scene or children found');
                     }
                 } catch (error) {
-                    console.log('Spline interaction error:', error);
+                    console.log('❌ Toggle error:', error);
                 }
             } else {
-                console.log('Spline app not loaded yet');
+                console.log('❌ Spline viewer or _spline property not available');
             }
         }
 
