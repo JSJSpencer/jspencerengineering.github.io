@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+// Initialize project data with auto-discovery
+        let projectData = [];<!DOCTYPE html>
 <html lang="en-US">
 <head>
     <meta charset="utf-8">
@@ -1583,9 +1584,6 @@
             };
         }
 
-        // Initialize project data with auto-discovery
-        let projectData = [];
-
         async function initializeSearch() {
             console.log('🔍 Auto-discovering and loading projects...');
             try {
@@ -1612,7 +1610,21 @@
                 
             } catch (error) {
                 console.log('❌ Error initializing portfolio:', error);
-                console.log('Using static project cards from HTML.');
+                console.log('Please check the console for project discovery details.');
+                
+                // Don't fall back to static cards since we removed them - show helpful message
+                const projectsGrid = document.getElementById('projectsGrid');
+                if (projectsGrid && projectsGrid.children.length === 0) {
+                    projectsGrid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-secondary);">
+                            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Projects Loading...</h3>
+                            <p>Having trouble loading projects. Check the console for details.</p>
+                            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                                Make sure you're viewing this from a web server (not file://) and that your project files are in the projects/ folder.
+                            </p>
+                        </div>
+                    `;
+                }
             }
         }
 
