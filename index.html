@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Jordan's Engineering Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔨</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -515,6 +516,16 @@
             border: none;
         }
 
+        /* SharkNinja logo color switching */
+        .card-logo[alt="SharkNinja"] {
+            filter: brightness(0) invert(1); /* Makes it white in dark mode */
+            transition: filter 0.3s ease;
+        }
+
+        [data-theme="light"] .card-logo[alt="SharkNinja"] {
+            filter: brightness(0); /* Makes it black in light mode */
+        }
+
         .card-info h3 {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
             font-size: 1.3rem;
@@ -878,7 +889,7 @@
             <div class="experience-grid">
                 <a href="https://sharkninja.com" target="_blank" class="modern-card card-animate" style="text-decoration: none; color: inherit;">
                     <div class="card-content">
-                        <img src="images/sharkninja-logo.png" alt="SharkNinja" class="card-logo">
+                        <img src="images/sharkninja-logo.svg" alt="SharkNinja" class="card-logo">
                         <div class="card-info">
                             <h3>SharkNinja</h3>
                             <p>Needham, MA</p>
