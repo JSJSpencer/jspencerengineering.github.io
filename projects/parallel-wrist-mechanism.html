@@ -811,55 +811,8 @@
                 <div class="project-main animate-on-scroll">
                     <h2 class="card-title">Project Overview</h2>
                     <div class="project-description">
-                        <p>This project investigates a 3-DOF parallel wrist mechanism designed for controlled spatial orientation. Three kinematic legs connect a fixed base to a moving outer race in a closed-loop structure. Two legs are actuated via coplanar cylindrical joints oriented orthogonally, providing coupled rotational and translational motion, while the third uses a centrally located revolute input for rotation about the vertical axis.</p>
-
-                        <p>Passive universal and spherical joints constrain the system to pure rotation about a fixed point, yielding a spherical parallel mechanism with improved stiffness and load distribution compared to a serial gimbal equivalent.</p>
-                    </div>
-
-                    <div class="cad-figure">
-                        <img src="../images/project-images/parallel-wrist-mechanism-cad.jpg" alt="CAD model of the parallel wrist mechanism">
-                        <div class="cad-figure-caption">Figure 1: CAD model of the mechanism</div>
-                    </div>
-
-                    <h3 class="card-title">Construction</h3>
-                    <div class="project-description">
-                        <p><strong>Bearing:</strong> The outer and inner race are connected by a revolute joint, with universal joints attached at a radius of 80mm.</p>
-                        <p><strong>Cylindrical Input Legs (1 &amp; 2):</strong> Oriented orthogonally to decouple their motion. Each contains 2 universal joints and 1 cylindrical joint, connecting the outer race down to the base plate.</p>
-                        <p><strong>Rotational Input Leg (3):</strong> Connects to the spherical center via a universal yoke on the pin bisecting the inner race, with 1 revolute joint and 1 universal joint.</p>
-                        <p><strong>Socket:</strong> A spherical socket opposite the cylindrical legs, containing a spherical joint, a prismatic joint, and a revolute joint back to the base plate.</p>
-                    </div>
-
-                    <h3 class="card-title">Degree of Freedom Analysis</h3>
-                    <div class="project-description">
-                        <p>DOF was analyzed using the Grübler equation for spatial mechanisms, where <em>m</em> is the total DOF of the space, <em>N</em> is the number of links (including ground), <em>J</em> is the number of joints, and <em>f<sub>i</sub></em> is the DOF of each joint:</p>
-                    </div>
-                    <div class="equation-box">DOF = m(N &minus; 1 &minus; J) + &Sigma;f<sub>i</sub> &nbsp;&nbsp;&rarr;&nbsp;&nbsp; 6(10 &minus; 1 &minus; 12) + 21 = <strong>3 DOF</strong></div>
-                    <div class="dof-table-wrap">
-                        <table class="dof-table">
-                            <thead>
-                                <tr><th>Joint Type</th><th>f<sub>i</sub></th><th>Leg 1</th><th>Leg 2</th><th>Leg 3</th><th>Socket</th><th>Bearing</th><th># of Joints</th><th>&Sigma;f<sub>i</sub></th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Revolute (R)</td><td>1</td><td></td><td></td><td>1</td><td>1</td><td>1</td><td>3</td><td>3</td></tr>
-                                <tr><td>Prismatic (P)</td><td>1</td><td></td><td></td><td></td><td>1</td><td></td><td>1</td><td>1</td></tr>
-                                <tr><td>Cylindrical (C)</td><td>2</td><td>1</td><td>1</td><td></td><td></td><td></td><td>2</td><td>4</td></tr>
-                                <tr><td>Universal (U)</td><td>2</td><td>2</td><td>2</td><td>1</td><td></td><td></td><td>5</td><td>10</td></tr>
-                                <tr><td>Spherical (S)</td><td>3</td><td></td><td></td><td></td><td>1</td><td></td><td>1</td><td>3</td></tr>
-                                <tr><td><strong>Totals</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td><strong>12</strong></td><td><strong>21</strong></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3 class="card-title">Workspace &amp; Singularity Analysis</h3>
-                    <div class="project-description">
-                        <p>The mechanism is driven by inputs q = [&theta;<sub>1</sub>, &theta;<sub>2</sub>, &theta;<sub>3</sub>] — the translation of each cylindrical input and the rotational input — with actuator limits of |&theta;<sub>1</sub>| and |&theta;<sub>2</sub>| &le; 57mm from the home position, determined using SOLIDWORKS Motion Analysis contact and interference tools. The theoretical workspace, ignoring those limits, was mapped in MATLAB:</p>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/parallel-wrist-mechanism-workspace.jpg" alt="Workspace boundaries plot">
-                        <div class="cad-figure-caption">Figure 5: Workspace boundaries</div>
-                    </div>
-                    <div class="project-description">
-                        <p>A singularity would occur if |&theta;<sub>1</sub>| or |&theta;<sub>2</sub>| exceeded the leg radius of r = 80mm. Since the actuator limits of &plusmn;57mm stay well within that radius, no singularity is reachable within the mechanism's real, geometrically-constrained workspace.</p>
+                        <p>This project analyzes a 3-DOF parallel wrist mechanism for controlled spatial orientation. Three kinematic legs connect a fixed base to a moving outer race in a closed-loop structure — two legs use coplanar cylindrical joints oriented orthogonally, while the third uses a centrally located revolute input for rotation about the vertical axis. Passive universal and spherical joints constrain the system to pure rotation about a fixed point, giving a spherical parallel mechanism with better stiffness and load distribution than a serial gimbal equivalent.</p>
+                        <p>A Grübler DOF analysis confirmed the mechanism has exactly 3 degrees of freedom, matching its 3 rotational inputs. Actuator limits were found using SOLIDWORKS Motion Analysis, and the resulting workspace was mapped in MATLAB; since those limits stay well within the mechanism's leg radius, no singularity is reachable within its real, geometrically-constrained range of motion.</p>
                     </div>
 
                     <!-- Design Notebook Section -->

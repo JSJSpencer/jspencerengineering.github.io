@@ -784,76 +784,9 @@
                 <div class="project-main animate-on-scroll">
                     <h2 class="card-title">Project Overview</h2>
                     <div class="project-description">
-                        <p>K'Nex roller coaster sets are widely used in K-8 classrooms to teach energy and motion concepts, but gravity-driven model coasters can't scale correctly: gravity itself can't be scaled down, so a model car's speed only shrinks by the square root of the size ratio while everything else shrinks linearly. The result is model coaster motion that visually misrepresents the full-scale ride it's supposed to teach.</p>
-                        <p>Our team set out to fix this by motorizing the cart from K'Nex's official <em>STEM Explorations: Roller Coaster Set</em>, using MATLAB-calculated kinematics and a custom control system to make the small-scale cart's motion visually match its full-size counterpart.</p>
-                    </div>
-
-                    <h3 class="card-title">Driving Mechanism</h3>
-                    <div class="project-description">
-                        <p>Three driving concepts were compared: a rack-and-pinion gear running along a toothed track, a friction wheel pressed against a flat surface, and a filament-extruder-style mechanism adapted from 3D printer hardware. The extruder concept won out — by driving the cart's own road wheels directly against the rail (the same way a 3D printer's extruder wheel grips filament), it works on tight bends without requiring a specially-shaped track, unlike the other two options.</p>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-driving-mechanisms.jpg" alt="Rack and pinion, friction wheel, and filament extruder driving mechanisms compared">
-                        <div class="cad-figure-caption">Rack &amp; pinion, friction wheel, and filament extruder concepts compared</div>
-                    </div>
-
-                    <h3 class="card-title">Wheel Cluster Evolution</h3>
-                    <div class="project-description">
-                        <p>The wheel assembly went through several CAD iterations: a smooth drive wheel and idler proof-of-concept, a toothed drive wheel for better grip, a side-guide wheel to prevent misalignment on curves, and a crown-structured cluster that added a dog clutch to disengage the motor for frictionless "gravity mode" comparisons. The final geometry — a swivel cart split into front and back segments — gave each wheel cluster its own rigidity while letting the cart body flex through hills, valleys, and turns.</p>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-crown-wheel-cluster.jpg" alt="Crown-structured wheel cluster CAD model with dog clutch">
-                        <div class="cad-figure-caption">Crown-structured wheel cluster with a dog clutch for frictionless mode</div>
-                    </div>
-
-                    <h3 class="card-title">Final Cart Design</h3>
-                    <div class="project-description">
-                        <p>The recommended design uses a motor-driven filament extruder wheel assembly where an O-ring rubber drive wheel presses against the track rail to actively control the cart's speed. A small N20 3V 400RPM DC motor drives a 1:1 gear train (15-tooth, 1mm pitch) that keeps the motor mounted above the track. The front half of the cart holds the Seeed Studio Xiao nRF52840 Sense microcontroller, motor driver, and power switch; the back half holds the motor and battery, connected by a central swivel joint for rotational freedom along the direction of travel.</p>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-swivel-cart-cad.jpg" alt="Swivel cart CAD model with labeled components">
-                        <div class="cad-figure-caption">Final swivel cart design — motor, battery, microcontroller, and gear train</div>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-final-cart-photo.jpg" alt="Final assembled cart with electronics">
-                        <div class="cad-figure-caption">The final cart, assembled and wired</div>
-                    </div>
-
-                    <h3 class="card-title">MATLAB Modeling &amp; Control</h3>
-                    <div class="project-description">
-                        <p>To calculate the "correct" scaled motion, a 2D image of the track was sketched into a spline in SolidWorks, exported as a DXF, and imported into AutoCAD to extract XY coordinates. Those points were pulled into MATLAB, which simulates the cart's potential and kinetic energy at each point along the track (starting from the highest point, since the real coaster is gravity-driven) to generate the target velocity profile — then applies a scale factor to translate that into what the small model's velocity should be to look visually correct.</p>
-                        <p>From there, a script converts the target velocities into a sequence of PWM signals and delta-times, exported as a CSV. A custom web app ("Rollercoaster Sequencer," built with help from Claude AI) transmits that CSV to the onboard microcontroller over Bluetooth, which drives the motor through the sequence in real time.</p>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-sequencer-webapp.jpg" alt="Rollercoaster Sequencer web app for Bluetooth CSV transmission">
-                        <div class="cad-figure-caption">The Rollercoaster Sequencer web app, used to transmit PWM sequences to the cart over Bluetooth</div>
-                    </div>
-
-                    <h3 class="card-title">Track Construction</h3>
-                    <div class="project-description">
-                        <p>Three test tracks of increasing complexity were built: a 1D straight section for quick informal tests, a 2D track (a drop plus a short hill) as a proof-of-concept, and the full 3D STEM Explorations layout as the end goal. Two additional final test tracks isolated specific motion types — an XY track with hills and valleys to test gravitational potential energy handling, and a flat XZ circular loop to isolate lateral/centripetal motion through turns.</p>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-track-xy.jpg" alt="XY test track with hills and valleys">
-                        <div class="cad-figure-caption">The XY test track — varying elevation to test gravitational effects</div>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-track-xz.jpg" alt="XZ circular loop test track">
-                        <div class="cad-figure-caption">The XZ test track — a flat loop isolating lateral motion</div>
-                    </div>
-
-                    <h3 class="card-title">Testing &amp; Results</h3>
-                    <div class="project-description">
-                        <p>Video motion tracking (via the Tracker software) established a baseline for the unmodified, gravity-driven cart's velocity and acceleration, then the same analysis was repeated on the motor-controlled cart for direct comparison. The unmodified cart showed the sharp, inconsistent velocity swings typical of a gravity-driven system; the motor-controlled cart showed a noticeably smoother, more stable velocity profile — evidence that active control is successfully compensating for the uneven scaling.</p>
-                        <p>Motor selection was also characterized experimentally across several RPM ratings to find the widest usable speed range; a 400 RPM motor won out and was used in the final design. The current cart demonstrates feasibility on 2D test tracks. Next steps include a closed-loop control system using the onboard IMU to adapt to arbitrary track layouts, further motor/torque tuning, and integration testing on the full 3D STEM Explorations set.</p>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-tracker-software.jpg" alt="Tracker motion analysis software with test track">
-                        <div class="cad-figure-caption">Tracker video motion analysis establishing baseline gravity-driven motion</div>
-                    </div>
-                    <div class="cad-figure">
-                        <img src="../images/project-images/knext-pwm-motor-chart.jpg" alt="Average PWM input needed across different candidate motors">
-                        <div class="cad-figure-caption">Motor characterization — the 400 RPM motor had the widest usable range</div>
+                        <p>K'Nex roller coaster sets are widely used in K-8 classrooms to teach energy and motion concepts, but gravity-driven model coasters can't scale correctly — gravity itself can't shrink with the model, so a model car's speed only drops by the square root of the size ratio while everything else scales linearly. The result is model coaster motion that visually misrepresents the full-scale ride it's supposed to teach.</p>
+                        <p>Our team fixed this by motorizing the cart from K'Nex's official <em>STEM Explorations: Roller Coaster Set</em>. After comparing a few driving mechanisms, we landed on a filament-extruder-style wheel assembly that drives the cart's own road wheels directly against the rail — no specially-shaped track required. MATLAB calculates the scaled velocity profile from a digitized track, converts it into a PWM sequence, and a custom Bluetooth web app sends that sequence to an onboard microcontroller in real time.</p>
+                        <p>Tracker motion-tracking software confirmed the result: the motor-controlled cart showed a noticeably smoother, more stable velocity profile than the unmodified, gravity-driven baseline. Full technical details — literature review, every design iteration, and complete testing &amp; analysis — are in the two reports below.</p>
                     </div>
 
                     <!-- Design Notebook Section -->
