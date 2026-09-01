@@ -904,6 +904,26 @@
             position: relative;
         }
 
+        .project-thumb {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 24px 24px 0 0;
+            background: var(--background-secondary);
+        }
+
+        .project-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover .project-thumb img {
+            transform: scale(1.08);
+        }
+
         .project-card:hover {
             transform: translateY(-12px) scale(1.02);
             box-shadow: 0 32px 80px var(--shadow-heavy);
@@ -1359,6 +1379,9 @@
 
             <div class="projects-grid" id="projectsGrid">
                 <a href="projects/eagle-scout-project.html" class="project-card card-animate" data-keywords="leadership project management community service eagle scout">
+                    <div class="project-thumb">
+                        <img src="images/project-images/eagle-scout-3.jpg" alt="Eagle Scout Project" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">EAGLE SCOUT PROJECT</h3>
                         <p class="project-description">Community service project demonstrating leadership and project management skills through planning and executing a beneficial initiative.</p>
@@ -1377,6 +1400,9 @@
                     </div>
                 </a>
                 <a href="projects/tabletop-arcade-machine.html" class="project-card card-animate" data-keywords="raspberry pi woodworking electronics programming gaming arcade">
+                    <div class="project-thumb">
+                        <img src="images/project-images/arcade-machine-1.jpg" alt="Tabletop Arcade Machine" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">TABLETOP ARCADE MACHINE</h3>
                         <p class="project-description">Custom-built retro gaming system combining woodworking craftsmanship with electronics integration and programming.</p>
@@ -1396,6 +1422,9 @@
                     </div>
                 </a>
                 <a href="projects/mini-robo-arm.html" class="project-card card-animate" data-keywords="arduino pcb design robotics 3d printing servo motors automation">
+                    <div class="project-thumb">
+                        <img src="images/project-images/mini-robo-arm-1.jpg" alt="Mini Robo Arm" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">MINI ROBO ARM</h3>
                         <p class="project-description">Precision robotic arm with servo motor control, hotswappable end effectors, and automated task execution capabilities.</p>
@@ -1415,6 +1444,9 @@
                     </div>
                 </a>
                 <a href="projects/ir-transmitter-and-receiver.html" class="project-card card-animate" data-keywords="arduino pcb design signal processing electronics infrared communication">
+                    <div class="project-thumb">
+                        <img src="images/project-images/ir-receiver-circuit.jpg" alt="IR Transmitter and Receiver" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">IR TRANSMITTER AND RECEIVER</h3>
                         <p class="project-description">Electronic communication system utilizing infrared technology for wireless data transmission and signal processing.</p>
@@ -1434,6 +1466,9 @@
                     </div>
                 </a>
                 <a href="projects/stealth-planes-museum-exhibit.html" class="project-card card-animate" data-keywords="aerospace 3d modeling education museum design radar stealth">
+                    <div class="project-thumb">
+                        <img src="images/project-images/stealth-planes-5.jpg" alt="Stealth Planes Museum Exhibit" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">STEALTH PLANES EXHIBIT</h3>
                         <p class="project-description">Interactive museum display showcasing aerospace engineering principles and stealth technology innovations.</p>
@@ -1453,6 +1488,9 @@
                     </div>
                 </a>
                 <a href="projects/portable-charging-3ds-dock.html" class="project-card card-animate" data-keywords="3d printing circuit design cad product design usb charging">
+                    <div class="project-thumb">
+                        <img src="images/project-images/3ds-dock-1.jpg" alt="Portable Charging 3DS Dock" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">PORTABLE CHARGING 3DS DOCK</h3>
                         <p class="project-description">Compact charging solution with custom circuitry and 3D printed housing for mobile gaming convenience.</p>
@@ -1472,6 +1510,9 @@
                     </div>
                 </a>
                 <a href="projects/motor-control-assistive-device.html" class="project-card card-animate" data-keywords="assistive technology motor control arduino accessibility assistive device mobility">
+                    <div class="project-thumb">
+                        <img src="images/project-images/motor-control-1.jpg" alt="Motor Control Assistive Device" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">MOTOR CONTROL ASSISTIVE DEVICE</h3>
                         <p class="project-description">Accessibility-focused engineering solution utilizing motor control systems to assist individuals with mobility challenges.</p>
@@ -1491,6 +1532,9 @@
                     </div>
                 </a>
                 <a href="projects/parallel-wrist-mechanism.html" class="project-card card-animate" data-keywords="kinematics matlab solidworks motion analysis mechanism dof grubler parallel wrist ME5250">
+                    <div class="project-thumb">
+                        <img src="images/project-images/parallel-wrist-mechanism-cad.jpg" alt="3-DOF Parallel Wrist Mechanism" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">3-DOF PARALLEL WRIST MECHANISM</h3>
                         <p class="project-description">Course project analyzing a spherical parallel mechanism for controlled spatial orientation, from Grübler DOF analysis through forward kinematics.</p>
@@ -1510,6 +1554,9 @@
                     </div>
                 </a>
                 <a href="projects/knext-level-engineering-capstone.html" class="project-card card-animate" data-keywords="capstone matlab control systems mechatronics dynamics roller coaster knex">
+                    <div class="project-thumb">
+                        <img src="images/project-images/knext-final-cart-photo.jpg" alt="K'Nex't Level Engineering" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">K'NEX'T LEVEL ENGINEERING</h3>
                         <p class="project-description">Senior capstone motorizing a K'Nex roller coaster cart to fix uneven kinematic scaling, with a MATLAB-driven velocity control system.</p>
@@ -1529,6 +1576,9 @@
                     </div>
                 </a>
                 <a href="projects/scrap-metal-go-kart.html" class="project-card card-animate" data-keywords="welding fabrication drivetrain go kart scrap metal engine wip">
+                    <div class="project-thumb">
+                        <img src="images/project-images/scrap-metal-go-kart-1.jpg" alt="Scrap Metal Go-Kart" loading="lazy">
+                    </div>
                     <div class="project-content">
                         <h3 class="project-title">SCRAP METAL GO-KART <span style="font-size: 0.75rem; color: var(--accent-color); font-weight: 700;">(WIP)</span></h3>
                         <p class="project-description">A drivable go-kart welded up from scrap frame materials and off-the-shelf drivetrain parts — currently in the finishing stages.</p>
