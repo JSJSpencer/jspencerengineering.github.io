@@ -414,6 +414,69 @@
         }
 
         /* CAD Viewer - Enhanced */
+        .cad-figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .cad-figure img {
+            max-width: 100%;
+            border-radius: 16px;
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 8px 32px var(--shadow-light);
+            background: white;
+        }
+        .cad-figure-caption {
+            margin-top: 0.75rem;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+        .team-line {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            margin-top: -0.5rem;
+        }
+
+        /* Design Notebook / PDF Viewer */
+        .design-notebook {
+            margin: 3rem 0;
+        }
+        .pdf-viewer {
+            width: 100%;
+            height: 600px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: block;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+            background: var(--surface-secondary);
+        }
+        .pdf-fallback {
+            background: var(--surface-secondary);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+        .pdf-download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 1rem;
+        }
+        .pdf-download-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+        }
+
         .cad-viewer {
             margin: 3rem 0;
         }
@@ -710,9 +773,10 @@
                     </svg>
                     Back to Projects
                 </a>
-                <h1 class="project-title">K'NEXT LEVEL ENGINEERING</h1>
-                <p class="project-subtitle">Senior Capstone — Solving the scaling problem in K'Nex roller coaster dynamics</p>
-                <p style="color: rgba(255,255,255,0.85); font-weight: 600; margin-top: -0.5rem;">🏆 Awarded Best in Track at Capstone Showcase</p>
+                <h1 class="project-title">K'NEX'T LEVEL ENGINEERING</h1>
+                <p class="project-subtitle">Senior Capstone — Motorizing a K'Nex roller coaster cart to fix uneven kinematic scaling</p>
+                <p class="team-line">Team: Turner Marks, Reyna Rodriguez, Dante Scalfi, Jordan Spencer &nbsp;|&nbsp; Advisor: Stuart Jacobson</p>
+                <p style="color: rgba(255,255,255,0.85); font-weight: 600; margin-top: 0.5rem;">🏆 Awarded Best in Track at Capstone Showcase</p>
             </div>
 
             <!-- Project Content Grid -->
@@ -720,28 +784,111 @@
                 <div class="project-main animate-on-scroll">
                     <h2 class="card-title">Project Overview</h2>
                     <div class="project-description">
-                        <p>Identified and solved the scaling problem between K'Nex roller coaster models and their real-life counterparts, where direct geometric scaling fails to reproduce equivalent dynamic behavior — a scaled-down track simply can't preserve the speed, acceleration, and g-force profile a rider feels on the full-size ride.</p>
-                        
-                        <p>Developed a modular cart addon with a custom control system modeled in MATLAB to dynamically modify cart velocity in real time, matching the apparent velocity profile of a full-scale roller coaster as the cart moves through the track.</p>
-
-                        <p>The project was recognized with <strong>Best in Track</strong> at the capstone showcase, with judges specifically noting the consistently high level of documentation and communication maintained throughout the full project period.</p>
+                        <p>K'Nex roller coaster sets are widely used in K-8 classrooms to teach energy and motion concepts, but gravity-driven model coasters can't scale correctly: gravity itself can't be scaled down, so a model car's speed only shrinks by the square root of the size ratio while everything else shrinks linearly. The result is model coaster motion that visually misrepresents the full-scale ride it's supposed to teach.</p>
+                        <p>Our team set out to fix this by motorizing the cart from K'Nex's official <em>STEM Explorations: Roller Coaster Set</em>, using MATLAB-calculated kinematics and a custom control system to make the small-scale cart's motion visually match its full-size counterpart.</p>
                     </div>
 
-                    <!-- CAD Viewer Section -->
-                    <!-- TODO: Once a Spline scene is published, replace this placeholder block with:
-                         <spline-viewer id="spline-viewer" url="YOUR_SPLINE_SCENE_URL"></spline-viewer>
-                         (see mini-robo-arm.html for the full toggle-enabled version) -->
-                    <div class="cad-viewer">
-                        <h3 class="card-title">3D Interactive Model</h3>
-                        <div style="width: 100%; min-height: 320px; border-radius: 16px; border: 2px dashed var(--border-secondary); background: var(--background-secondary); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; gap: 0.5rem;">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                                <line x1="12" y1="22.08" x2="12" y2="12"/>
-                            </svg>
-                            <p style="color: var(--text-secondary); font-weight: 500;">Interactive 3D CAD model coming soon</p>
-                            <p style="color: var(--text-tertiary); font-size: 0.9rem;">Check back for a rotatable model of the cart addon assembly</p>
+                    <h3 class="card-title">Driving Mechanism</h3>
+                    <div class="project-description">
+                        <p>Three driving concepts were compared: a rack-and-pinion gear running along a toothed track, a friction wheel pressed against a flat surface, and a filament-extruder-style mechanism adapted from 3D printer hardware. The extruder concept won out — by driving the cart's own road wheels directly against the rail (the same way a 3D printer's extruder wheel grips filament), it works on tight bends without requiring a specially-shaped track, unlike the other two options.</p>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-driving-mechanisms.jpg" alt="Rack and pinion, friction wheel, and filament extruder driving mechanisms compared">
+                        <div class="cad-figure-caption">Rack &amp; pinion, friction wheel, and filament extruder concepts compared</div>
+                    </div>
+
+                    <h3 class="card-title">Wheel Cluster Evolution</h3>
+                    <div class="project-description">
+                        <p>The wheel assembly went through several CAD iterations: a smooth drive wheel and idler proof-of-concept, a toothed drive wheel for better grip, a side-guide wheel to prevent misalignment on curves, and a crown-structured cluster that added a dog clutch to disengage the motor for frictionless "gravity mode" comparisons. The final geometry — a swivel cart split into front and back segments — gave each wheel cluster its own rigidity while letting the cart body flex through hills, valleys, and turns.</p>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-crown-wheel-cluster.jpg" alt="Crown-structured wheel cluster CAD model with dog clutch">
+                        <div class="cad-figure-caption">Crown-structured wheel cluster with a dog clutch for frictionless mode</div>
+                    </div>
+
+                    <h3 class="card-title">Final Cart Design</h3>
+                    <div class="project-description">
+                        <p>The recommended design uses a motor-driven filament extruder wheel assembly where an O-ring rubber drive wheel presses against the track rail to actively control the cart's speed. A small N20 3V 400RPM DC motor drives a 1:1 gear train (15-tooth, 1mm pitch) that keeps the motor mounted above the track. The front half of the cart holds the Seeed Studio Xiao nRF52840 Sense microcontroller, motor driver, and power switch; the back half holds the motor and battery, connected by a central swivel joint for rotational freedom along the direction of travel.</p>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-swivel-cart-cad.jpg" alt="Swivel cart CAD model with labeled components">
+                        <div class="cad-figure-caption">Final swivel cart design — motor, battery, microcontroller, and gear train</div>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-final-cart-photo.jpg" alt="Final assembled cart with electronics">
+                        <div class="cad-figure-caption">The final cart, assembled and wired</div>
+                    </div>
+
+                    <h3 class="card-title">MATLAB Modeling &amp; Control</h3>
+                    <div class="project-description">
+                        <p>To calculate the "correct" scaled motion, a 2D image of the track was sketched into a spline in SolidWorks, exported as a DXF, and imported into AutoCAD to extract XY coordinates. Those points were pulled into MATLAB, which simulates the cart's potential and kinetic energy at each point along the track (starting from the highest point, since the real coaster is gravity-driven) to generate the target velocity profile — then applies a scale factor to translate that into what the small model's velocity should be to look visually correct.</p>
+                        <p>From there, a script converts the target velocities into a sequence of PWM signals and delta-times, exported as a CSV. A custom web app ("Rollercoaster Sequencer," built with help from Claude AI) transmits that CSV to the onboard microcontroller over Bluetooth, which drives the motor through the sequence in real time.</p>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-sequencer-webapp.jpg" alt="Rollercoaster Sequencer web app for Bluetooth CSV transmission">
+                        <div class="cad-figure-caption">The Rollercoaster Sequencer web app, used to transmit PWM sequences to the cart over Bluetooth</div>
+                    </div>
+
+                    <h3 class="card-title">Track Construction</h3>
+                    <div class="project-description">
+                        <p>Three test tracks of increasing complexity were built: a 1D straight section for quick informal tests, a 2D track (a drop plus a short hill) as a proof-of-concept, and the full 3D STEM Explorations layout as the end goal. Two additional final test tracks isolated specific motion types — an XY track with hills and valleys to test gravitational potential energy handling, and a flat XZ circular loop to isolate lateral/centripetal motion through turns.</p>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-track-xy.jpg" alt="XY test track with hills and valleys">
+                        <div class="cad-figure-caption">The XY test track — varying elevation to test gravitational effects</div>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-track-xz.jpg" alt="XZ circular loop test track">
+                        <div class="cad-figure-caption">The XZ test track — a flat loop isolating lateral motion</div>
+                    </div>
+
+                    <h3 class="card-title">Testing &amp; Results</h3>
+                    <div class="project-description">
+                        <p>Video motion tracking (via the Tracker software) established a baseline for the unmodified, gravity-driven cart's velocity and acceleration, then the same analysis was repeated on the motor-controlled cart for direct comparison. The unmodified cart showed the sharp, inconsistent velocity swings typical of a gravity-driven system; the motor-controlled cart showed a noticeably smoother, more stable velocity profile — evidence that active control is successfully compensating for the uneven scaling.</p>
+                        <p>Motor selection was also characterized experimentally across several RPM ratings to find the widest usable speed range; a 400 RPM motor won out and was used in the final design. The current cart demonstrates feasibility on 2D test tracks. Next steps include a closed-loop control system using the onboard IMU to adapt to arbitrary track layouts, further motor/torque tuning, and integration testing on the full 3D STEM Explorations set.</p>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-tracker-software.jpg" alt="Tracker motion analysis software with test track">
+                        <div class="cad-figure-caption">Tracker video motion analysis establishing baseline gravity-driven motion</div>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/knext-pwm-motor-chart.jpg" alt="Average PWM input needed across different candidate motors">
+                        <div class="cad-figure-caption">Motor characterization — the 400 RPM motor had the widest usable range</div>
+                    </div>
+
+                    <!-- Design Notebook Section -->
+                    <div class="design-notebook">
+                        <h3 class="card-title">Executive Summary</h3>
+                        <iframe src="../assets/knext-level-engineering-executive-summary.pdf"
+                                class="pdf-viewer"
+                                title="K'Nex't Level Engineering Executive Summary">
+                        </iframe>
+                        <div class="pdf-fallback" style="display: none;">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Capstone 2 Executive Summary</h4>
+                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">A condensed summary of the project's need, objectives, design concepts, and current status.</p>
+                            <a href="../assets/knext-level-engineering-executive-summary.pdf" class="pdf-download-btn" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>
+                                View Executive Summary PDF
+                            </a>
                         </div>
+                        <p style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.9rem; text-align: center;">Condensed project summary and current status</p>
+                    </div>
+
+                    <div class="design-notebook">
+                        <h3 class="card-title">Full Internal Design Review</h3>
+                        <iframe src="../assets/knext-level-engineering-idr.pdf"
+                                class="pdf-viewer"
+                                title="K'Nex't Level Engineering Internal Design Review">
+                        </iframe>
+                        <div class="pdf-fallback" style="display: none;">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Internal Technical Review v.2.0</h4>
+                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">The full 41-page design review — literature review, every wheel cluster iteration, MATLAB modeling, control system design, and complete testing &amp; analysis.</p>
+                            <a href="../assets/knext-level-engineering-idr.pdf" class="pdf-download-btn" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>
+                                View Full IDR PDF
+                            </a>
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.9rem; text-align: center;">Complete internal design review — literature review through final testing</p>
                     </div>
                 </div>
 
@@ -751,11 +898,14 @@
                     <div class="components-card animate-on-scroll">
                         <h3 class="card-title">Components</h3>
                         <ul class="components-list">
-                            <li>K'Nex Roller Coaster Set</li>
-                            <li>Modular Cart Addon</li>
-                            <li>Custom Motor/Drive Unit</li>
-                            <li>Microcontroller</li>
-                            <li>Velocity Feedback Sensors</li>
+                            <li>K'Nex STEM Explorations Set</li>
+                            <li>Filament-Extruder Wheel Cluster</li>
+                            <li>N20 3V 400RPM DC Motor</li>
+                            <li>1:1 Gear Train (15-Tooth)</li>
+                            <li>Seeed Studio Xiao nRF52840 Sense</li>
+                            <li>L9110H Motor Driver</li>
+                            <li>3.7V LiPo Battery</li>
+                            <li>3D-Printed Swivel Cart Body</li>
                         </ul>
                     </div>
 
@@ -763,14 +913,14 @@
                     <div class="skills-card animate-on-scroll">
                         <h3 class="card-title">Skills Used</h3>
                         <ul class="skills-list">
-                            <li>MATLAB Control Systems</li>
-                            <li>Dynamics &amp; Vibrations Analysis</li>
-                            <li>Mechatronics</li>
-                            <li>Real-Time Velocity Control</li>
-                            <li>CAD Design</li>
+                            <li>MATLAB Kinematic Modeling</li>
+                            <li>SOLIDWORKS &amp; AutoCAD</li>
+                            <li>Embedded Firmware (nRF52840)</li>
+                            <li>Bluetooth Data Transmission</li>
+                            <li>Tracker Motion Analysis</li>
+                            <li>Mechanism Design</li>
                             <li>3D Printing</li>
-                            <li>Technical Documentation</li>
-                            <li>Team Collaboration</li>
+                            <li>Technical Writing</li>
                         </ul>
                     </div>
                 </div>
@@ -779,19 +929,46 @@
             <!-- Image Gallery -->
             <div class="image-gallery">
                 <h2 class="card-title animate-on-scroll" style="text-align: center; margin-bottom: 3rem; font-size: 2rem;">Project Gallery</h2>
-                <!-- TODO: Replace the image filenames below with real photos in /images/project-images/ -->
                 <div class="gallery-grid">
                     <div class="gallery-item animate-on-scroll">
-                        <img src="../images/project-images/knext-level-engineering-1.jpg" alt="K'Next Level Engineering cart addon" class="gallery-image">
-                        <div class="gallery-caption">Modular cart addon on the K'Nex track</div>
+                        <img src="../images/project-images/knext-cart-no-shell.jpg" alt="Cart with motor and electronics, no shell" class="gallery-image">
+                        <div class="gallery-caption">The cart with motor and electronics, before the shell was added</div>
                     </div>
                     <div class="gallery-item animate-on-scroll">
-                        <img src="../images/project-images/knext-level-engineering-2.jpg" alt="K'Next Level Engineering control system" class="gallery-image">
-                        <div class="gallery-caption">Velocity control system and electronics</div>
+                        <img src="../images/project-images/knext-appendix-front.jpg" alt="Final cart front view" class="gallery-image">
+                        <div class="gallery-caption">Final cart — front view</div>
                     </div>
                     <div class="gallery-item animate-on-scroll">
-                        <img src="../images/project-images/knext-level-engineering-3.jpg" alt="Best in Track award at capstone showcase" class="gallery-image">
-                        <div class="gallery-caption">Best in Track award at the capstone showcase</div>
+                        <img src="../images/project-images/knext-appendix-back.jpg" alt="Final cart back view" class="gallery-image">
+                        <div class="gallery-caption">Final cart — back view</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/knext-appendix-wheels.jpg" alt="Wheel cluster close-up" class="gallery-image">
+                        <div class="gallery-caption">Wheel cluster close-up — bearings and O-ring drive wheel</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/knext-appendix-wiring.jpg" alt="Electronics wiring close-up" class="gallery-image">
+                        <div class="gallery-caption">Motor driver and microcontroller wiring close-up</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/knext-track-1d.jpg" alt="1D straight test track" class="gallery-image">
+                        <div class="gallery-caption">1D track — quick informal driving mechanism tests</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/knext-track-2d.jpg" alt="2D test track with drop and hill" class="gallery-image">
+                        <div class="gallery-caption">2D track — the proof-of-concept layout</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/knext-tracker-marker-test.jpg" alt="Tracker software test with red marker on cart" class="gallery-image">
+                        <div class="gallery-caption">A high-contrast marker was added to the cart for reliable Tracker tracking</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/knext-velocity-gravity.jpg" alt="Velocity vs time, gravity driven" class="gallery-image">
+                        <div class="gallery-caption">Velocity vs. time — unmodified, gravity-driven cart</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll">
+                        <img src="../images/project-images/knext-velocity-motor.jpg" alt="Velocity vs time, motor driven" class="gallery-image">
+                        <div class="gallery-caption">Velocity vs. time — motor-controlled cart (smoother, more stable)</div>
                     </div>
                 </div>
             </div>
@@ -841,6 +1018,26 @@
             body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         }
+
+        // PDF Viewer Fallback Detection (supports multiple PDFs on one page)
+        function checkPDFSupport() {
+            document.querySelectorAll('.pdf-viewer').forEach((iframe) => {
+                const fallback = iframe.nextElementSibling;
+                setTimeout(() => {
+                    try {
+                        if (iframe.contentDocument === null) {
+                            iframe.style.display = 'none';
+                            if (fallback && fallback.classList.contains('pdf-fallback')) {
+                                fallback.style.display = 'block';
+                            }
+                        }
+                    } catch (e) {
+                        console.log('PDF viewer working correctly');
+                    }
+                }, 2000);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', checkPDFSupport);
 
         // Load saved theme
         document.addEventListener('DOMContentLoaded', function() {

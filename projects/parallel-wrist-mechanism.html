@@ -4,11 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Motor Control Assistive Device - Jordan Spencer</title>
+    <title>3-DOF Parallel Wrist Mechanism - Jordan Spencer</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔨</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <style>
         :root {
             /* Dark Theme Colors */
@@ -412,7 +411,97 @@
             margin-bottom: 1.5rem;
         }
 
+        /* CAD Viewer - Enhanced */
+        .cad-viewer {
+            margin: 3rem 0;
+        }
 
+        spline-viewer {
+            width: 100%;
+            height: 500px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: block;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+        }
+
+        /* Component Visibility Toggle */
+        .component-toggle-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--background-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-primary);
+        }
+
+        .component-toggle-label {
+            margin-right: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .component-toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .component-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: var(--surface-secondary);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-primary);
+        }
+
+        .component-switch::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 6px var(--shadow-medium);
+        }
+
+        .component-switch.active {
+            background: var(--primary-color);
+        }
+
+        .component-switch.active::before {
+            transform: translateX(24px);
+            background: white;
+        }
+
+        .component-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            right: 5px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .component-icon {
+            width: 12px;
+            height: 12px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            fill: currentColor;
+        }
 
         /* Image Gallery */
         .image-gallery {
@@ -567,6 +656,10 @@
             .gallery-grid {
                 grid-template-columns: 1fr;
             }
+
+            spline-viewer {
+                height: 400px;
+            }
         }
 
         /* Smooth transitions for theme changes */
@@ -574,6 +667,100 @@
             transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                         border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                         color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* DOF / Joint Table */
+        .dof-table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        .dof-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 500px;
+        }
+        .dof-table th, .dof-table td {
+            border: 1px solid var(--border-primary);
+            padding: 0.6rem 0.75rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        .dof-table th {
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .dof-table td:first-child, .dof-table th:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        /* Design Notebook / PDF Viewer */
+        .design-notebook {
+            margin: 3rem 0;
+        }
+        .pdf-viewer {
+            width: 100%;
+            height: 600px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: block;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--border-primary);
+            background: var(--surface-secondary);
+        }
+        .pdf-fallback {
+            background: var(--surface-secondary);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+        .pdf-download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 1rem;
+        }
+        .pdf-download-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+        }
+
+        .equation-box {
+            background: var(--background-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            text-align: center;
+            overflow-x: auto;
+        }
+        .cad-figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .cad-figure img {
+            max-width: 100%;
+            border-radius: 16px;
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+        .cad-figure-caption {
+            margin-top: 0.75rem;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -615,8 +802,8 @@
                     </svg>
                     Back to Projects
                 </a>
-                <h1 class="project-title">MOTOR CONTROL ASSISTIVE DEVICE</h1>
-                <p class="project-subtitle">One-handed operated launcher with adjustable trajectory and range control</p>
+                <h1 class="project-title">3-DOF PARALLEL WRIST MECHANISM</h1>
+                <p class="project-subtitle">ME5250 Course Project — a spherical parallel mechanism for controlled spatial orientation</p>
             </div>
 
             <!-- Project Content Grid -->
@@ -624,11 +811,73 @@
                 <div class="project-main animate-on-scroll">
                     <h2 class="card-title">Project Overview</h2>
                     <div class="project-description">
-                        <p>Designed and prototyped a motor control assistive device from common household materials using exacto-knives, handsaws, and fasteners. The device launches ping pong balls 5-25 feet based on the adjustment of the launch angle and amount of winding.</p>
-                        
-                        <p>The innovative design allows the device to be operated accurately with one hand, making it accessible for individuals with limited motor control or mobility. The adjustable mechanism provides precise control over both trajectory and launch distance.</p>
-                        
-                        <p>This project demonstrates inclusive design principles and assistive technology development using readily available materials and simple mechanical systems.</p>
+                        <p>This project investigates a 3-DOF parallel wrist mechanism designed for controlled spatial orientation. Three kinematic legs connect a fixed base to a moving outer race in a closed-loop structure. Two legs are actuated via coplanar cylindrical joints oriented orthogonally, providing coupled rotational and translational motion, while the third uses a centrally located revolute input for rotation about the vertical axis.</p>
+
+                        <p>Passive universal and spherical joints constrain the system to pure rotation about a fixed point, yielding a spherical parallel mechanism with improved stiffness and load distribution compared to a serial gimbal equivalent.</p>
+                    </div>
+
+                    <div class="cad-figure">
+                        <img src="../images/project-images/parallel-wrist-mechanism-cad.jpg" alt="CAD model of the parallel wrist mechanism">
+                        <div class="cad-figure-caption">Figure 1: CAD model of the mechanism</div>
+                    </div>
+
+                    <h3 class="card-title">Construction</h3>
+                    <div class="project-description">
+                        <p><strong>Bearing:</strong> The outer and inner race are connected by a revolute joint, with universal joints attached at a radius of 80mm.</p>
+                        <p><strong>Cylindrical Input Legs (1 &amp; 2):</strong> Oriented orthogonally to decouple their motion. Each contains 2 universal joints and 1 cylindrical joint, connecting the outer race down to the base plate.</p>
+                        <p><strong>Rotational Input Leg (3):</strong> Connects to the spherical center via a universal yoke on the pin bisecting the inner race, with 1 revolute joint and 1 universal joint.</p>
+                        <p><strong>Socket:</strong> A spherical socket opposite the cylindrical legs, containing a spherical joint, a prismatic joint, and a revolute joint back to the base plate.</p>
+                    </div>
+
+                    <h3 class="card-title">Degree of Freedom Analysis</h3>
+                    <div class="project-description">
+                        <p>DOF was analyzed using the Grübler equation for spatial mechanisms, where <em>m</em> is the total DOF of the space, <em>N</em> is the number of links (including ground), <em>J</em> is the number of joints, and <em>f<sub>i</sub></em> is the DOF of each joint:</p>
+                    </div>
+                    <div class="equation-box">DOF = m(N &minus; 1 &minus; J) + &Sigma;f<sub>i</sub> &nbsp;&nbsp;&rarr;&nbsp;&nbsp; 6(10 &minus; 1 &minus; 12) + 21 = <strong>3 DOF</strong></div>
+                    <div class="dof-table-wrap">
+                        <table class="dof-table">
+                            <thead>
+                                <tr><th>Joint Type</th><th>f<sub>i</sub></th><th>Leg 1</th><th>Leg 2</th><th>Leg 3</th><th>Socket</th><th>Bearing</th><th># of Joints</th><th>&Sigma;f<sub>i</sub></th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Revolute (R)</td><td>1</td><td></td><td></td><td>1</td><td>1</td><td>1</td><td>3</td><td>3</td></tr>
+                                <tr><td>Prismatic (P)</td><td>1</td><td></td><td></td><td></td><td>1</td><td></td><td>1</td><td>1</td></tr>
+                                <tr><td>Cylindrical (C)</td><td>2</td><td>1</td><td>1</td><td></td><td></td><td></td><td>2</td><td>4</td></tr>
+                                <tr><td>Universal (U)</td><td>2</td><td>2</td><td>2</td><td>1</td><td></td><td></td><td>5</td><td>10</td></tr>
+                                <tr><td>Spherical (S)</td><td>3</td><td></td><td></td><td></td><td>1</td><td></td><td>1</td><td>3</td></tr>
+                                <tr><td><strong>Totals</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td><strong>12</strong></td><td><strong>21</strong></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="card-title">Workspace &amp; Singularity Analysis</h3>
+                    <div class="project-description">
+                        <p>The mechanism is driven by inputs q = [&theta;<sub>1</sub>, &theta;<sub>2</sub>, &theta;<sub>3</sub>] — the translation of each cylindrical input and the rotational input — with actuator limits of |&theta;<sub>1</sub>| and |&theta;<sub>2</sub>| &le; 57mm from the home position, determined using SOLIDWORKS Motion Analysis contact and interference tools. The theoretical workspace, ignoring those limits, was mapped in MATLAB:</p>
+                    </div>
+                    <div class="cad-figure">
+                        <img src="../images/project-images/parallel-wrist-mechanism-workspace.jpg" alt="Workspace boundaries plot">
+                        <div class="cad-figure-caption">Figure 5: Workspace boundaries</div>
+                    </div>
+                    <div class="project-description">
+                        <p>A singularity would occur if |&theta;<sub>1</sub>| or |&theta;<sub>2</sub>| exceeded the leg radius of r = 80mm. Since the actuator limits of &plusmn;57mm stay well within that radius, no singularity is reachable within the mechanism's real, geometrically-constrained workspace.</p>
+                    </div>
+
+                    <!-- Design Notebook Section -->
+                    <div class="design-notebook">
+                        <h3 class="card-title">Full Project Report</h3>
+                        <iframe src="../assets/parallel-wrist-mechanism-report.pdf"
+                                class="pdf-viewer"
+                                title="3-DOF Parallel Wrist Mechanism Project Report">
+                        </iframe>
+                        <div class="pdf-fallback" style="display: none;">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">ME5250 Project 1 Report</h4>
+                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">The complete write-up — literature review, construction details, full DOF analysis, forward kinematics derivation, and singularity analysis.</p>
+                            <a href="../assets/parallel-wrist-mechanism-report.pdf" class="pdf-download-btn" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>
+                                View Full Report PDF
+                            </a>
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.9rem; text-align: center;">Complete ME5250 write-up with full derivations</p>
                     </div>
                 </div>
 
@@ -638,12 +887,13 @@
                     <div class="components-card animate-on-scroll">
                         <h3 class="card-title">Components</h3>
                         <ul class="components-list">
-                            <li>Cardboard</li>
-                            <li>Dowels</li>
-                            <li>Popsicle Sticks</li>
-                            <li>String</li>
-                            <li>Double Sided Tape</li>
-                            <li>Duct Tape</li>
+                            <li>Rigid Base Plate</li>
+                            <li>Moving Outer Race</li>
+                            <li>2 Cylindrical Input Legs</li>
+                            <li>1 Rotational Input Leg</li>
+                            <li>Spherical Socket Joint</li>
+                            <li>5 Universal Joints</li>
+                            <li>Revolute Bearing</li>
                         </ul>
                     </div>
 
@@ -651,13 +901,14 @@
                     <div class="skills-card animate-on-scroll">
                         <h3 class="card-title">Skills Used</h3>
                         <ul class="skills-list">
-                            <li>Hand Tools</li>
-                            <li>Testing</li>
-                            <li>Prototyping</li>
-                            <li>Mechanical Design</li>
-                            <li>Assistive Technology</li>
-                            <li>Material Selection</li>
-                            <li>Accessibility Design</li>
+                            <li>Kinematic Analysis</li>
+                            <li>Grübler DOF Equation</li>
+                            <li>Forward Kinematics</li>
+                            <li>Singularity Analysis</li>
+                            <li>SOLIDWORKS Motion Analysis</li>
+                            <li>MATLAB</li>
+                            <li>CAD Design</li>
+                            <li>Technical Writing</li>
                         </ul>
                     </div>
                 </div>
@@ -668,12 +919,20 @@
                 <h2 class="card-title animate-on-scroll" style="text-align: center; margin-bottom: 3rem; font-size: 2rem;">Project Gallery</h2>
                 <div class="gallery-grid">
                     <div class="gallery-item animate-on-scroll">
-                        <img src="../images/project-images/motor-control-1.jpg" alt="Motor Control Assistive Device Overview" class="gallery-image">
-                        <div class="gallery-caption">Rigged up and being operated one-handed across a table</div>
+                        <img src="../images/project-images/parallel-wrist-mechanism-cad.jpg" alt="Parallel wrist mechanism CAD model" class="gallery-image">
+                        <div class="gallery-caption">CAD model of the 3-DOF spherical parallel wrist</div>
                     </div>
                     <div class="gallery-item animate-on-scroll">
-                        <img src="../images/project-images/motor-control-3.jpg" alt="Motor Control Device Construction" class="gallery-image">
-                        <div class="gallery-caption">Drilling the winding-mechanism mount into the cardboard frame</div>
+                        <img src="../images/project-images/parallel-wrist-mechanism-workspace.jpg" alt="Workspace boundaries plot" class="gallery-image">
+                        <div class="gallery-caption">MATLAB-generated theoretical workspace boundaries</div>
+                    </div>
+                    <div class="gallery-item animate-on-scroll video-item">
+                        <video class="gallery-video" controls
+                               onerror="console.log('Video failed to load')">
+                            <source src="../images/project-images/parallel-wrist-mechanism-video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="gallery-caption">Motion analysis of the mechanism moving through its workspace</div>
                     </div>
                 </div>
             </div>
@@ -698,7 +957,7 @@
                         <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
                     <h4>Email</h4>
-                    <a href="mailto:spencer.jo@northeastern.edu?subject=Project%20Inquiry%20-%20Motor%20Control%20Assistive%20Device&body=Hi%20Jordan,%0D%0A%0D%0AI%20saw%20your%20Motor%20Control%20Assistive%20Device%20project%20and%20would%20like%20to%20discuss%20">spencer.jo@northeastern.edu</a>
+                    <a href="mailto:spencer.jo@northeastern.edu?subject=Project%20Inquiry%20-%203-DOF%20Parallel%20Wrist%20Mechanism&body=Hi%20Jordan,%0D%0A%0D%0AI%20saw%20your%20Parallel%20Wrist%20Mechanism%20project%20and%20would%20like%20to%20discuss%20">spencer.jo@northeastern.edu</a>
                 </div>
                 <div class="contact-item animate-on-scroll">
                     <svg class="contact-icon" viewBox="0 0 24 24">
@@ -723,6 +982,26 @@
             body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         }
+
+        // PDF Viewer Fallback Detection
+        function checkPDFSupport() {
+            document.querySelectorAll('.pdf-viewer').forEach((iframe) => {
+                const fallback = iframe.nextElementSibling;
+                setTimeout(() => {
+                    try {
+                        if (iframe.contentDocument === null) {
+                            iframe.style.display = 'none';
+                            if (fallback && fallback.classList.contains('pdf-fallback')) {
+                                fallback.style.display = 'block';
+                            }
+                        }
+                    } catch (e) {
+                        console.log('PDF viewer working correctly');
+                    }
+                }, 2000);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', checkPDFSupport);
 
         // Load saved theme
         document.addEventListener('DOMContentLoaded', function() {
